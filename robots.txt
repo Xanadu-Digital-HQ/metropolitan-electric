@@ -1,0 +1,9 @@
+# START nuxt-robots (indexable)
+User-agent: *
+Disallow: /_nuxt/
+Disallow: /_nuxt/builds/
+Disallow: /_nuxt/meta/
+Disallow: /api/
+
+Sitemap: https://metropolitanelectricng.com/sitemap.xml
+# END nuxt-robots

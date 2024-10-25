@@ -1,0 +1,1 @@
+import{e as o}from"./XuaglUsL.js";import{I as r,J as t,N as c}from"./E_WSPPXw.js";const s={};function n(e,l){return r(),t("blockquote",null,[c(e.$slots,"default")])}const u=o(s,[["render",n]]);export{u as default};

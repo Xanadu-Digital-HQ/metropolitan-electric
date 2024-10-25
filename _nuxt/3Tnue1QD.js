@@ -1,0 +1,1 @@
+import{k as n,I as c,J as o,P as t}from"./E_WSPPXw.js";const a=["src"],l=n({__name:"Icon",props:{name:{type:String,required:!0}},setup(e){return(r,s)=>(c(),o("div",null,[t("img",{class:"size-7 object-cover",src:`/${e.name}.png`,alt:"`A Social Media Icon"},null,8,a)]))}});export{l as _};

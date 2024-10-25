@@ -1,0 +1,1 @@
+import{e as r}from"./XuaglUsL.js";import{I as o,J as t,N as n}from"./E_WSPPXw.js";const s={};function c(e,a){return o(),t("strong",null,[n(e.$slots,"default")])}const _=r(s,[["render",c]]);export{_ as default};

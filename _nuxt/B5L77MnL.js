@@ -1,0 +1,1 @@
+import{e as r}from"./XuaglUsL.js";import{I as o,J as s,N as t}from"./E_WSPPXw.js";const n={},a={class:"prose prose-green max-w-none prose-h2:mt-0"};function c(e,p){return o(),s("div",a,[t(e.$slots,"default")])}const l=r(n,[["render",c]]);export{l as default};
