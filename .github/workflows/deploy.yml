@@ -1,0 +1,35 @@
+name: Deploy to DreamHost via FTP
+
+# Trigger this workflow on push events to the main branch
+on:
+  push:
+    branches:
+      - main  # Change this to your branch if necessary
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Check out your repository code
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.9.0'
+
+      - name: Install dependencies
+        run: npm install  # Installs your project dependencies
+
+      - name: Build Nuxt project
+        run: npm run build  # Builds your project
+
+      - name: FTP Deploy  # The part you were asked to add
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 208.113.149.209  # Your FTP server address
+          username: ${{ secrets.FTP_USERNAME }}  # Fetches your FTP username from GitHub secrets
+          password: ${{ secrets.FTP_PASSWORD }}  # Fetches your FTP password from GitHub secrets
+          local-dir: .output/public  # The directory where your build files are
+          remote-dir: /home/dh_8vtwft  # The remote directory on your FTP server
