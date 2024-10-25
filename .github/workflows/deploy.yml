@@ -28,7 +28,7 @@ jobs:
       - name: FTP Deploy  # The part you were asked to add
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: 208.113.149.209  # Your FTP server address
+          server: metropolitanelectricng.com  # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}  # Fetches your FTP username from GitHub secrets
           password: ${{ secrets.FTP_PASSWORD }}  # Fetches your FTP password from GitHub secrets
           local-dir: .output/public/MetropolitanElectric  # The directory where your build files are
