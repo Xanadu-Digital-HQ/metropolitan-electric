@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install  # Installs your project dependencies
 
-      - name: Build Nuxt project
-        run: npm run build  # Builds your project
+      - name: Generate Nuxt project
+        run: npm run generate  # Builds your project
 
       - name: FTP Deploy  # The part you were asked to add
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -31,5 +31,5 @@ jobs:
           server: 208.113.149.209  # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}  # Fetches your FTP username from GitHub secrets
           password: ${{ secrets.FTP_PASSWORD }}  # Fetches your FTP password from GitHub secrets
-          local-dir: .output/public/  # The directory where your build files are
+          local-dir: .output/public/MetropolitanElectric  # The directory where your build files are
           remote-dir: /home/dh_8vtwft/  # The remote directory on your FTP server
