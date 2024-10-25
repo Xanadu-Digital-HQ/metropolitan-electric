@@ -28,8 +28,9 @@ jobs:
       - name: FTP Deploy  # The part you were asked to add
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: iad1-shared-d12-04.dreamhost.com  # Your FTP server address
-          username: ${{ secrets.FTP_USERNAME }}  # Fetches your FTP username from GitHub secrets
-          password: ${{ secrets.FTP_PASSWORD }}  # Fetches your FTP password from GitHub secrets
-          local-dir: .output/public/  # The directory where your build files are
-          remote-dir: /home/dh_8vtwft/MetropolitanElectric/  # The remote directory on your FTP server
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          port: ${{ secrets.SFTP_PORT }}
+          source: ".output/public/"
+          target: "/home/dh_8vtwft/MetropolitanElectric/" 
