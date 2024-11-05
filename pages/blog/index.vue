@@ -34,7 +34,7 @@
                         {{ blogs[blogs.length - 1].title }}
                       </h1>
                       <p
-                        class="text-white text-sm sm:text-base md:text-lg font-noto"
+                        class="text-white text-sm sm:text-base md:text-lg font-noto line-clamp-2"
                       >
                         {{ blogs[blogs.length - 1].description }}
                       </p>
@@ -103,10 +103,10 @@
         </div>
       </div> -->
 
-      <div class="flex flex-wrap justify-between">
+      <div class="flex flex-wrap">
         <ContentList path="/blog" v-slot="{ list: blogs }">
           <BlogItem
-            v-for="blog in blogs"
+            v-for="blog in blogs.slice(0).reverse()"
             :key="blog.id"
             :title="blog.title!"
             :description="blog.description"

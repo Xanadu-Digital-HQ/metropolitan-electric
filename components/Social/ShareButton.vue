@@ -10,7 +10,7 @@ const props = defineProps({
     type: String,
     default: "Twitter",
     validator: (value: string) =>
-      ["Twitter", "Facebook", "LinkedIn", "WhatsApp", "Instagram"].includes(
+      ["Twitter", "Facebook", "Linkedin", "Whatsapp", "Instagram"].includes(
         value
       ),
   },
