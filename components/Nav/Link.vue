@@ -5,7 +5,6 @@
       exact-active-class="relative border-b border-b-2 border-b-[#1C6220]"
       :class="navLinkStyle"
       :to="toUrl"
-      :aria-label="`Navigate to ${toUrl}`"
       ><slot />
     </NuxtLink>
   </span>

@@ -6,6 +6,7 @@
         class="group absolute -left-8 active:outline outline-[#1c6220] rounded-2xl hidden [@media(min-width:800px)]:inline"
       >
         <ArrowLeftIcon
+          v-if="!(list.length < 4)"
           class="group-hover:text-[#1c6220] w-6 h-6"
           :class="transition"
         />
@@ -15,6 +16,7 @@
         class="group absolute -right-8 active:outline outline-[#1c6220] rounded-2xl hidden [@media(min-width:800px)]:inline"
       >
         <ArrowRightIcon
+          v-if="!(list.length < 4)"
           class="group-hover:text-[#1c6220] w-6 h-6"
           :class="transition"
         />
@@ -24,9 +26,9 @@
         ref="scrollContainer"
         class="blog-container-scroll flex gap-5 overflow-x-auto"
       >
-        <ContentList path="/blog" v-slot="{ list: blogs }">
+        <ContentRenderer :value="list">
           <BlogItem
-            v-for="blog in blogs"
+            v-for="blog in list"
             :key="blog.id"
             class="min-w-[310px] max-w-[310px]"
             :title="blog.title!"
@@ -38,7 +40,7 @@
             :date="blog.date"
             :minutes-read="blog.minutesRead"
           />
-        </ContentList>
+        </ContentRenderer>
       </div>
     </div>
   </div>
@@ -48,6 +50,8 @@
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/vue/20/solid";
 
 const { transition } = useTailwindConfig();
+
+const list = await queryContent("blog").limit(10).find();
 
 const scrollContainer = ref<HTMLDivElement | null>(null);
 

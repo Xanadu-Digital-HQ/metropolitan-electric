@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     public: {
       Emailjs: "75u1MbtaSAXCYENAL",
       gtm: {
-        id: process.env.NUXT_PUBLIC_GTM_ID,
+        id: process.env.NUXT_GTM_ID!,
         queryParams: {
           gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
           gtm_preview: "env-4",

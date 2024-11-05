@@ -1,5 +1,5 @@
 ---
-title: "Electric Vehicles: A Sustainable Future for Nigeria"
+title: "Electric Vehicles : A Sustainable Future for Nigeria"
 description: "Explore the benefits, challenges, and opportunities of electric vehicles in Nigeria, and how they can contribute to a cleaner, more efficient transportation future."
 image: "https://utfs.io/f/3VcV2KI5zmFpdpV2yD6cbXCEP0mn7lLqeZsfagHFGdzMV8IT"
 date: "22 October, 2024"

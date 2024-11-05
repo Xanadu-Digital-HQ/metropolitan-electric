@@ -9,15 +9,15 @@
         />
       </div>
       <div class="flex flex-col gap-1.5">
-        <div class="flex flex-wrap gap-1.5">
-          <p
+        <p class="line-clamp-1 space-x-2">
+          <span
             v-for="(tag, index) in tags"
             :key="`tag${index}`"
             class="text-[#101920] text-xs"
           >
             #{{ tag }}
-          </p>
-        </div>
+          </span>
+        </p>
         <h1
           class="group-hover:text-black/80 text-lg font-semibold max-w-full md:max-w-[90%] transition-all duration-200"
         >
@@ -29,7 +29,7 @@
           {{ description }}
         </p>
       </div>
-      <div class="flex justify-between">
+      <div class="flex justify-between mt-2">
         <span class="text-xs">{{ minutesRead }} mins</span>
         <span class="text-xs">{{ date }}</span>
       </div>

@@ -48,7 +48,12 @@
     <div class="flex flex-col gap-2.5 order-first md:order-last p-0 md:p-2">
       <h2 class="text-lg font-semibold">Follow Us</h2>
       <div class="flex gap-2">
-        <NuxtLink v-for="item in socialMedia" :key="item.name" :to="item.url">
+        <NuxtLink
+          v-for="item in socialMedia"
+          :key="item.name"
+          :to="item.url"
+          :aria-label="item.name"
+        >
           <SocialIcon :name="item.name" />
         </NuxtLink>
       </div>
