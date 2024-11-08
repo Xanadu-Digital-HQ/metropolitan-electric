@@ -2,7 +2,7 @@
   <div :class="container" class="py-20 space-y-20">
     <div class="space-y-10">
       <div class="flex flex-col gap-2.5">
-        <h1 class="text-[#113912] text-3xl md:text-4xl">Blog & Articless</h1>
+        <h1 class="text-[#113912] text-3xl md:text-4xl">Blog & Articles</h1>
         <p class="text-[#1C6220] text-lg sm:text-xl">
           Insights, Stories, and Expert Opinions on Industry Trends
         </p>
