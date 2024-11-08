@@ -96,12 +96,11 @@
     </div>
 
     <div class="space-y-10">
-      <!-- Sub Navbar and Search Button to be added here -->
-      <!-- <div class="flex">
+      <div class="flex">
         <div class="flex">
           <span>All</span>
         </div>
-      </div> -->
+      </div>
 
       <div class="flex flex-wrap">
         <ContentList path="/blog" v-slot="{ list: blogs }">

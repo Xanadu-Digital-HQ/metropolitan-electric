@@ -9,6 +9,20 @@
 <script lang="ts" setup>
 import type { Card, Media } from "~/types/types";
 
+useHead({
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Metropolitan Electric",
+        url: "https://metropolitanelectricng.com",
+      }),
+    },
+  ],
+});
+
 const { data: posts } = await useAsyncData("posts", () =>
   queryContent("/media-center").find()
 );
