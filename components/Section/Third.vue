@@ -134,7 +134,7 @@
               >{{ errorMsg }}</span
             >
             <button
-              class="py-3 px-8 text-center text-sm sm:text-base bg-[#1C6220] hover:bg-[#113912] cursor-pointer text-white font-semibold block transition-colors duration-200"
+              class="py-3 px-8 text-center text-sm sm:text-base bg-brand/80 hover:bg-brand cursor-pointer text-white font-semibold block transition-colors duration-200"
               type="submit"
             >
               <ArrowPathIcon
