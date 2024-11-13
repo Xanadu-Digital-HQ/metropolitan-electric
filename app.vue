@@ -16,7 +16,7 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Metropolitan Electric",
+        name: "Metropolitan Electric Limited",
         url: "https://metropolitanelectricng.com",
       }),
     },

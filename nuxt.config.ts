@@ -23,7 +23,7 @@ export default defineNuxtConfig({
         },
         {
           name: "og:image",
-          content: "https://metropolitanelectricng.com/logo.svg",
+          content: "logo.svg",
         },
         { name: "twitter:card", content: "summary_large_image" },
       ],
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   ],
   site: {
     url: "https://metropolitanelectricng.com",
-    name: "Metropolitan Electric",
+    name: "Metropolitan Electric Limited",
     defaultLocale: "en",
   },
   robots: {
