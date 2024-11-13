@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#113912]">
+  <div class="bg-brand">
     <div class="flex flex-col" :class="container">
       <div
         class="flex flex-wrap justify-between sm:justify-start gap-5 sm:gap-10 py-24"

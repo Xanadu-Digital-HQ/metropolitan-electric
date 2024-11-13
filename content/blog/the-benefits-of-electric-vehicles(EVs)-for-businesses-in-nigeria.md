@@ -4,7 +4,7 @@ description: "Explore how electric vehicles (EVs) can offer Nigerian businesses 
 image: "https://utfs.io/f/3VcV2KI5zmFpfBtkyLapezRk2QdqcsxyONbTLlw9rD7JV6PE"
 date: "29 October, 2024"
 slug: "benefits-electric-vehicles-nigeria"
-tags: ["Electric Vehicles", "Sustainability", "Nigeria", "Business"]
+tags: ["Electric Vehicles", "Sustainability", "Nigeria"]
 minutesRead: 7
 ---
 

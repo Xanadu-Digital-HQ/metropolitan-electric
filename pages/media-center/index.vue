@@ -124,7 +124,7 @@
         <button
           v-if="loadMoreActive"
           @click="loadMore"
-          class="mt-5 flex justify-center items-center py-3 px-8 text-white bg-[#1C6220] hover:bg-[#113912] gap-2.5 w-fit disabled:opacity-10"
+          class="mt-5 flex justify-center items-center py-3 px-8 text-white bg-brand/80 hover:bg-brand gap-2.5 w-fit disabled:opacity-10"
           :disabled="!loadMoreActive"
         >
           Load More

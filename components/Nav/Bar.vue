@@ -16,7 +16,7 @@
           <NavLink to-url="/blog">Blog</NavLink>
           <NuxtLink
             to="/#contact"
-            class="relative z-10 py-2.5 px-7 font-medium font-main border-2 border-[#113912] hover:bg-[#1C6220] hover:border-[#1C6220] hover:text-white focus:bg-[#30a336] transition-all duration-200 before:absolute before:content-[''] before:top-0 before:left-0 before:right-0 before:bottom-0 focus:before:border-2 focus:text-white before:border-[#30a336] before:rounded-md before:-z-10 focus:before:-top-1.5 focus:before:-right-1.5 focus:before:-left-1.5 focus:before:-bottom-1.5"
+            class="relative z-10 py-2.5 px-7 font-medium font-main border-2 border-brand hover:bg-brand hover:border-brand hover:text-white focus:bg-accent transition-all duration-200 before:absolute before:content-[''] before:top-0 before:left-0 before:right-0 before:bottom-0 focus:before:border-2 focus:text-white before:border-accent before:rounded-md before:-z-10 focus:before:-top-1.5 focus:before:-right-1.5 focus:before:-left-1.5 focus:before:-bottom-1.5"
             >Contact</NuxtLink
           >
         </div>

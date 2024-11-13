@@ -59,7 +59,7 @@
                           <img
                             class="size-4 md:size-5"
                             src="/wheel.svg"
-                            alt=""
+                            alt="Logo Wheel Image"
                           />
                         </div>
                         <p class="text-white text-sm sm:text-base md:text-lg">
@@ -96,28 +96,54 @@
     </div>
 
     <div class="space-y-10">
-      <!-- Sub Navbar and Search Button to be added here -->
-      <!-- <div class="flex">
-        <div class="flex">
-          <span>All</span>
+      <div class="flex">
+        <div class="tag-container-scroll flex gap-5 overflow-x-auto">
+          <button
+            v-for="tag in tags"
+            class="text-nowrap text-sm md:text-base hover:text-accentHovered focus:text-accentHovered py-1.5 px-5 w-fit rounded-full transition-all duration-300"
+            :class="
+              activeTag === tag
+                ? 'text-accent bg-accent/20'
+                : 'text-brand bg-accent/5'
+            "
+            @click="filter(tag)"
+          >
+            {{ tag }}
+          </button>
         </div>
-      </div> -->
+      </div>
 
-      <div class="flex flex-wrap">
-        <ContentList path="/blog" v-slot="{ list: blogs }">
-          <BlogItem
-            v-for="blog in blogs.slice(0).reverse()"
-            :key="blog.id"
-            :title="blog.title!"
-            :description="blog.description"
-            :content="blog.content"
-            :slug="blog._path!"
-            :image="blog.image"
-            :tags="blog.tags"
-            :date="blog.date"
-            :minutes-read="blog.minutesRead"
-          />
-        </ContentList>
+      <div class="flex justify-center items-center min-h-[700px] md:min-h-96">
+        <div v-if="filteredBlogs" class="flex flex-wrap size-full">
+          <ContentRenderer
+            v-if="filteredBlogs.length > 0"
+            :value="filteredBlogs"
+            path="/blog"
+          >
+            <BlogItem
+              v-for="blog in filteredBlogs.slice(0).reverse()"
+              :key="blog.id"
+              :title="blog.title!"
+              :description="blog.description"
+              :content="blog.content"
+              :slug="blog._path!"
+              :image="blog.image"
+              :tags="blog.tags"
+              :date="blog.date"
+              :minutes-read="blog.minutesRead"
+            />
+          </ContentRenderer>
+
+          <div v-else class="flex size-full justify-center items-center">
+            <p class="text-brand text-lg md:text-xl">No Blogs Found</p>
+          </div>
+        </div>
+
+        <div v-else class="flex my-auto justify-center items-center">
+          <div class="animate-spin">
+            <IconsLoadingWheel class="animate-ping size-16 fill-[#101920]" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -128,6 +154,52 @@ import { ArrowUpRightIcon } from "@heroicons/vue/20/solid";
 import { CalendarDaysIcon } from "@heroicons/vue/24/outline";
 
 const { container } = useTailwindConfig();
+
+const filteredBlogs = ref();
+const loadingBlogs = ref(false);
+const activeTag = ref("All");
+
+const filterBlogs = async (tag: string) => {
+  loadingBlogs.value = true;
+  filteredBlogs.value = null;
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  const { data } = await useAsyncData("filtered-blogs", async () => {
+    if (tag === "All") {
+      return queryContent("/blog").find();
+    } else {
+      return queryContent("/blog")
+        .where({
+          tags: { $contains: tag },
+        })
+        .find();
+    }
+  });
+
+  filteredBlogs.value = data.value;
+  loadingBlogs.value = false;
+};
+
+const filter = (tag: string) => {
+  activeTag.value = tag;
+  filterBlogs(activeTag.value);
+};
+
+onMounted(() => {
+  filterBlogs("All");
+});
+
+const tags = [
+  "All",
+  "Electric Vehicles",
+  "EV Maintenance",
+  "Zero Emissions",
+  "Electric Buses",
+  "Charging Stations",
+  "Renewable Energy",
+  "Sustainability",
+  "Nigeria",
+];
 
 useSeoMeta({
   title: "Blogs & Articles",
@@ -140,3 +212,18 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 </script>
+<style scoped>
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.tag-container-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.tag-container-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

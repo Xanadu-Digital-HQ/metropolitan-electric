@@ -45,7 +45,7 @@
         :delay="800"
         :duration="400"
         to="/#about"
-        class="px-8 py-3 text-sm sm:text-base bg-[#1c6220] hover:bg-[#113a13] w-fit font-semibold font-main text-white transition-all duration-200"
+        class="px-8 py-3 text-sm sm:text-base hover:bg-brand bg-white w-fit font-semibold font-main text-brand hover:text-white transition-all duration-200"
         >Lead The Charge</NuxtLink
       >
     </div>
