@@ -32,6 +32,7 @@ export default defineNuxtConfig({
   },
   modules: [
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
     "@vueuse/motion/nuxt",
     "@zadigetvoltaire/nuxt-gtm",
     "@nuxtjs/seo",
@@ -39,7 +40,25 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxthq/studio",
     "nuxt-swiper",
+    "shadcn-nuxt",
   ],
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: "",
+    /**
+     * Directory that the component lives in.
+     * @default
+     */
+    componentDir: "./components/ui",
+  },
+  colorMode: {
+    classSuffix: "",
+    preference: "light",
+    storage: "cookie",
+    // fallback: "light",
+  },
   site: {
     url: "https://metropolitanelectricng.com",
     name: "Metropolitan Electric Limited",

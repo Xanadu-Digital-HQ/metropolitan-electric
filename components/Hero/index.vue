@@ -5,7 +5,7 @@
   >
     <div class="flex flex-col gap-y-5 w-full max-w-2xl z-20">
       <div class="flex flex-col gap-y-2">
-        <p
+        <h1
           v-motion
           :initial="{ opacity: 1, y: 80 }"
           :enter="{ opacity: 1, y: 80 }"
@@ -18,7 +18,7 @@
           class="font-medium font-main text-3xl sm:text-4xl text-white leading-9 sm:leading-10 tracking-wider"
         >
           Driving The Future Of Sustainable Mobility In Africa
-        </p>
+        </h1>
         <p
           v-motion
           :initial="{ opacity: 1, y: 20 }"
