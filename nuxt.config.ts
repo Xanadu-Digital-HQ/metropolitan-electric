@@ -34,13 +34,13 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vueuse/motion/nuxt",
-    "@zadigetvoltaire/nuxt-gtm",
     "@nuxtjs/seo",
     "@nuxt/content",
     "@nuxt/image",
     "@nuxthq/studio",
     "nuxt-swiper",
     "shadcn-nuxt",
+    "@nuxt/scripts",
   ],
   shadcn: {
     /**
@@ -73,26 +73,37 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
   compatibilityDate: "2024-07-02",
+  scripts: {
+    registry: {
+      googleTagManager: true,
+      googleAnalytics: true,
+    },
+  },
   runtimeConfig: {
     public: {
       Emailjs: "75u1MbtaSAXCYENAL",
-      gtm: {
-        id: process.env.NUXT_GTM_ID!,
-        queryParams: {
-          gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
-          gtm_preview: "env-4",
-          gtm_cookies_win: "x",
+      scripts: {
+        googleAnalytics: {
+          id: process.env.NUXT_GOOGLE_ANALYTICS_ID!,
         },
-        defer: false,
-        compatibility: false,
-        nonce: "2726c7f26c",
-        enabled: true,
-        debug: true,
-        loadScript: true,
-        enableRouterSync: true,
-        ignoredViews: ["homepage"],
-        trackOnNextTick: false,
-        devtools: true,
+        googleTagManager: {
+          id: process.env.NUXT_GTM_ID!,
+          queryParams: {
+            gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
+            gtm_preview: "env-4",
+            gtm_cookies_win: "x",
+          },
+          defer: false,
+          compatibility: false,
+          nonce: "2726c7f26c",
+          enabled: true,
+          debug: true,
+          loadScript: true,
+          enableRouterSync: true,
+          ignoredViews: ["homepage"],
+          trackOnNextTick: false,
+          devtools: true,
+        },
       },
     },
   },
