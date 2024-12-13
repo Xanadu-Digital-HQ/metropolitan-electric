@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   ],
   shadcn: {
     /**
-     * Prefix for all the imported component
+     * Prefix for all the imported componen
      */
     prefix: "",
     /**
