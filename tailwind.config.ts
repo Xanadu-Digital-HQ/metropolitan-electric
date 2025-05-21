@@ -80,8 +80,9 @@ module.exports = {
         },
       },
       fontFamily: {
+        monoton: ["Monoton", "inter"],
         noto: ["'Noto Serif'", "nunito", "sans-serif"],
-        main: ["Varela Round", "arial", "sans-serif"],
+        body: ["Poppins", "arial", "sans-serif"],
       },
       fontSize: {
         xxs: "10px",

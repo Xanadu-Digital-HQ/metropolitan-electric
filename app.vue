@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <NavBar class="sticky top-0 bg-white w-full z-30" />
+  <div class="overflow-visible">
+    <NavBar class="fixed top-6 w-full z-30" />
     <NuxtPage :data="cards" :news="posts" :media="mediaItems" />
     <Footer class="p-5" />
   </div>

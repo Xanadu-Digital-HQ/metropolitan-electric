@@ -1,171 +1,59 @@
+<script lang="ts" setup>
+import { PhQuotes } from "@phosphor-icons/vue";
+import { ref, onMounted, onUnmounted } from "vue";
+
+const texts = [
+  "At Metropolitan Electric, we are building an eco-friendly future by redefining transportation. Our electric vehicles offer a cleaner, smarter, and more sustainable way to move.",
+  "Our electric vehicles combine cutting-edge technology with exceptional design, ensuring you experience unmatched performance and driving comfort on every journey.",
+  "Step into our showroom to explore our electric vehicle lineup, engage with our expert team, and discover how sustainable driving can transform your journey.",
+];
+let count = 0;
+const activeText = ref(texts[count]);
+const activeTextKey = ref(`text${count + 1}`);
+let intervalId: ReturnType<typeof setInterval>;
+
+const startTextCycle = () => {
+  intervalId = setInterval(() => {
+    count = (count + 1) % texts.length;
+    activeText.value = texts[count];
+    activeTextKey.value = `text${count + 1}`;
+  }, 5000);
+};
+
+onMounted(() => {
+  startTextCycle();
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
+</script>
+
 <template>
-  <div class="flex flex-col items-center justify-center gap-20">
-    <div
-      class="flex flex-col md:flex-row py-20 justify-between items-center gap-28"
-      :class="container"
-    >
-      <div class="flex flex-1 flex-col gap-y-2.5">
-        <h3
-          v-motion
-          :initial="{ opacity: 1, y: 20 }"
-          :enter="{ opacity: 1, y: 20 }"
-          :visible-once="{ opacity: 1, y: 0 }"
-          :duration="400"
-          :delay="500"
-          class="font-main text-[#1C6220]"
-        >
-          About Us
-        </h3>
-        <h1
-          v-motion
-          :initial="{ opacity: 1, y: 50 }"
-          :enter="{ opacity: 1, y: 50 }"
-          :visible-once="{ opacity: 1, y: 0 }"
-          :duration="400"
-          :delay="500"
-          class="font-main text-2xl lg:text-3xl text-[#113912]"
-        >
-          Leading The Electric Vehicle Revolution
-        </h1>
-        <p
-          v-motion
-          :initial="{ opacity: 1, y: 150 }"
-          :enter="{ opacity: 1, y: 150 }"
-          :visible-once="{ opacity: 1, y: 0 }"
-          :duration="400"
-          :delay="600"
-          class="font-noto text-base lg:text-lg text-[#505050] tracking-wide"
-        >
-          Metropolitan Electric Limited is at the forefront of revolutionizing
-          the Electric Vehicle (EV) industry across Africa. Established in
-          Nigeria, our company is committed to leading the adoption of Electric
-          Vehicles in Nigeria and promoting sustainable mobility throughout the
-          continent. We are dedicated to providing innovative and sustainable
-          transportation solutions tailored for the African market.
-        </p>
-        <NuxtLink
-          v-motion
-          :initial="{ opacity: 1, y: 20 }"
-          :enter="{ opacity: 1, y: 20 }"
-          :visible-once="{ opacity: 1, y: 0 }"
-          :duration="400"
-          :delay="700"
-          to="/"
-          class="font-main text-sm text-[#505050] underline font-semibold hover:no-underline"
-        >
-          Discover Our Story
-        </NuxtLink>
-      </div>
-      <div v-motion-fade-visible-once :duration="1200" class="flex-1">
-        <img src="/sectionImage1.png" alt="Gear Image" />
-      </div>
+  <div
+    class="flex justify-center items-center py-5 px-2.5 sm:px-5 md:px-10 w-full"
+  >
+    <div class="absolute top-0 left-0 size-full bg-white/90 z-10"></div>
+
+    <div class="absolute top-0 left-0 size-full z-0">
+      <img class="object-cover size-full" src="/building.png" alt="building" />
     </div>
 
-    <div class="flex flex-1 flex-col gap-y-2.5 pb-20" :class="container">
-      <h3
-        v-motion
-        :initial="{ opacity: 1, y: 20 }"
-        :enter="{ opacity: 1, y: 20 }"
-        :visible-once="{ opacity: 1, y: 0 }"
-        :duration="400"
-        :delay="500"
-        class="font-main text-[#1C6220]"
-      >
-        Our Core Values
-      </h3>
-      <h1
-        v-motion
-        :initial="{ opacity: 1, y: 50 }"
-        :enter="{ opacity: 1, y: 50 }"
-        :visible-once="{ opacity: 1, y: 0 }"
-        :duration="400"
-        :delay="500"
-        class="font-main text-2xl lg:text-3xl text-[#113912]"
-      >
-        The principles that guide us
-      </h1>
-      <p
-        v-motion
-        :initial="{ opacity: 1, y: 150 }"
-        :enter="{ opacity: 1, y: 150 }"
-        :visible-once="{ opacity: 1, y: 0 }"
-        :duration="400"
-        :delay="600"
-        class="font-noto text-base lg:text-lg text-[#505050] tracking-wide"
-      >
-        At Metropolitan Electric Limited, our core values are encapsulated in
-        the acronym SUSTAIN, reflecting our commitment to sustainability and
-        excellence in all our endeavors.
-      </p>
-
-      <div
-        class="flex flex-wrap gap-y-10 mt-5 justify-center md:justify-around lg:justify-center gap-x-8 md:gap-x-0 lg:gap-x-8"
-      >
-        <div class="flex flex-col gap-10 md:w-4/12 lg:w-3/12">
-          <SectionValuesCard
-            key="Sustainability"
-            title="Sustainability"
-            description="We are dedicated to promoting and implementing sustainable practices in every aspect of our business, from Electric Vehicles (EV) production to service delivery. Our commitment to the environment drives our innovation and operational strategies."
+    <div class="flex flex-col p-0 sm:p-10 z-20 max-w-5xl">
+      <div class="flex gap-2.5 md:gap-5">
+        <PhQuotes
+          class="size-12 md:size-14 lg:size-16 text-primary shrink-0"
+          weight="duotone"
+        />
+        <div class="flex flex-col gap-10">
+          <p
+            :key="activeTextKey"
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center text-primary transition-all duration-200"
           >
-            <IconsSustainability />
-          </SectionValuesCard>
-
-          <SectionValuesCard
-            key="Transparency"
-            title="Transparency"
-            description="We conduct our business with the highest standards of integrity, ensuring transparency, honesty, and fairness in all our dealings with customers, partners, and stakeholders."
-          >
-            <IconsTransparency />
-          </SectionValuesCard>
-        </div>
-
-        <div class="flex flex-col gap-10 md:w-4/12 lg:w-3/12">
-          <SectionValuesCard
-            key="Unity"
-            title="Unity"
-            description="We believe in the power of partnerships and work closely with governments, businesses, and communities to promote the adoption of Electric Vehicles (EV) and sustainable mobility solutions."
-          >
-            <IconsUnity />
-          </SectionValuesCard>
-
-          <SectionValuesCard
-            key="Adaptability"
-            title="Adaptability"
-            description="We are agile and responsive to the dynamic needs of the market. Our ability to adapt quickly to changing circumstances enables us to stay ahead and provide relevant and effective solutions."
-          >
-            <IconsAdaptation />
-          </SectionValuesCard>
-          <SectionValuesCard
-            key="Nurturing"
-            title="Nurturing"
-            description="Our customers are at the heart of everything we do. We are committed to understanding their needs and delivering exceptional service and products that exceed their expectations."
-          >
-            <IconsNurturing />
-          </SectionValuesCard>
-        </div>
-
-        <div class="flex flex-col gap-10 md:w-4/12 lg:w-3/12">
-          <SectionValuesCard
-            key="Safety"
-            title="Safety"
-            description="Safety is a top priority in all our operations. We ensure that our Electric Vehicles (EV) and services meet the highest safety standards to protect our customers and the communities we serve."
-          >
-            <IconsSafety />
-          </SectionValuesCard>
-
-          <SectionValuesCard
-            key="Innovation"
-            title="Innovation"
-            description="We believe in continuous improvement and embrace cutting-edge technologies to provide state-of-the-art Electric Vehicles (EV) solutions. Our goal is to lead the market with forward-thinking ideas and advanced mobility solutions."
-          >
-            <IconsInnovation />
-          </SectionValuesCard>
+            {{ activeText }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-const { container } = useTailwindConfig();
-</script>

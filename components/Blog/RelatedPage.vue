@@ -1,6 +1,33 @@
+<script lang="ts" setup>
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/vue/20/solid";
+const route = useRoute();
+
+const { transition } = useTailwindConfig();
+
+const { data: list } = await useAsyncData(route.path, () => {
+  return queryCollection("content").path("/blog").limit(10).all();
+});
+
+const scrollContainer = ref<HTMLDivElement | null>(null);
+
+const scrollRight = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollBy({ left: 400, behavior: "smooth" });
+  }
+};
+
+const scrollLeft = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollBy({ left: -400, behavior: "smooth" });
+  }
+};
+</script>
 <template>
   <div class="py-20 space-y-10">
-    <div class="relative flex flex-col justify-center w-full gap-y-10">
+    <div
+      v-if="list"
+      class="relative flex flex-col justify-center w-full gap-y-10"
+    >
       <button
         @click="scrollLeft"
         class="group absolute -left-8 active:outline outline-[#1c6220] rounded-2xl hidden [@media(min-width:800px)]:inline"
@@ -26,15 +53,14 @@
         ref="scrollContainer"
         class="blog-container-scroll flex gap-5 overflow-x-auto"
       >
-        <ContentRenderer :value="list">
+        <ContentRenderer v-for="blog in list" :value="blog">
           <BlogItem
-            v-for="blog in list"
             :key="blog.id"
             class="min-w-[310px] max-w-[310px]"
             :title="blog.title!"
             :description="blog.description"
             :content="blog.content"
-            :slug="blog._path!"
+            :slug="blog.path!"
             :image="blog.image"
             :tags="blog.tags"
             :date="blog.date"
@@ -46,27 +72,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/vue/20/solid";
-
-const { transition } = useTailwindConfig();
-
-const list = await queryContent("blog").limit(10).find();
-
-const scrollContainer = ref<HTMLDivElement | null>(null);
-
-const scrollRight = () => {
-  if (scrollContainer.value) {
-    scrollContainer.value.scrollBy({ left: 400, behavior: "smooth" });
-  }
-};
-
-const scrollLeft = () => {
-  if (scrollContainer.value) {
-    scrollContainer.value.scrollBy({ left: -400, behavior: "smooth" });
-  }
-};
-</script>
 <style scoped>
 body::-webkit-scrollbar {
   display: none;

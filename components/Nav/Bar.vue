@@ -1,24 +1,38 @@
+<script lang="ts" setup>
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/solid";
+const { container } = useTailwindConfig();
+const menuToggled = ref(false);
+</script>
+
 <template>
-  <div class="bg-white">
-    <div class="relative" :class="container">
-      <div
-        class="flex justify-between bg-white items-center z-20 h-full p-4 md:px-0"
-      >
-        <NuxtLink to="/" aria-label="Navigate to Home Page">
-          <img class="h-10" src="/logo.svg" alt="Metropolitan Logo" />
-        </NuxtLink>
-        <div class="hidden lg:flex gap-5 items-center">
-          <NavLink to-url="/">Home</NavLink>
-          <NavLink to-url="/#about">About</NavLink>
-          <NavLink to-url="/#services">Services</NavLink>
-          <NavLink to-url="/#index">Sustainability</NavLink>
-          <NavLink to-url="/media-center">Media Center</NavLink>
-          <NavLink to-url="/blog">Blog</NavLink>
-          <NuxtLink
-            to="/#contact"
-            class="relative z-10 py-2.5 px-7 font-medium font-main border-2 border-brand hover:bg-brand hover:border-brand hover:text-white focus:bg-accent transition-all duration-200 before:absolute before:content-[''] before:top-0 before:left-0 before:right-0 before:bottom-0 focus:before:border-2 focus:text-white before:border-accent before:rounded-md before:-z-10 focus:before:-top-1.5 focus:before:-right-1.5 focus:before:-left-1.5 focus:before:-bottom-1.5"
-            >Contact</NuxtLink
-          >
+  <div class="py-2.5 px-5">
+    <div
+      class="relative bg-accent/40 md:max-w-xl backdrop-blur-sm mx-auto rounded-full"
+    >
+      <div class="flex justify-center items-center z-20 h-full p-4 md:px-0">
+        <div class="flex gap-20 items-center">
+          <div class="flex items-center gap-8">
+            <NavLink to-url="/">Home</NavLink>
+            <NavLink class="flex items-center">
+              <span> Explore</span>
+            </NavLink>
+          </div>
+          <NuxtLink to="/" aria-label="Navigate to Home Page">
+            <img
+              class="h-8 aspect-square"
+              src="/wheel.svg"
+              alt="Metropolitan Logo"
+            />
+          </NuxtLink>
+
+          <div class="flex items-center gap-8">
+            <NavLink to-url="/#index">Other</NavLink>
+            <NuxtLink
+              to="/#contact"
+              class="relative z-10 py-2.5 px-7 font-medium font-main bg-accent text-white rounded-full transition duration-200 hover:bg-primary/80"
+              >Contact</NuxtLink
+            >
+          </div>
         </div>
         <div class="inline lg:hidden z-10">
           <transition mode="out-in" name="buttonSwap">
@@ -98,12 +112,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/solid";
-const { container } = useTailwindConfig();
-const menuToggled = ref(false);
-</script>
 
 <style scoped>
 .menu-enter-active {

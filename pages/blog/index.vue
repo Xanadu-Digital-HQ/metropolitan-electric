@@ -1,3 +1,67 @@
+<script lang="ts" setup>
+import { ArrowUpRightIcon } from "@heroicons/vue/20/solid";
+import { CalendarDaysIcon } from "@heroicons/vue/24/outline";
+
+const { container } = useTailwindConfig();
+
+const tags = [
+  "All",
+  "Electric Vehicles",
+  "EV Maintenance",
+  "Zero Emissions",
+  "Electric Buses",
+  "Charging Stations",
+  "Renewable Energy",
+  "Sustainability",
+  "Technology",
+  "Nigeria",
+];
+
+const filteredBlogs = ref();
+const loadingBlogs = ref(false);
+const activeTag = ref("All");
+const items: Ref<Record<string, any>[]> = ref([]);
+
+const filterBlogs = async (tag: string) => {
+  loadingBlogs.value = true;
+  filteredBlogs.value = null;
+
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  const { data } = await useAsyncData("filtered-blogs", async () => {
+    items.value = queryCollection("blog").all();
+    if (tag === "All") {
+      return items.value;
+    } else {
+      return items.value.filter((item: object) => item.tags?.includes(tag));
+    }
+  });
+
+  filteredBlogs.value = data.value;
+  loadingBlogs.value = false;
+};
+
+const filter = (tag: string) => {
+  activeTag.value = tag;
+  filterBlogs(activeTag.value);
+};
+
+onMounted(() => {
+  filterBlogs("All");
+});
+
+useSeoMeta({
+  title: "Blogs & Articles",
+  ogTitle: "Blogs & Articles",
+  description:
+    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+  ogDescription:
+    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+  ogImage: "https://metropolitanelectricng.com/logo.svg",
+  twitterCard: "summary_large_image",
+});
+</script>
+
 <template>
   <div :class="container" class="py-20 space-y-20">
     <div class="space-y-10">
@@ -9,10 +73,10 @@
       </div>
 
       <div class="flex flex-col gap-2.5">
-        <ContentList path="/blog" v-slot="{ list: blogs }">
+        <ContentRenderer v-if="blogs" path="/blog" :value="blogs">
           <div class="relative flex flex-col h-[500px] w-full justify-end">
             <NuxtLink
-              :to="blogs[blogs.length - 1]._path"
+              :to="blogs[blogs.length - 1].path"
               class="group relative flex flex-col h-[500px] w-full"
             >
               <div class="relative flex overflow-clip h-full items-end">
@@ -91,7 +155,7 @@
               </div>
             </NuxtLink>
           </div>
-        </ContentList>
+        </ContentRenderer>
       </div>
     </div>
 
@@ -115,24 +179,20 @@
 
       <div class="flex justify-center items-center min-h-[700px] md:min-h-96">
         <div v-if="filteredBlogs" class="flex flex-wrap size-full">
-          <ContentRenderer
+          <BlogItem
             v-if="filteredBlogs.length > 0"
-            :value="filteredBlogs"
-            path="/blog"
-          >
-            <BlogItem
-              v-for="blog in filteredBlogs.slice(0).reverse()"
-              :key="blog.id"
-              :title="blog.title!"
-              :description="blog.description"
-              :content="blog.content"
-              :slug="blog._path!"
-              :image="blog.image"
-              :tags="blog.tags"
-              :date="blog.date"
-              :minutes-read="blog.minutesRead"
-            />
-          </ContentRenderer>
+            v-for="blog in filteredBlogs.slice(0).reverse()"
+            :key="blog.id"
+            :title="blog.title!"
+            :description="blog.description"
+            :content="blog.content"
+            :slug="blog._path!"
+            :image="blog.image"
+            :tags="blog.tags"
+            :date="blog.date"
+            :minutes-read="blog.minutesRead"
+            class="cursor-pointer"
+          />
 
           <div v-else class="flex size-full justify-center items-center">
             <p class="text-brand text-lg md:text-xl">No Blogs Found</p>
@@ -149,70 +209,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ArrowUpRightIcon } from "@heroicons/vue/20/solid";
-import { CalendarDaysIcon } from "@heroicons/vue/24/outline";
-
-const { container } = useTailwindConfig();
-
-const filteredBlogs = ref();
-const loadingBlogs = ref(false);
-const activeTag = ref("All");
-
-const filterBlogs = async (tag: string) => {
-  loadingBlogs.value = true;
-  filteredBlogs.value = null;
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const { data } = await useAsyncData("filtered-blogs", async () => {
-    if (tag === "All") {
-      return queryContent("/blog").find();
-    } else {
-      return queryContent("/blog")
-        .where({
-          tags: { $contains: tag },
-        })
-        .find();
-    }
-  });
-
-  filteredBlogs.value = data.value;
-  loadingBlogs.value = false;
-};
-
-const filter = (tag: string) => {
-  activeTag.value = tag;
-  filterBlogs(activeTag.value);
-};
-
-onMounted(() => {
-  filterBlogs("All");
-});
-
-const tags = [
-  "All",
-  "Electric Vehicles",
-  "EV Maintenance",
-  "Zero Emissions",
-  "Electric Buses",
-  "Charging Stations",
-  "Renewable Energy",
-  "Sustainability",
-  "Technology",
-  "Nigeria",
-];
-
-useSeoMeta({
-  title: "Blogs & Articles",
-  ogTitle: "Blogs & Articles",
-  description:
-    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
-  ogDescription:
-    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
-  ogImage: "https://metropolitanelectricng.com/logo.svg",
-  twitterCard: "summary_large_image",
-});
-</script>
 <style scoped>
 body::-webkit-scrollbar {
   display: none;

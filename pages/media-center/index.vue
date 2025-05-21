@@ -1,3 +1,82 @@
+<script lang="ts" setup>
+import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/vue/20/solid";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Autoplay, Navigation } from "swiper/modules";
+import type { Media } from "~/types/types";
+
+const { container } = useTailwindConfig();
+const isLoading = ref(false);
+const progressCircle = ref();
+const progressContent = ref<HTMLElement | null>(null);
+const loadMoreActive = ref(false);
+const gallerySize = ref(1020);
+const gallerySizeIncrement = ref();
+
+let windowWidth = 0;
+const numberOfGalleryItems = ref(0);
+
+onMounted(() => {
+  windowWidth = window.innerWidth;
+  gallerySizeIncrement.value = Size.value;
+  updateGalleryItemCount();
+});
+
+const itemsPerPage = computed(() => {
+  return windowWidth <= 768 ? 2 : 3;
+});
+const Size = computed(() => {
+  return windowWidth <= 768 ? 510 : 1020;
+});
+
+const props = defineProps<{ media: Media[] }>();
+
+const updateGalleryItemCount = () => {
+  numberOfGalleryItems.value = itemsPerPage.value;
+  if (numberOfGalleryItems.value >= props.media.length) {
+    loadMoreActive.value = false;
+  } else {
+    loadMoreActive.value = true;
+  }
+};
+
+const onAutoplayTimeLeft = (s: any, time: number, progress: any) => {
+  if (progressCircle.value) {
+    progressCircle.value.style.setProperty("--progress", 1 - progress);
+  }
+  if (progressContent.value) {
+    progressContent.value.textContent = `${Math.ceil(time / 1000)}s`;
+  }
+};
+
+useSeoMeta({
+  title: "Media Center",
+  ogTitle: "Media Center",
+  description:
+    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+  ogDescription:
+    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+  ogImage: "https://metropolitanelectricng.com/logo.svg",
+  twitterCard: "summary_large_image",
+});
+
+const loadMore = () => {
+  isLoading.value = true;
+  setTimeout(() => {
+    if (numberOfGalleryItems.value >= props.media.length) {
+      loadMoreActive.value = false;
+    } else {
+      gallerySize.value += gallerySizeIncrement.value;
+      numberOfGalleryItems.value =
+        numberOfGalleryItems.value + itemsPerPage.value;
+      if (numberOfGalleryItems.value >= props.media.length) {
+        loadMoreActive.value = false;
+      }
+    }
+    isLoading.value = false;
+  }, 500);
+};
+</script>
+
 <template>
   <div :class="container" class="py-20 space-y-20">
     <div class="space-y-10">
@@ -49,7 +128,7 @@
           />
           <div class="flex w-full">
             <Swiper
-              :modules="[SwiperAutoplay, SwiperNavigation]"
+              :modules="[Autoplay, Navigation]"
               class="size-full"
               :direction="'horizontal'"
               :space-between="0"
@@ -138,85 +217,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/vue/20/solid";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { SwiperAutoplay, SwiperNavigation } from "#imports";
-import type { Media } from "~/types/types";
-
-const { container } = useTailwindConfig();
-const isLoading = ref(false);
-const progressCircle = ref();
-const progressContent = ref<HTMLElement | null>(null);
-const loadMoreActive = ref(false);
-const gallerySize = ref(1020);
-const gallerySizeIncrement = ref();
-
-let windowWidth = 0;
-const numberOfGalleryItems = ref(0);
-
-onMounted(() => {
-  windowWidth = window.innerWidth;
-  gallerySizeIncrement.value = Size.value;
-  updateGalleryItemCount();
-});
-
-const itemsPerPage = computed(() => {
-  return windowWidth <= 768 ? 2 : 3;
-});
-const Size = computed(() => {
-  return windowWidth <= 768 ? 510 : 1020;
-});
-
-const props = defineProps<{ media: Media[] }>();
-
-const updateGalleryItemCount = () => {
-  numberOfGalleryItems.value = itemsPerPage.value;
-  if (numberOfGalleryItems.value >= props.media.length) {
-    loadMoreActive.value = false;
-  } else {
-    loadMoreActive.value = true;
-  }
-};
-
-const onAutoplayTimeLeft = (s: any, time: number, progress: any) => {
-  if (progressCircle.value) {
-    progressCircle.value.style.setProperty("--progress", 1 - progress);
-  }
-  if (progressContent.value) {
-    progressContent.value.textContent = `${Math.ceil(time / 1000)}s`;
-  }
-};
-
-useSeoMeta({
-  title: "Media Center",
-  ogTitle: "Media Center",
-  description:
-    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
-  ogDescription:
-    "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
-  ogImage: "https://metropolitanelectricng.com/logo.svg",
-  twitterCard: "summary_large_image",
-});
-
-const loadMore = () => {
-  isLoading.value = true;
-  setTimeout(() => {
-    if (numberOfGalleryItems.value >= props.media.length) {
-      loadMoreActive.value = false;
-    } else {
-      gallerySize.value += gallerySizeIncrement.value;
-      numberOfGalleryItems.value =
-        numberOfGalleryItems.value + itemsPerPage.value;
-      if (numberOfGalleryItems.value >= props.media.length) {
-        loadMoreActive.value = false;
-      }
-    }
-    isLoading.value = false;
-  }, 500);
-};
-</script>
 
 <style>
 .autoplay-progress {

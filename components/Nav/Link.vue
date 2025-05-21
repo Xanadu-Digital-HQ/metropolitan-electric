@@ -2,8 +2,7 @@
   <span>
     <NuxtLink
       style="font-family: 'Noto Serif'"
-      exact-active-class="relative border-b border-b-2 border-b-[#1C6220]"
-      :class="navLinkStyle"
+      :class="[navLinkStyle]"
       :to="toUrl"
       ><slot />
     </NuxtLink>
@@ -15,7 +14,7 @@ const { navLinkStyle } = useTailwindConfig();
 const props = defineProps({
   toUrl: {
     type: String,
-    require: true,
+    require: false,
   },
 });
 </script>
