@@ -16,7 +16,7 @@
         >
           About Us
         </h3>
-        <p
+        <h1
           v-motion
           :initial="{ opacity: 1, y: 50 }"
           :enter="{ opacity: 1, y: 50 }"
@@ -26,7 +26,7 @@
           class="font-main text-2xl lg:text-3xl text-[#113912]"
         >
           Leading The Electric Vehicle Revolution
-        </p>
+        </h1>
         <p
           v-motion
           :initial="{ opacity: 1, y: 150 }"
@@ -73,7 +73,7 @@
       >
         Our Core Values
       </h3>
-      <p
+      <h1
         v-motion
         :initial="{ opacity: 1, y: 50 }"
         :enter="{ opacity: 1, y: 50 }"
@@ -83,7 +83,7 @@
         class="font-main text-2xl lg:text-3xl text-[#113912]"
       >
         The principles that guide us
-      </p>
+      </h1>
       <p
         v-motion
         :initial="{ opacity: 1, y: 150 }"

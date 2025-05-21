@@ -198,6 +198,7 @@ const tags = [
   "Charging Stations",
   "Renewable Energy",
   "Sustainability",
+  "Technology",
   "Nigeria",
 ];
 

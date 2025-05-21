@@ -16,7 +16,7 @@
         >
           Contact Us
         </h3>
-        <p
+        <h1
           v-motion
           :initial="{ opacity: 1, y: 50 }"
           :enter="{ opacity: 1, y: 50 }"
@@ -26,7 +26,7 @@
           class="font-main text-2xl lg:text-3xl text-[#113912]"
         >
           Get In Touch
-        </p>
+        </h1>
         <p
           v-motion
           :initial="{ opacity: 1, y: 150 }"
