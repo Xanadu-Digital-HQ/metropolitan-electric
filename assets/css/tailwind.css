@@ -76,3 +76,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* s@layer base {
+  body{
+    font-family: Arial, Helvetica, V sans-serif;
+  }
+} */
