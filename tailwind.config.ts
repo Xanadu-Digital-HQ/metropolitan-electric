@@ -84,6 +84,8 @@ module.exports = {
         noto: ["'Noto Serif'", "nunito", "sans-serif"],
         varela: ["Varela Round", "sans-serif"],
         opensans: ["Open Sans", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        sora: ["Sora", "sans-serif"],
       },
       fontSize: {
         xxs: "10px",
