@@ -6,7 +6,6 @@
         :class="container"
       >
         <div
-          v-motion-fade-visible-once
           :duration="1200"
           class="rounded-xl overflow-clip w-full h-fit md:w-80 md:h-[435px]"
         >
@@ -18,7 +17,6 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <div
-            v-motion
             :initial="{ opacity: 1, y: 20 }"
             :enter="{ opacity: 1, y: 20 }"
             :visible-once="{ opacity: 1, y: 0 }"

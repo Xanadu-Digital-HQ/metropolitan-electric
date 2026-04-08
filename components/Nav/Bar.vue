@@ -1,63 +1,65 @@
 <script lang="ts" setup>
-import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/solid";
-const { container } = useTailwindConfig();
+import { routes } from "~/utils/routes";
+import { PhList, PhX } from "@phosphor-icons/vue";
 const menuToggled = ref(false);
 </script>
 
 <template>
-  <div class="py-2.5 px-5">
-    <div
-      class="relative bg-accent/40 md:max-w-xl backdrop-blur-sm mx-auto rounded-full"
+  <header class="py-2.5 px-5">
+    <nav
+      class="group/overall relative bg-accent/40 hover:bg-accent sm:max-w-xl md:max-w-2xl h-fit backdrop-blur-sm mx-auto transition-all duration-300"
+      :style="{
+        borderRadius: menuToggled ? '1.5rem' : '9999px',
+        transition: 'all 0.5s ease',
+      }"
     >
-      <div class="flex justify-center items-center z-20 h-full p-4 md:px-0">
-        <div class="flex gap-20 items-center">
-          <div class="flex items-center gap-8">
-            <NavLink to-url="/">Home</NavLink>
-            <NavLink class="flex items-center">
-              <span> Explore</span>
-            </NavLink>
-          </div>
-          <NuxtLink to="/" aria-label="Navigate to Home Page">
+      <div
+        class="flex justify-center items-center z-20 h-full p-4 sm:px-6 md:px-12 w-full"
+      >
+        <div class="hidden sm:flex justify-between items-center gap-8 w-full">
+          <NavLink
+            v-for="(route, index) in routes"
+            :key="route.name"
+            :class="`order-${index < 2 ? index : index + 1}`"
+            :item="route"
+          />
+          <NuxtLink
+            to="/"
+            class="order-2 mx-4"
+            aria-label="Navigate to Home Page"
+          >
             <img
               class="h-8 aspect-square"
               src="/wheel.svg"
               alt="Metropolitan Logo"
             />
           </NuxtLink>
-
-          <div class="flex items-center gap-8">
-            <NavLink to-url="/#index">Other</NavLink>
-            <NuxtLink
-              to="/#contact"
-              class="relative z-10 py-2.5 px-7 font-medium font-main bg-accent text-white rounded-full transition duration-200 hover:bg-primary/80"
-              >Contact</NuxtLink
-            >
-          </div>
         </div>
-        <div class="inline lg:hidden z-10">
+
+        <div class="inline sm:hidden z-10">
           <transition mode="out-in" name="buttonSwap">
             <button
               v-if="!menuToggled"
               class="outline-white active:outline rounded-md outline-2 p-0.5 z-20"
               @click="menuToggled = !menuToggled"
             >
-              <Bars3Icon class="w-6 h-6" />
+              <PhList class="w-6 h-6 text-white" />
             </button>
             <button
               v-else
               class="outline-white active:outline rounded-md outline-2 p-0.5 z-20"
               @click="menuToggled = !menuToggled"
             >
-              <XMarkIcon class="w-6 h-6 ttext-[#1C6220]" />
+              <PhX class="w-6 h-6 text-[#1C6220]" />
             </button>
           </transition>
         </div>
       </div>
+
+      <!-- Mobile Nav -->
+
       <Transition mode="in-out" name="menu">
-        <div
-          v-if="menuToggled"
-          class="absolute lg:hidden h-fit bg-white/95 right-0 w-full top-0 backdrop-blur-sm -z-50 p-4"
-        >
+        <div v-if="menuToggled" :class="['relative lg:hidden  w-full p-4']">
           <div class="flex flex-col w-full pt-24 pb-10 text-right items-center">
             <NuxtLink
               to="/"
@@ -109,19 +111,11 @@ const menuToggled = ref(false);
           </div>
         </div>
       </Transition>
-    </div>
-  </div>
+    </nav>
+  </header>
 </template>
 
 <style scoped>
-.menu-enter-active {
-  animation: slide-in 0.25s ease-in-out 0s 1 normal;
-}
-
-.menu-leave-active {
-  animation: slide-out 0.25s ease-in-out 0s 1 normal none;
-}
-
 .buttonSwap-enter-active {
   animation: scale-small 0.25s ease 0s 1 normal none;
 }
@@ -130,30 +124,37 @@ const menuToggled = ref(false);
   animation: scale-large 0.25s ease 0s 1 normal none;
 }
 
+.nav-menu-enter-active,
+.nav-menu-leave-active {
+  overflow: hidden;
+}
+
+.nav-menu-enter-active {
+  animation: slide-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-menu-leave-active {
+  animation: slide-out 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 @keyframes slide-in {
   0% {
-    transform: translateY(-100%);
-    transform-origin: top;
+    height: 0;
     opacity: 1;
   }
-
   100% {
-    transform: translateY(0%);
-    transform-origin: top;
+    height: 304px;
     opacity: 1;
   }
 }
 
 @keyframes slide-out {
   0% {
-    transform: translateY(0%);
-    transform-origin: top;
+    height: 304px;
     opacity: 1;
   }
-
   100% {
-    transform: translateY(-100%);
-    transform-origin: top;
+    height: 0;
     opacity: 1;
   }
 }

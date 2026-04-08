@@ -6,7 +6,6 @@
     >
       <div class="flex flex-1 flex-col gap-y-2.5">
         <h3
-          v-motion
           :initial="{ opacity: 1, y: 20 }"
           :enter="{ opacity: 1, y: 20 }"
           :visible-once="{ opacity: 1, y: 0 }"
@@ -17,7 +16,6 @@
           Contact Us
         </h3>
         <h1
-          v-motion
           :initial="{ opacity: 1, y: 50 }"
           :enter="{ opacity: 1, y: 50 }"
           :visible-once="{ opacity: 1, y: 0 }"
@@ -28,7 +26,6 @@
           Get In Touch
         </h1>
         <p
-          v-motion
           :initial="{ opacity: 1, y: 150 }"
           :enter="{ opacity: 1, y: 150 }"
           :visible-once="{ opacity: 1, y: 0 }"
@@ -45,7 +42,6 @@
           ref="form"
           method="post"
           @submit.prevent="sendEmail"
-          v-motion-slide-visible-once-bottom
           :duration="400"
           :delay="600"
           class="mt-2.5"
@@ -109,7 +105,7 @@
             </label>
             <div class="flex items-start gap-2.5">
               <input
-                v-model="checkBox"
+                del="checkBox"
                 type="checkbox"
                 name="checkbox"
                 class="relative appearance-none border-2 checked:bg-[#1C6220] focus:outline-none focus:border-green-500 focus:ring-green-500 block w-6 h-5 before:absolute before:content-[''] before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:w-1.5 before:h-2.5 before:border-r-2 before:border-b-2 before:border-white"

@@ -11,7 +11,6 @@
       ></iframe>
     </div>
     <div
-      v-motion-slide-visible-once-bottom
       :duration="400"
       :delay="600"
       class="flex flex-col relative p-5 sm:p-10 gap-y-8"

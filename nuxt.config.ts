@@ -1,5 +1,8 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  css: ["~/assets/css/tailwind.css"],
   nitro: {
     prerender: {
       routes: ["/"],
@@ -51,17 +54,10 @@ export default defineNuxtConfig({
     },
     pageTransition: { name: "page", mode: "out-in" },
   },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
-    "@vueuse/motion/nuxt",
-    "@nuxtjs/seo",
-    "@nuxt/content",
-    "@nuxt/scripts",
-    "@nuxt/image",
-    "nuxt-swiper",
-    "shadcn-nuxt",
-  ],
+  modules: ["@nuxtjs/color-mode", "motion-v/nuxt", "@nuxtjs/seo", "@nuxt/content", "@nuxt/scripts", "@nuxt/image", "nuxt-swiper", "shadcn-nuxt", "nuxt-og-image"],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   shadcn: {
     /**
      * Prefix for all the imported componen

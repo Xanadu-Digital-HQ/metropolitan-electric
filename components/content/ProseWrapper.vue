@@ -4,8 +4,12 @@
   </div>
 </template>
 
-<style lang="postcss">
+<style>
 .prose {
-  @apply text-gray-900 dark:text-gray-100;
+  color: rgb(17 24 39);
+}
+
+.dark .prose {
+  color: rgb(243 244 246);
 }
 </style>

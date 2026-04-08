@@ -3,7 +3,6 @@
     <div :class="container">
       <div class="flex flex-1 flex-col gap-y-2.5">
         <h3
-          v-motion
           :initial="{ opacity: 1, y: 20 }"
           :enter="{ opacity: 1, y: 20 }"
           :visible-once="{ opacity: 1, y: 0 }"
@@ -14,7 +13,6 @@
           FAQ
         </h3>
         <h1
-          v-motion
           :initial="{ opacity: 1, y: 50 }"
           :enter="{ opacity: 1, y: 50 }"
           :visible-once="{ opacity: 1, y: 0 }"

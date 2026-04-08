@@ -2,7 +2,6 @@
   <div :class="container">
     <div class="flex flex-col gap-2.5 py-24 px-10 sm:px-20 md:px-36">
       <div
-        v-motion
         :initial="{ opacity: 1, y: 20 }"
         :enter="{ opacity: 1, y: 20 }"
         :visible-once="{ opacity: 1, y: 0 }"
@@ -14,7 +13,6 @@
         <p class="text-[#1C6220]">Intake Form</p>
       </div>
       <p
-        v-motion
         :initial="{ opacity: 1, y: 50 }"
         :enter="{ opacity: 1, y: 50 }"
         :visible-once="{ opacity: 1, y: 0 }"
@@ -25,7 +23,6 @@
         Help Us Serve You Better
       </p>
       <p
-        v-motion
         :initial="{ opacity: 1, y: 150 }"
         :enter="{ opacity: 1, y: 150 }"
         :visible-once="{ opacity: 1, y: 0 }"
@@ -39,7 +36,6 @@
         ref="feedbackForm"
         method="post"
         @submit.prevent="sendEmail"
-        v-motion-slide-visible-once-bottom
         :duration="400"
         :delay="600"
         class="flex flex-col gap-y-4 py-6"
