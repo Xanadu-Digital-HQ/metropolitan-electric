@@ -28,7 +28,7 @@
           >
             <div
               ref="vehicleDeck"
-              class="relative flex w-full max-w-7xl items-end justify-center gap-3 sm:gap-4 lg:gap-6 [perspective:1600px]"
+              class="relative flex w-full max-w-7xl items-end justify-center gap-3 sm:gap-4 lg:gap-6 perspective-[1600px]"
             >
               <div
                 v-for="vehicle in vehicles"
@@ -70,8 +70,7 @@
 
 <script lang="ts" setup>
 import gsap from 'gsap';
-import { Observer } from 'gsap/Observer';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { Observer, ScrollToPlugin } from 'gsap/all';
 import type { Card } from '~/types/types.js';
 
 defineProps<{ data: Card[] }>();
@@ -101,6 +100,10 @@ const contentStack = ref<HTMLElement | null>(null);
 
 let mm: gsap.MatchMedia | null = null;
 let removeHeroWheelSnap: (() => void) | null = null;
+const phaseTransitionDuration = 2.2;
+const wheelIntentCooldown = 180;
+const queuedPhaseHandoffProgress = 0.58;
+type PhaseIndex = 0 | 1 | 2;
 
 const vehicles = [
   {
@@ -134,11 +137,22 @@ onMounted(async () => {
   mm = gsap.matchMedia();
 
   mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const page = pageRoot.value;
+
+    if (!page) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
-      let activePhase = 0;
+      let activePhase: PhaseIndex = 0;
+      let targetPhase: PhaseIndex = 0;
+      let queuedPhase: PhaseIndex | null = null;
       let isTransitioning = false;
+      let currentScrollTween: gsap.core.Tween | null = null;
+      let currentPhaseTween: gsap.core.Tween | null = null;
+      let ignoreWheelUntil = 0;
 
       gsap.set(contentStack.value, { y: 160 });
       gsap.set(heroShowcase.value, { autoAlpha: 0 });
@@ -158,51 +172,68 @@ onMounted(async () => {
         ease: 'power3.out',
       });
 
-      const masterTimeline = gsap.timeline({ paused: true, defaults: { ease: 'power3.inOut' } });
+      const masterTimeline = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut' } });
 
       masterTimeline.addLabel('phase0', 0);
       masterTimeline
-        .to(heroOverlay.value, { opacity: 0.08 }, 0)
-        .to(heroIntro.value, { autoAlpha: 0, yPercent: -12 }, 0)
-        .to(heroShowcase.value, { autoAlpha: 1, duration: 0.35 }, 0.15)
+        .to(heroOverlay.value, { opacity: 0.08, duration: 1.8 }, 0)
+        .to(heroIntro.value, { autoAlpha: 0, yPercent: -12, duration: 1.75 }, 0)
+        .to(heroShowcase.value, { autoAlpha: 1, duration: 1.2 }, 0.78)
         .to(cards, {
           autoAlpha: 1,
           yPercent: 0,
           rotationY: 0,
           rotation: 0,
           scale: 1,
-          duration: 0.45,
-          stagger: 0.06,
-        }, 0.15)
-        .to(cards[0], { xPercent: -6, z: -40, duration: 0.45 }, 0.15)
-        .to(cards[1], { yPercent: -4, z: 80, scale: 1.04, duration: 0.45 }, 0.15)
-        .to(cards[2], { xPercent: 6, z: -40, duration: 0.45 }, 0.15)
-        .to(heroButton.value, { autoAlpha: 1, y: 0, duration: 0.32 }, 0.32)
-        .addLabel('phase1', 1.05)
-        .to(heroBackdrop.value, { scale: 1.18, yPercent: 8, duration: 0.65 }, 'phase1')
-        .to(heroShowcase.value, { autoAlpha: 0.32, yPercent: -10, duration: 0.55 }, 'phase1')
-        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.35 }, 'phase1')
-        .to(contentStack.value, { y: 0, duration: 0.6 }, 'phase1+=0.08');
+          duration: 1.8,
+          stagger: 0.22,
+        }, 0.95)
+        .to(heroButton.value, { autoAlpha: 1, y: 0, duration: 1.15 }, 1.75)
+        .addLabel('phase1', 2.95)
+        .to(heroBackdrop.value, { scale: 1.18, yPercent: 8, duration: 1.4 }, 'phase1')
+        .to(heroShowcase.value, { autoAlpha: 0.32, yPercent: -10, duration: 1.3 }, 'phase1')
+        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.95 }, 'phase1')
+        .to(contentStack.value, { y: 0, duration: 1.3 }, 'phase1+=0.22');
 
       if (cards[0]) {
-        masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 0.6 }, 'phase1');
+        masterTimeline.to(cards[0], { xPercent: -6, z: -40, duration: 1.8 }, 0.95);
       }
 
       if (cards[1]) {
-        masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 0.6 }, 'phase1');
+        masterTimeline.to(cards[1], { yPercent: -4, z: 80, scale: 1.04, duration: 1.8 }, 0.95);
       }
 
       if (cards[2]) {
-        masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 0.6 }, 'phase1');
+        masterTimeline.to(cards[2], { xPercent: 6, z: -40, duration: 1.8 }, 0.95);
+      }
+
+      if (cards[0]) {
+        masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 1.35 }, 'phase1');
+      }
+
+      if (cards[1]) {
+        masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 1.35 }, 'phase1');
+      }
+
+      if (cards[2]) {
+        masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 1.35 }, 'phase1');
       }
 
       masterTimeline.addLabel('phase2');
 
-      const phaseLabels = ['phase0', 'phase1', 'phase2'] as const;
-      const phaseOffsets = [0, 0.38, 1];
+      const phaseLabels: Record<PhaseIndex, 'phase0' | 'phase1' | 'phase2'> = {
+        0: 'phase0',
+        1: 'phase1',
+        2: 'phase2',
+      };
+      const phaseOffsets: Record<PhaseIndex, number> = {
+        0: 0,
+        1: 0.38,
+        2: 1,
+      };
 
-      const goToPhase = (nextPhase: number) => {
-        if (!heroSection.value || nextPhase === activePhase || isTransitioning) {
+      const goToPhase = (nextPhase: PhaseIndex) => {
+        if (!heroSection.value || nextPhase === targetPhase) {
           return;
         }
 
@@ -216,27 +247,83 @@ onMounted(async () => {
 
         const targetY = heroStart + (totalDistance * phaseOffsets[nextPhase]);
         const targetLabel = phaseLabels[nextPhase];
+        const targetTime = masterTimeline.labels[targetLabel];
+        let handedOffToQueuedPhase = false;
+
+        if (typeof targetTime !== 'number') {
+          return;
+        }
 
         isTransitioning = true;
+        targetPhase = nextPhase;
+        ignoreWheelUntil = Date.now() + wheelIntentCooldown;
+        currentScrollTween?.kill();
+        currentPhaseTween?.kill();
 
-        const syncScroll = gsap.to(window, {
+        currentScrollTween = gsap.to(window, {
           scrollTo: targetY,
-          duration: 0.7,
-          ease: 'power3.inOut',
+          duration: phaseTransitionDuration,
+          ease: 'power2.out',
           overwrite: true,
         });
 
-        gsap.to(masterTimeline, {
-          time: masterTimeline.labels[targetLabel],
-          duration: 0.7,
-          ease: 'power3.inOut',
+        currentPhaseTween = gsap.to(masterTimeline, {
+          time: targetTime,
+          duration: phaseTransitionDuration,
+          ease: 'power2.out',
           overwrite: true,
-          onComplete: () => {
+          onUpdate: () => {
+            const progress = currentPhaseTween?.progress() ?? 0;
+
+            if (
+              handedOffToQueuedPhase ||
+              queuedPhase === null ||
+              queuedPhase === nextPhase ||
+              progress < queuedPhaseHandoffProgress
+            ) {
+              return;
+            }
+
+            handedOffToQueuedPhase = true;
+
+            const nextQueuedPhase = queuedPhase;
+            queuedPhase = null;
             activePhase = nextPhase;
+            targetPhase = nextPhase;
             isTransitioning = false;
+
+            currentScrollTween?.kill();
+            currentScrollTween = null;
+            currentPhaseTween?.kill();
+            currentPhaseTween = null;
+
+            goToPhase(nextQueuedPhase);
+          },
+          onComplete: () => {
+            if (handedOffToQueuedPhase) {
+              return;
+            }
+
+            activePhase = nextPhase;
+            targetPhase = nextPhase;
+            isTransitioning = false;
+            ignoreWheelUntil = Date.now() + 120;
+            currentScrollTween = null;
+            currentPhaseTween = null;
+
+            if (queuedPhase !== null && queuedPhase !== activePhase) {
+              const nextQueuedPhase = queuedPhase;
+              queuedPhase = null;
+              goToPhase(nextQueuedPhase);
+              return;
+            }
+
+            queuedPhase = null;
           },
           onInterrupt: () => {
-            syncScroll.kill();
+            currentScrollTween?.kill();
+            currentScrollTween = null;
+            currentPhaseTween = null;
             isTransitioning = false;
           },
         });
@@ -252,18 +339,26 @@ onMounted(async () => {
         const currentY = window.scrollY;
         const withinHero = currentY >= heroStart && currentY <= heroEnd;
 
-        if (!withinHero || Math.abs(event.deltaY) < 4 || isTransitioning) {
+        if (!withinHero || Math.abs(event.deltaY) < 4 || Date.now() < ignoreWheelUntil) {
           return;
         }
 
         const direction = event.deltaY > 0 ? 1 : -1;
-        const nextPhase = Math.max(0, Math.min(2, activePhase + direction));
+        const phaseBase = isTransitioning ? targetPhase : activePhase;
+        const nextPhase = Math.max(0, Math.min(2, phaseBase + direction)) as PhaseIndex;
 
-        if (nextPhase === activePhase) {
+        if (nextPhase === phaseBase) {
           return;
         }
 
         event.preventDefault();
+
+        if (isTransitioning) {
+          queuedPhase = nextPhase;
+          ignoreWheelUntil = Date.now() + wheelIntentCooldown;
+          return;
+        }
+
         goToPhase(nextPhase);
       };
 
@@ -271,7 +366,7 @@ onMounted(async () => {
       removeHeroWheelSnap = () => {
         window.removeEventListener('wheel', onWheel);
       };
-    }, pageRoot.value);
+    }, page);
 
     return () => {
       removeHeroWheelSnap?.();
