@@ -1,5 +1,11 @@
 <template>
   <div ref="pageRoot" class="h-fit w-full overflow-x-clip bg-white">
+    <HomeSplashOverlay
+      :show="showSplash"
+      :show-video="showSplashVideo"
+      @video-ended="onSplashVideoEnded"
+    />
+
     <section ref="heroSection" class="relative h-[220vh] bg-brand">
       <div ref="heroSticky" class="sticky top-0 h-screen overflow-hidden">
         <div
@@ -43,6 +49,8 @@
               <CustomButton text="Go to Gallery" class="mt-2" />
             </div>
           </div>
+
+          <HomePhaseThreeGallery :features="phaseThreeFeatures" />
         </div>
       </div>
     </section>
@@ -100,10 +108,17 @@ const contentStack = ref<HTMLElement | null>(null);
 
 let mm: gsap.MatchMedia | null = null;
 let removeHeroWheelSnap: (() => void) | null = null;
+let removeGalleryParallax: (() => void) | null = null;
+let currentGalleryScrollTween: gsap.core.Tween | null = null;
 const phaseTransitionDuration = 2.2;
 const wheelIntentCooldown = 180;
 const queuedPhaseHandoffProgress = 0.58;
 type PhaseIndex = 0 | 1 | 2;
+
+const hasClientLoadedAssets = ref(false);
+const hasSplashVideoFinished = ref(false);
+const showSplash = computed(() => !hasClientLoadedAssets.value || !hasSplashVideoFinished.value);
+const showSplashVideo = computed(() => !hasSplashVideoFinished.value);
 
 const vehicles = [
   {
@@ -123,11 +138,75 @@ const vehicles = [
   },
 ];
 
+const phaseThreeFeatures = [
+  {
+    title: 'Technology Meets Transportation',
+    description:
+      'A refined cabin, clean interface, and connected controls designed to make every journey feel deliberate, calm, and future-facing.',
+    image: 'https://picsum.photos/id/1071/1400/900',
+    reverse: false,
+  },
+  {
+    title: 'Space To Share',
+    description:
+      'Flexible storage, generous proportions, and a practical layout that adapts to weekday movement and longer-distance travel with ease.',
+    image: 'https://picsum.photos/id/1068/1400/900',
+    reverse: true,
+  },
+  {
+    title: 'Designed For The Long Run',
+    description:
+      'A composed driving experience, quiet cabin atmosphere, and balanced proportions that make every trip feel lighter, smoother, and more intentional.',
+    image: 'https://picsum.photos/id/1050/1400/900',
+    reverse: false,
+  },
+] as const;
+
 if (import.meta.client) {
   gsap.registerPlugin(Observer, ScrollToPlugin);
 }
 
+const onSplashVideoEnded = () => {
+  hasSplashVideoFinished.value = true;
+};
+
+const waitForWindowLoad = () => new Promise<void>((resolve) => {
+  if (document.readyState === 'complete') {
+    resolve();
+    return;
+  }
+
+  const onLoad = () => {
+    window.removeEventListener('load', onLoad);
+    resolve();
+  };
+
+  window.addEventListener('load', onLoad, { once: true });
+});
+
+const preloadImage = (src: string) => new Promise<void>((resolve) => {
+  const img = new Image();
+  img.onload = () => resolve();
+  img.onerror = () => resolve();
+  img.src = src;
+});
+
+const waitForClientAssets = async () => {
+  const fontReady = 'fonts' in document ? (document as Document & { fonts: FontFaceSet }).fonts.ready.catch(() => undefined) : Promise.resolve();
+
+  await Promise.all([
+    waitForWindowLoad(),
+    preloadImage('/homeBg.png'),
+    preloadImage('/building.png'),
+    preloadImage('/wheel.svg'),
+    fontReady,
+  ]);
+
+  hasClientLoadedAssets.value = true;
+};
+
 onMounted(async () => {
+  void waitForClientAssets();
   await nextTick();
 
   if (!pageRoot.value || !heroSection.value || !contentStack.value) {
@@ -144,8 +223,14 @@ onMounted(async () => {
     }
 
     const ctx = gsap.context(() => {
+      const heroGallery = page.querySelector<HTMLElement>('.js-phase-three-gallery');
+      const heroGalleryScroll = page.querySelector<HTMLElement>('.js-phase-three-gallery-scroll');
       const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
+      const phaseThreePanels = gsap.utils.toArray<HTMLElement>('.js-phase-three-panel');
+      const phaseThreeCopies = gsap.utils.toArray<HTMLElement>('.js-phase-three-copy');
+      const phaseThreeImageWrappers = gsap.utils.toArray<HTMLElement>('.js-phase-three-image-wrapper');
+      const phaseThreeImages = gsap.utils.toArray<HTMLElement>('.js-phase-three-image');
       let activePhase: PhaseIndex = 0;
       let targetPhase: PhaseIndex = 0;
       let queuedPhase: PhaseIndex | null = null;
@@ -157,6 +242,17 @@ onMounted(async () => {
       gsap.set(contentStack.value, { y: 160 });
       gsap.set(heroShowcase.value, { autoAlpha: 0 });
       gsap.set(heroButton.value, { autoAlpha: 0, y: 28 });
+      gsap.set(heroGallery, { autoAlpha: 0, yPercent: 8 });
+      gsap.set(heroGalleryScroll, { scrollTop: 0 });
+      gsap.set(phaseThreeCopies, { autoAlpha: 0, y: 40 });
+      gsap.set(phaseThreePanels, { yPercent: 8 });
+      gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, yPercent: 10 });
+      phaseThreeImages.forEach((image, index) => {
+        gsap.set(image, {
+          scale: 1.14,
+          yPercent: 26 + (index * 3),
+        });
+      });
       gsap.set(cards, {
         transformPerspective: 1600,
         transformOrigin: 'center center',
@@ -190,10 +286,55 @@ onMounted(async () => {
         }, 0.95)
         .to(heroButton.value, { autoAlpha: 1, y: 0, duration: 1.15 }, 1.75)
         .addLabel('phase1', 2.95)
-        .to(heroBackdrop.value, { scale: 1.18, yPercent: 8, duration: 1.4 }, 'phase1')
-        .to(heroShowcase.value, { autoAlpha: 0.32, yPercent: -10, duration: 1.3 }, 'phase1')
+        .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: 1.4 }, 'phase1')
+        .to(heroOverlay.value, { opacity: 0.35, duration: 1.15 }, 'phase1')
+        .to(heroShowcase.value, { autoAlpha: 0, yPercent: -12, duration: 1.1 }, 'phase1')
         .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.95 }, 'phase1')
+        .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: 1.2 }, 'phase1+=0.08')
+        .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.16 }, 'phase1+=0.2')
+        .to(phaseThreePanels, { yPercent: 0, duration: 1.2, stagger: 0.12 }, 'phase1+=0.14')
+        .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: 1.15, stagger: 0.14 }, 'phase1+=0.08')
         .to(contentStack.value, { y: 0, duration: 1.3 }, 'phase1+=0.22');
+
+      phaseThreeImages.forEach((image) => {
+        masterTimeline.to(image, {
+          scale: 1.06,
+          duration: 1.6,
+        }, 'phase1');
+      });
+
+      const galleryScrollEl = heroGalleryScroll;
+
+      if (galleryScrollEl && phaseThreeImages.length) {
+        const imageSetters = phaseThreeImages.map((image) => gsap.quickSetter(image, 'yPercent'));
+
+        const syncGalleryParallax = () => {
+          const containerRect = galleryScrollEl.getBoundingClientRect();
+          const containerCenter = containerRect.top + (containerRect.height / 2);
+
+          phaseThreePanels.forEach((panel, index) => {
+            const panelRect = panel.getBoundingClientRect();
+            const panelCenter = panelRect.top + (panelRect.height / 2);
+            const maxOffset = (containerRect.height + panelRect.height) / 2;
+            const normalizedOffset = gsap.utils.clamp(-1, 1, (panelCenter - containerCenter) / maxOffset);
+            const setImageYPercent = imageSetters[index];
+
+            if (!setImageYPercent) {
+              return;
+            }
+
+            setImageYPercent(-normalizedOffset * 34);
+          });
+        };
+
+        syncGalleryParallax();
+        galleryScrollEl.addEventListener('scroll', syncGalleryParallax, { passive: true });
+        removeGalleryParallax = () => {
+          currentGalleryScrollTween?.kill();
+          currentGalleryScrollTween = null;
+          galleryScrollEl.removeEventListener('scroll', syncGalleryParallax);
+        };
+      }
 
       if (cards[0]) {
         masterTimeline.to(cards[0], { xPercent: -6, z: -40, duration: 1.8 }, 0.95);
@@ -343,6 +484,32 @@ onMounted(async () => {
           return;
         }
 
+        if (targetPhase === 2 && heroGalleryScroll) {
+          const galleryEl = heroGalleryScroll;
+          const maxScrollTop = galleryEl.scrollHeight - galleryEl.clientHeight;
+          const canScrollGalleryDown = event.deltaY > 0 && galleryEl.scrollTop < maxScrollTop;
+          const canScrollGalleryUp = event.deltaY < 0 && galleryEl.scrollTop > 0;
+
+          if (canScrollGalleryDown || canScrollGalleryUp) {
+            event.preventDefault();
+            const nextScrollTop = Math.max(0, Math.min(maxScrollTop, galleryEl.scrollTop + (event.deltaY * 2.1)));
+            currentGalleryScrollTween?.kill();
+            currentGalleryScrollTween = gsap.to(galleryEl, {
+              scrollTo: { y: nextScrollTop, autoKill: false },
+              duration: 0.9,
+              ease: 'expo.out',
+              overwrite: true,
+              onComplete: () => {
+                currentGalleryScrollTween = null;
+              },
+              onInterrupt: () => {
+                currentGalleryScrollTween = null;
+              },
+            });
+            return;
+          }
+        }
+
         const direction = event.deltaY > 0 ? 1 : -1;
         const phaseBase = isTransitioning ? targetPhase : activePhase;
         const nextPhase = Math.max(0, Math.min(2, phaseBase + direction)) as PhaseIndex;
@@ -369,6 +536,10 @@ onMounted(async () => {
     }, page);
 
     return () => {
+      removeGalleryParallax?.();
+      removeGalleryParallax = null;
+      currentGalleryScrollTween?.kill();
+      currentGalleryScrollTween = null;
       removeHeroWheelSnap?.();
       removeHeroWheelSnap = null;
       ctx.revert();
@@ -376,6 +547,10 @@ onMounted(async () => {
   });
 
   mm.add('(prefers-reduced-motion: reduce)', () => {
+    removeGalleryParallax?.();
+    removeGalleryParallax = null;
+    currentGalleryScrollTween?.kill();
+    currentGalleryScrollTween = null;
     removeHeroWheelSnap?.();
     removeHeroWheelSnap = null;
     gsap.set(contentStack.value, { clearProps: 'transform' });
@@ -385,9 +560,25 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+  removeGalleryParallax?.();
+  removeGalleryParallax = null;
+  currentGalleryScrollTween?.kill();
+  currentGalleryScrollTween = null;
   removeHeroWheelSnap?.();
   removeHeroWheelSnap = null;
   mm?.revert();
   mm = null;
+
+  if (import.meta.client) {
+    document.body.style.overflow = '';
+  }
 });
+
+watch(showSplash, (isVisible) => {
+  if (!import.meta.client) {
+    return;
+  }
+
+  document.body.style.overflow = isVisible ? 'hidden' : '';
+}, { immediate: true });
 </script>
