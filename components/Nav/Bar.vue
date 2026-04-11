@@ -2,6 +2,7 @@
 import { routes } from "~/utils/routes";
 import { PhList, PhX } from "@phosphor-icons/vue";
 const menuToggled = ref(false);
+
 </script>
 
 <template>
@@ -14,13 +15,13 @@ const menuToggled = ref(false);
       }"
     >
       <div
-        class="flex justify-center items-center z-20 h-full p-4 sm:px-6 md:px-12 w-full"
+        class="flex justify-center items-center z-20 h-full py-2 px-4 sm:px-6 md:px-12 w-full"
       >
         <div class="hidden sm:flex justify-between items-center gap-8 w-full">
           <NavLink
-            v-for="(route, index) in routes"
+            v-for="route in routes"
             :key="route.name"
-            :class="`order-${index < 2 ? index : index + 1}`"
+            :class="route.pos >= 2 ? 'order-last' : 'order-first'"
             :item="route"
           />
           <NuxtLink

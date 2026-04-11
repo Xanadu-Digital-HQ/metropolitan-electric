@@ -57,3 +57,14 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
+
+
+width: 100%;
+height: 100%;
+display: block;
+-webkit-backdrop-filter: blur(4px);
+backdrop-filter: blur(4px);
+background: linear-gradient(180deg, rgba(16, 25, 32, 0) 10.36036036036036%, rgba(16, 25, 32, 0.3) 29.72972972972973%, rgba(16, 25, 32, 0.7) 48.64864864864865%, rgb(16, 25, 32) 100%);
+overflow: hidden;
+z-index: 1;
+border-radius: 0px 0px 0px 0px;

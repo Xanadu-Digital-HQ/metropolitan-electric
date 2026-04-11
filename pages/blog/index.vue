@@ -164,7 +164,7 @@ useSeoMeta({
         <div class="tag-container-scroll flex gap-5 overflow-x-auto">
           <button
             v-for="tag in tags"
-            class="text-nowrap text-sm md:text-base hover:text-accentHovered focus:text-accentHovered py-1.5 px-5 w-fit rounded-full transition-all duration-300"
+            class="text-nowrap text-sm md:text-base hover:text-accent-hovered focus:text-accent-hovered py-1.5 px-5 w-fit rounded-full transition-all duration-300"
             :class="
               activeTag === tag
                 ? 'text-accent bg-accent/20'

@@ -1,6 +1,106 @@
 @import "tailwindcss";
-@config "../../tailwind.config.ts";
-@source inline("dark");
+@import "../fonts/Elemental End/stylesheet.css";
+
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --breakpoint-xs: 200px;
+  --breakpoint-2xl: 1400px;
+
+  --color-dim-50: #5f99f7;
+  --color-dim-100: #5f99f7;
+  --color-dim-200: #38444d;
+  --color-dim-300: #202e3a;
+  --color-dim-400: #253341;
+  --color-dim-500: #5f99f7;
+  --color-dim-600: #5f99f7;
+  --color-dim-700: #192734;
+  --color-dim-800: #162d40;
+  --color-dim-900: #15202b;
+
+  --color-brand: #101920;
+  --color-accent-hovered: #113912;
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --font-elemental: "Elemental End", sans-serif;
+  --font-monoton: "Monoton", inter, sans-serif;
+  --font-noto: "Noto Serif", nunito, sans-serif;
+  --font-varela: "Varela Round", sans-serif;
+  --font-opensans: "Open Sans", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-sora: "Sora", sans-serif;
+
+  --text-xxs: 10px;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-collapsible-down: collapsible-down 0.2s ease-in-out;
+  --animate-collapsible-up: collapsible-up 0.2s ease-in-out;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+@keyframes collapsible-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
 
 @layer base {
   :root {
@@ -75,5 +175,23 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .prose {
+    color: var(--color-gray-800);
+  }
+
+  .prose a {
+    color: var(--color-green-500);
+  }
+
+  .prose a:hover {
+    color: var(--color-green-600);
+  }
+
+  .dark .prose {
+    color: var(--color-gray-100);
   }
 }

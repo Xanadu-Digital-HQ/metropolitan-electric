@@ -17,7 +17,7 @@ const props = defineProps({
       style="font-family: 'Noto Serif'"
       :class="
         item.state === 'button'
-          ? 'relative z-10 py-2.5 px-7 font-medium font-main bg-accent group-hover/overall:bg-white group-hover/overall:text-accent  text-white hover:text-black group-hover: rounded-full transition duration-300 hover:bg-primary/80'
+          ? 'relative z-10 py-2.5 px-7 text-sm font-medium font-main bg-accent group-hover/overall:bg-white group-hover/overall:text-accent  text-white hover:text-black rounded-full transition duration-300 hover:bg-primary/80'
           : navLinkStyle
       "
     >

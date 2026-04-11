@@ -1,9 +1,15 @@
 import type { Link } from "~/types/types";
-export const routes: Link[] = [
+import { URLS } from "./constants";
+
+type position = {
+  pos : number
+}
+export const routes: (Link & position)[] = [
   {
     state: "normal",
     name: "Home",
-    path: "/",
+    path: URLS.HOME,
+    pos: 0,
   },
   {
     state: "subnavLink",
@@ -11,13 +17,14 @@ export const routes: Link[] = [
     subItems: [
       {
         name: "Gallery",
-        path: "/gallery",
+        path: URLS.GALLERY,
       },
       {
         name: "Services",
-        path: "/services",
+        path: URLS.SERVICES,
       },
     ],
+    pos: 1,
   },
   {
     state: "subnavLink",
@@ -25,21 +32,23 @@ export const routes: Link[] = [
     subItems: [
       {
         name: "About",
-        path: "/about",
+        path: URLS.ABOUT,
       },
       {
         name: "Media Center",
-        path: "/media-center",
+        path: URLS.MEDIA,
       },
       {
         name: "Blog",
-        path: "/blog",
+        path: URLS.BLOG,
       },
     ],
+    pos: 3,
   },
   {
     state: "button",
     name: "Contact",
-    path: "/#contact",
+    path: URLS.CONTACT,
+    pos: 4,
   },
 ];
