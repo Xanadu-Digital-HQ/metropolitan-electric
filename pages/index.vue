@@ -6,7 +6,7 @@
       @video-ended="onSplashVideoEnded"
     />
 
-    <section ref="heroSection" class="relative h-[220vh] bg-brand">
+    <section ref="heroSection" class="relative h-[400vh] bg-brand">
       <div ref="heroSticky" class="sticky top-0 h-screen overflow-hidden">
         <div
           ref="heroBackdrop"
@@ -51,28 +51,12 @@
           </div>
 
           <HomePhaseThreeGallery :features="phaseThreeFeatures" />
+          <HomeWhyChooseUs overlay />
+          <HomeClosingContactFooter overlay />
         </div>
       </div>
     </section>
 
-    <div
-      ref="contentStack"
-      class="relative z-40 -mt-[18vh] rounded-t-4xl bg-white pt-6 shadow-[0_-40px_120px_rgba(16,25,32,0.22)]"
-    >
-      <SectionFirst id="about" class="relative min-h-screen max-h-fit scroll-smooth z-20" />
-      <SectionSecond
-        :data="data"
-        id="services"
-        class="relative min-h-screen max-h-fit z-20 before:content-[''] before:absolute before:bg-[#EEEFED] before:top-0 before:right-0 before:left-0 before:bottom-0 before:-z-10"
-      />
-      <SectionFAQ
-        class="relative min-h-screen max-h-fit z-20 before:content-[''] before:absolute before:bg-brand/50 before:top-0 before:right-0 before:left-0 before:bottom-0 before:-z-10"
-      />
-      <SectionThird
-        id="contact"
-        class="relative min-h-screen max-h-fit z-20 before:content-[''] before:absolute before:bg-white before:top-0 before:right-0 before:left-0 before:bottom-0 before:-z-10"
-      />
-    </div>
   </div>
 </template>
 
@@ -104,16 +88,16 @@ const heroIntro = ref<HTMLElement | null>(null);
 const heroShowcase = ref<HTMLElement | null>(null);
 const heroButton = ref<HTMLElement | null>(null);
 const vehicleDeck = ref<HTMLElement | null>(null);
-const contentStack = ref<HTMLElement | null>(null);
 
 let mm: gsap.MatchMedia | null = null;
 let removeHeroWheelSnap: (() => void) | null = null;
+let removeHeroScrollSync: (() => void) | null = null;
 let removeGalleryParallax: (() => void) | null = null;
 let currentGalleryScrollTween: gsap.core.Tween | null = null;
 const phaseTransitionDuration = 2.2;
 const wheelIntentCooldown = 180;
 const queuedPhaseHandoffProgress = 0.58;
-type PhaseIndex = 0 | 1 | 2;
+type PhaseIndex = 0 | 1 | 2 | 3 | 4;
 
 const hasClientLoadedAssets = ref(false);
 const hasSplashVideoFinished = ref(false);
@@ -209,7 +193,7 @@ onMounted(async () => {
   void waitForClientAssets();
   await nextTick();
 
-  if (!pageRoot.value || !heroSection.value || !contentStack.value) {
+  if (!pageRoot.value || !heroSection.value) {
     return;
   }
 
@@ -225,6 +209,17 @@ onMounted(async () => {
     const ctx = gsap.context(() => {
       const heroGallery = page.querySelector<HTMLElement>('.js-phase-three-gallery');
       const heroGalleryScroll = page.querySelector<HTMLElement>('.js-phase-three-gallery-scroll');
+      const whyChooseSection = page.querySelector<HTMLElement>('.js-why-choose-us');
+      const whyChooseHeading = page.querySelector<HTMLElement>('.js-why-choose-heading');
+      const whyChooseCards = gsap.utils.toArray<HTMLElement>('.js-why-choose-card');
+      const whyChoosePanels = gsap.utils.toArray<HTMLElement>('.js-why-choose-panel');
+      const closingSection = page.querySelector<HTMLElement>('.js-home-closing');
+      const closingHeading = page.querySelector<HTMLElement>('.js-home-closing-heading');
+      const closingMap = page.querySelector<HTMLElement>('.js-home-closing-map');
+      const closingForm = page.querySelector<HTMLElement>('.js-home-closing-form');
+      const closingCar = page.querySelector<HTMLElement>('.js-home-closing-car');
+      const closingFooter = page.querySelector<HTMLElement>('.js-home-closing-footer');
+      const closingScroll = page.querySelector<HTMLElement>('.js-home-closing-scroll');
       const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
       const phaseThreePanels = gsap.utils.toArray<HTMLElement>('.js-phase-three-panel');
@@ -239,11 +234,20 @@ onMounted(async () => {
       let currentPhaseTween: gsap.core.Tween | null = null;
       let ignoreWheelUntil = 0;
 
-      gsap.set(contentStack.value, { y: 160 });
       gsap.set(heroShowcase.value, { autoAlpha: 0 });
       gsap.set(heroButton.value, { autoAlpha: 0, y: 28 });
       gsap.set(heroGallery, { autoAlpha: 0, yPercent: 8 });
       gsap.set(heroGalleryScroll, { scrollTop: 0 });
+      gsap.set(whyChooseSection, { autoAlpha: 0, yPercent: 8 });
+      gsap.set(whyChooseHeading, { autoAlpha: 0, y: 32 });
+      gsap.set(whyChooseCards, { autoAlpha: 0, y: 70, scale: 0.95 });
+      gsap.set(whyChoosePanels, { autoAlpha: 0, yPercent: 8, scale: 0.98 });
+      gsap.set(closingSection, { autoAlpha: 0, yPercent: 8 });
+      gsap.set(closingScroll, { scrollTop: 0 });
+      gsap.set(closingHeading, { autoAlpha: 0, y: 32 });
+      gsap.set([closingMap, closingForm], { autoAlpha: 0, y: 54, scale: 0.98 });
+      gsap.set(closingFooter, { autoAlpha: 0, y: 34 });
+      gsap.set(closingCar, { autoAlpha: 0, xPercent: 8, scale: 0.96 });
       gsap.set(phaseThreeCopies, { autoAlpha: 0, y: 40 });
       gsap.set(phaseThreePanels, { yPercent: 8 });
       gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, yPercent: 10 });
@@ -285,22 +289,35 @@ onMounted(async () => {
           stagger: 0.22,
         }, 0.95)
         .to(heroButton.value, { autoAlpha: 1, y: 0, duration: 1.15 }, 1.75)
-        .addLabel('phase1', 2.95)
-        .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: 1.4 }, 'phase1')
-        .to(heroOverlay.value, { opacity: 0.35, duration: 1.15 }, 'phase1')
-        .to(heroShowcase.value, { autoAlpha: 0, yPercent: -12, duration: 1.1 }, 'phase1')
-        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.95 }, 'phase1')
-        .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: 1.2 }, 'phase1+=0.08')
-        .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.16 }, 'phase1+=0.2')
-        .to(phaseThreePanels, { yPercent: 0, duration: 1.2, stagger: 0.12 }, 'phase1+=0.14')
-        .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: 1.15, stagger: 0.14 }, 'phase1+=0.08')
-        .to(contentStack.value, { y: 0, duration: 1.3 }, 'phase1+=0.22');
+        .addLabel('phase1', 2.35)
+        .addLabel('phase2', 3.55)
+        .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: 1.4 }, 'phase2')
+        .to(heroOverlay.value, { opacity: 0.35, duration: 1.15 }, 'phase2')
+        .to(heroShowcase.value, { autoAlpha: 0, yPercent: -12, duration: 1.1 }, 'phase2')
+        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.95 }, 'phase2')
+        .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: 1.2 }, 'phase2+=0.08')
+        .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.16 }, 'phase2+=0.2')
+        .to(phaseThreePanels, { yPercent: 0, duration: 1.2, stagger: 0.12 }, 'phase2+=0.14')
+        .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: 1.15, stagger: 0.14 }, 'phase2+=0.08')
+        .addLabel('phase3', 5.45)
+        .to(heroGallery, { autoAlpha: 0, yPercent: -8, duration: 1.05 }, 'phase3')
+        .to(whyChooseSection, { autoAlpha: 1, yPercent: 0, duration: 1.05 }, 'phase3+=0.02')
+        .to(whyChooseHeading, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase3+=0.16')
+        .to(whyChoosePanels, { autoAlpha: 1, yPercent: 0, scale: 1, duration: 1, stagger: 0.12 }, 'phase3+=0.08')
+        .to(whyChooseCards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.95, stagger: 0.16 }, 'phase3+=0.22')
+        .addLabel('phase4', 7.3)
+        .to(whyChooseSection, { autoAlpha: 0, yPercent: -8, duration: 1 }, 'phase4')
+        .to(closingSection, { autoAlpha: 1, yPercent: 0, duration: 1.05 }, 'phase4+=0.02')
+        .to(closingHeading, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase4+=0.16')
+        .to([closingMap, closingForm], { autoAlpha: 1, y: 0, scale: 1, duration: 0.95, stagger: 0.14 }, 'phase4+=0.22')
+        .to(closingFooter, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase4+=0.34')
+        .to(closingCar, { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.2 }, 'phase4+=0.18');
 
       phaseThreeImages.forEach((image) => {
         masterTimeline.to(image, {
           scale: 1.06,
           duration: 1.6,
-        }, 'phase1');
+        }, 'phase2');
       });
 
       const galleryScrollEl = heroGalleryScroll;
@@ -349,29 +366,48 @@ onMounted(async () => {
       }
 
       if (cards[0]) {
-        masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 1.35 }, 'phase1');
+        masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 1.35 }, 'phase2');
       }
 
       if (cards[1]) {
-        masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 1.35 }, 'phase1');
+        masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 1.35 }, 'phase2');
       }
 
       if (cards[2]) {
-        masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 1.35 }, 'phase1');
+        masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 1.35 }, 'phase2');
       }
 
-      masterTimeline.addLabel('phase2');
-
-      const phaseLabels: Record<PhaseIndex, 'phase0' | 'phase1' | 'phase2'> = {
+      const phaseLabels: Record<PhaseIndex, 'phase0' | 'phase1' | 'phase2' | 'phase3' | 'phase4'> = {
         0: 'phase0',
         1: 'phase1',
         2: 'phase2',
+        3: 'phase3',
+        4: 'phase4',
+      };
+      const phaseTargetTimes: Record<PhaseIndex, number> = {
+        0: 0,
+        1: 2.95,
+        2: 5.0,
+        3: 6.9,
+        4: 8.7,
       };
       const phaseOffsets: Record<PhaseIndex, number> = {
         0: 0,
-        1: 0.38,
-        2: 1,
+        1: 0.18,
+        2: 0.5,
+        3: 0.76,
+        4: 0.88,
       };
+      const galleryPhaseStartOffset = phaseOffsets[2];
+      const galleryPhaseTransitionOffset = phaseOffsets[3];
+      const closingPhaseStartOffset = phaseOffsets[4];
+      const closingPhaseEndOffset = 1;
+      const phaseThresholds: Array<{ phase: PhaseIndex; offset: number }> = [
+        { phase: 4, offset: phaseOffsets[4] },
+        { phase: 3, offset: phaseOffsets[3] },
+        { phase: 2, offset: galleryPhaseStartOffset },
+        { phase: 1, offset: 0.09 },
+      ];
 
       const goToPhase = (nextPhase: PhaseIndex) => {
         if (!heroSection.value || nextPhase === targetPhase) {
@@ -388,7 +424,7 @@ onMounted(async () => {
 
         const targetY = heroStart + (totalDistance * phaseOffsets[nextPhase]);
         const targetLabel = phaseLabels[nextPhase];
-        const targetTime = masterTimeline.labels[targetLabel];
+        const targetTime = phaseTargetTimes[nextPhase] ?? masterTimeline.labels[targetLabel];
         let handedOffToQueuedPhase = false;
 
         if (typeof targetTime !== 'number') {
@@ -400,6 +436,10 @@ onMounted(async () => {
         ignoreWheelUntil = Date.now() + wheelIntentCooldown;
         currentScrollTween?.kill();
         currentPhaseTween?.kill();
+
+        if (nextPhase !== 4 && closingScroll) {
+          closingScroll.scrollTop = 0;
+        }
 
         currentScrollTween = gsap.to(window, {
           scrollTo: targetY,
@@ -445,6 +485,10 @@ onMounted(async () => {
               return;
             }
 
+            if (nextPhase === 4 && closingScroll) {
+              closingScroll.scrollTop = 0;
+            }
+
             activePhase = nextPhase;
             targetPhase = nextPhase;
             isTransitioning = false;
@@ -470,6 +514,129 @@ onMounted(async () => {
         });
       };
 
+      const syncTimelineToScroll = () => {
+        if (!heroSection.value || isTransitioning) {
+          return;
+        }
+
+        const heroStart = heroSection.value.offsetTop;
+        const heroEnd = heroStart + heroSection.value.offsetHeight - window.innerHeight;
+        const totalDistance = heroEnd - heroStart;
+
+        if (totalDistance <= 0) {
+          return;
+        }
+
+        if (window.scrollY > heroEnd && activePhase < 4) {
+          const boundedPhase = (activePhase + 1) as PhaseIndex;
+          window.scrollTo({ top: heroStart + (totalDistance * phaseOffsets[activePhase]), behavior: 'auto' });
+          goToPhase(boundedPhase);
+          return;
+        }
+
+        if (window.scrollY < heroStart && activePhase > 0) {
+          const boundedPhase = (activePhase - 1) as PhaseIndex;
+          window.scrollTo({ top: heroStart + (totalDistance * phaseOffsets[activePhase]), behavior: 'auto' });
+          goToPhase(boundedPhase);
+          return;
+        }
+
+        const progress = gsap.utils.clamp(0, 1, (window.scrollY - heroStart) / totalDistance);
+        const galleryEl = heroGalleryScroll;
+        const galleryMaxScrollTop = galleryEl ? Math.max(0, galleryEl.scrollHeight - galleryEl.clientHeight) : 0;
+        const closingEl = closingScroll;
+        const closingMaxScrollTop = closingEl ? Math.max(0, closingEl.scrollHeight - closingEl.clientHeight) : 0;
+        let desiredPhase: PhaseIndex = 0;
+
+        for (const threshold of phaseThresholds) {
+          if (progress >= threshold.offset) {
+            desiredPhase = threshold.phase;
+            break;
+          }
+        }
+
+        if (Math.abs(desiredPhase - activePhase) > 1) {
+          const boundedPhase = (activePhase + Math.sign(desiredPhase - activePhase)) as PhaseIndex;
+          goToPhase(boundedPhase);
+          return;
+        }
+
+        if (closingEl && closingMaxScrollTop > 0 && progress >= closingPhaseStartOffset) {
+          masterTimeline.time(phaseTargetTimes[4], false);
+          closingEl.scrollTop = gsap.utils.mapRange(
+            closingPhaseStartOffset,
+            closingPhaseEndOffset,
+            0,
+            closingMaxScrollTop,
+            progress,
+          );
+          if (galleryEl) {
+            galleryEl.scrollTop = galleryMaxScrollTop;
+          }
+        }
+        else if (galleryEl && galleryMaxScrollTop > 0 && progress >= galleryPhaseStartOffset) {
+          if (progress < galleryPhaseTransitionOffset) {
+            const galleryProgress = gsap.utils.mapRange(
+              galleryPhaseStartOffset,
+              galleryPhaseTransitionOffset,
+              0,
+              1,
+              progress,
+            );
+
+            masterTimeline.time(phaseTargetTimes[2], false);
+            galleryEl.scrollTop = galleryProgress * galleryMaxScrollTop;
+          }
+          else {
+            masterTimeline.time(
+              gsap.utils.mapRange(
+                galleryPhaseTransitionOffset,
+                1,
+                phaseTargetTimes[3],
+                phaseTargetTimes[4],
+                progress,
+              ),
+              false,
+            );
+            galleryEl.scrollTop = galleryMaxScrollTop;
+          }
+        }
+        else {
+          if (galleryEl) {
+            galleryEl.scrollTop = 0;
+          }
+          if (closingEl) {
+            closingEl.scrollTop = 0;
+          }
+
+          let nextTime = phaseTargetTimes[0];
+
+          if (progress < phaseOffsets[1]) {
+            nextTime = gsap.utils.mapRange(
+              phaseOffsets[0],
+              phaseOffsets[1],
+              phaseTargetTimes[0],
+              phaseTargetTimes[1],
+              progress,
+            );
+          }
+          else if (progress < galleryPhaseStartOffset) {
+            nextTime = gsap.utils.mapRange(
+              phaseOffsets[1],
+              galleryPhaseStartOffset,
+              phaseTargetTimes[1],
+              phaseTargetTimes[2],
+              progress,
+            );
+          }
+
+          masterTimeline.time(nextTime, false);
+        }
+
+        activePhase = desiredPhase;
+        targetPhase = desiredPhase;
+      };
+
       const onWheel = (event: WheelEvent) => {
         if (!heroSection.value) {
           return;
@@ -484,11 +651,16 @@ onMounted(async () => {
           return;
         }
 
-        if (targetPhase === 2 && heroGalleryScroll) {
+        const direction = event.deltaY > 0 ? 1 : -1;
+        const phaseBase = isTransitioning ? targetPhase : activePhase;
+
+        if (phaseBase === 2 && heroGalleryScroll) {
           const galleryEl = heroGalleryScroll;
           const maxScrollTop = galleryEl.scrollHeight - galleryEl.clientHeight;
-          const canScrollGalleryDown = event.deltaY > 0 && galleryEl.scrollTop < maxScrollTop;
-          const canScrollGalleryUp = event.deltaY < 0 && galleryEl.scrollTop > 0;
+          const atGalleryBottom = galleryEl.scrollTop >= (maxScrollTop - 2);
+          const atGalleryTop = galleryEl.scrollTop <= 2;
+          const canScrollGalleryDown = event.deltaY > 0 && !atGalleryBottom;
+          const canScrollGalleryUp = event.deltaY < 0 && !atGalleryTop;
 
           if (canScrollGalleryDown || canScrollGalleryUp) {
             event.preventDefault();
@@ -510,9 +682,27 @@ onMounted(async () => {
           }
         }
 
-        const direction = event.deltaY > 0 ? 1 : -1;
-        const phaseBase = isTransitioning ? targetPhase : activePhase;
-        const nextPhase = Math.max(0, Math.min(2, phaseBase + direction)) as PhaseIndex;
+        if (phaseBase === 4 && closingScroll) {
+          const closingEl = closingScroll;
+          const maxScrollTop = closingEl.scrollHeight - closingEl.clientHeight;
+          const atBottom = closingEl.scrollTop >= (maxScrollTop - 2);
+          const atTop = closingEl.scrollTop <= 2;
+          const canScrollDown = event.deltaY > 0 && !atBottom;
+          const canScrollUp = event.deltaY < 0 && !atTop;
+
+          if (canScrollDown || canScrollUp) {
+            event.preventDefault();
+            const nextScrollTop = Math.max(0, Math.min(maxScrollTop, closingEl.scrollTop + (event.deltaY * 2.1)));
+            gsap.to(closingEl, {
+              scrollTo: { y: nextScrollTop, autoKill: false },
+              duration: 0.9,
+              ease: 'expo.out',
+              overwrite: true,
+            });
+            return;
+          }
+        }
+        const nextPhase = Math.max(0, Math.min(4, phaseBase + direction)) as PhaseIndex;
 
         if (nextPhase === phaseBase) {
           return;
@@ -530,9 +720,15 @@ onMounted(async () => {
       };
 
       window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('scroll', syncTimelineToScroll, { passive: true });
       removeHeroWheelSnap = () => {
         window.removeEventListener('wheel', onWheel);
       };
+      removeHeroScrollSync = () => {
+        window.removeEventListener('scroll', syncTimelineToScroll);
+      };
+
+      syncTimelineToScroll();
     }, page);
 
     return () => {
@@ -542,6 +738,8 @@ onMounted(async () => {
       currentGalleryScrollTween = null;
       removeHeroWheelSnap?.();
       removeHeroWheelSnap = null;
+      removeHeroScrollSync?.();
+      removeHeroScrollSync = null;
       ctx.revert();
     };
   });
@@ -553,9 +751,12 @@ onMounted(async () => {
     currentGalleryScrollTween = null;
     removeHeroWheelSnap?.();
     removeHeroWheelSnap = null;
-    gsap.set(contentStack.value, { clearProps: 'transform' });
+    removeHeroScrollSync?.();
+    removeHeroScrollSync = null;
     gsap.set([heroShowcase.value, heroButton.value, heroIntro.value], { clearProps: 'all' });
     gsap.set('.js-hero-card', { clearProps: 'all' });
+    gsap.set(['.js-why-choose-us', '.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], { clearProps: 'all' });
+    gsap.set(['.js-home-closing', '.js-home-closing-heading', '.js-home-closing-map', '.js-home-closing-form', '.js-home-closing-car', '.js-home-closing-footer'], { clearProps: 'all' });
   });
 });
 
@@ -566,6 +767,8 @@ onBeforeUnmount(() => {
   currentGalleryScrollTween = null;
   removeHeroWheelSnap?.();
   removeHeroWheelSnap = null;
+  removeHeroScrollSync?.();
+  removeHeroScrollSync = null;
   mm?.revert();
   mm = null;
 

@@ -24,10 +24,10 @@
             class="js-phase-three-copy max-w-xl lg:col-span-4"
             :class="feature.reverse ? 'lg:col-start-2' : 'lg:col-start-9'"
           >
-            <h2 class="font-noto text-3xl leading-tight text-brand sm:text-4xl">
+            <h2 :class="subHeading">
               {{ feature.title }}
             </h2>
-            <p class="mt-5 font-mono text-base leading-8 text-brand/70 sm:text-lg">
+            <p :class="paragraph" class="mt-5 text-lg! leading-7">
               {{ feature.description }}
             </p>
           </div>
@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts" setup>
+const {paragraph, subHeading} = useTailwindConfig();
 defineProps<{
   features: ReadonlyArray<{
     title: string;

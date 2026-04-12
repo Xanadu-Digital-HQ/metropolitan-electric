@@ -42,12 +42,8 @@
   --color-card-foreground: hsl(var(--card-foreground));
 
   --font-elemental: "Elemental End", sans-serif;
-  --font-monoton: "Monoton", inter, sans-serif;
-  --font-noto: "Noto Serif", nunito, sans-serif;
-  --font-varela: "Varela Round", sans-serif;
   --font-opensans: "Open Sans", sans-serif;
   --font-poppins: "Poppins", sans-serif;
-  --font-sora: "Sora", sans-serif;
 
   --text-xxs: 10px;
 
