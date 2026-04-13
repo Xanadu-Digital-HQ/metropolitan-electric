@@ -45,15 +45,15 @@
 
                 <div class="relative z-10 mx-auto flex max-w-md flex-col items-center text-center">
                   <div
-                    class="icon-float mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#5a7693,#243b4f_72%)] text-white shadow-[0_18px_36px_rgba(36,59,79,0.22)] transition-transform duration-500 group-hover:scale-110"
+                    class="icon-float mb-6 flex size-12 md:size-16 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#5a7693,#243b4f_72%)] text-white shadow-[0_18px_36px_rgba(36,59,79,0.22)] transition-transform duration-500 group-hover:scale-110"
                   >
-                    <component :is="item.icon" class="h-7 w-7" weight="fill" />
+                    <component :is="item.icon" class="size-4 sm:size-7" weight="fill" />
                   </div>
 
-                  <h3 class="font-opensans text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1">
+                  <h3 class="font-opensans text-xl md:text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1">
                     {{ item.title }}
                   </h3>
-                  <p class="mt-4 max-w-sm font-poppins text-base leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80">
+                  <p class="text-sm mt-4 max-w-sm font-poppins md:text-base md:leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80">
                     {{ item.description }}
                   </p>
                 </div>

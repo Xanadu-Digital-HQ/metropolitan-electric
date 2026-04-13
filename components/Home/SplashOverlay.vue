@@ -13,6 +13,7 @@
     >
       <video
         v-if="showVideo"
+        ref="videoEl"
         class="h-auto w-[min(42rem,88vw)] object-contain"
         autoplay
         muted
@@ -20,6 +21,9 @@
         preload="auto"
         @ended="$emit('video-ended')"
         @error="$emit('video-ended')"
+        @loadedmetadata="onLoadedMetadata"
+        @stalled="emitEnded"
+        @abort="emitEnded"
       >
         <source src="/metro_motion.webm" type="video/webm" />
       </video>
@@ -42,12 +46,54 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   show: boolean;
   showVideo: boolean;
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
   'video-ended': [];
 }>();
+
+const videoEl = ref<HTMLVideoElement | null>(null);
+let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
+const clearFallback = () => {
+  if (fallbackTimer) {
+    clearTimeout(fallbackTimer);
+    fallbackTimer = null;
+  }
+};
+
+const emitEnded = () => {
+  clearFallback();
+  emit('video-ended');
+};
+
+const onLoadedMetadata = () => {
+  clearFallback();
+  const duration = videoEl.value?.duration;
+  const fallbackMs = Number.isFinite(duration) ? Math.max(1000, (duration as number) * 1000 + 500) : 6500;
+  fallbackTimer = setTimeout(() => {
+    emitEnded();
+  }, fallbackMs);
+};
+
+watch(
+  () => [props.show, props.showVideo],
+  ([show, showVideo]) => {
+    clearFallback();
+    if (!show || !showVideo) {
+      return;
+    }
+
+    fallbackTimer = setTimeout(() => {
+      emitEnded();
+    }, 7000);
+  },
+);
+
+onBeforeUnmount(() => {
+  clearFallback();
+});
 </script>

@@ -3,7 +3,7 @@ const isOpen = ref(false);
 </script>
 <template>
   <div
-    class="relative flex-1 h-170 w-full overflow-hidden drop-shadow-xl shadow-md border-accent"
+    class="relative flex-1 h-110 sm:h-140 lg:h-170 w-full overflow-hidden drop-shadow-xl shadow-md border-accent"
     @mouseenter="isOpen = true"
     @mouseleave="isOpen = false"
   >

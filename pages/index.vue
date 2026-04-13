@@ -34,19 +34,19 @@
           >
             <div
               ref="vehicleDeck"
-              class="relative flex w-full max-w-7xl items-end justify-center gap-3 sm:gap-4 lg:gap-6 perspective-[1600px]"
+              class="relative flex w-full max-w-7xl items-end justify-start gap-4 overflow-x-auto pb-4 sm:justify-center sm:overflow-visible sm:pb-0 sm:gap-4 lg:gap-6 snap-x snap-mandatory perspective-none sm:perspective-[1600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div
                 v-for="vehicle in vehicles"
                 :key="vehicle.name"
-                class="js-hero-card origin-center flex-1 will-change-transform"
+                class="js-hero-card origin-center flex-none shrink-0 w-[88vw] max-w-[24rem] snap-center sm:flex-1 sm:w-auto sm:max-w-none sm:will-change-transform"
                 :class="vehicle.rotation"
               >
                 <HeroVehicleCard />
               </div>
             </div>
             <div ref="heroButton" class="js-hero-button">
-              <CustomButton text="Go to Gallery" class="mt-2" />
+              <CustomButton text="Go to Gallery" class="mt-10" />
             </div>
           </div>
 
@@ -92,17 +92,22 @@ const vehicleDeck = ref<HTMLElement | null>(null);
 let mm: gsap.MatchMedia | null = null;
 let removeHeroWheelSnap: (() => void) | null = null;
 let removeHeroScrollSync: (() => void) | null = null;
+let removeHeroTouchSnap: (() => void) | null = null;
 let removeGalleryParallax: (() => void) | null = null;
 let currentGalleryScrollTween: gsap.core.Tween | null = null;
+let clearScrollSnap: () => void = () => {};
+let clearTouchSnap: () => void = () => {};
 const phaseTransitionDuration = 2.2;
+const phaseTransitionDurationMobile = 0.9;
 const wheelIntentCooldown = 180;
 const queuedPhaseHandoffProgress = 0.58;
 type PhaseIndex = 0 | 1 | 2 | 3 | 4;
 
 const hasClientLoadedAssets = ref(false);
 const hasSplashVideoFinished = ref(false);
+const skipSplashVideo = ref(false);
 const showSplash = computed(() => !hasClientLoadedAssets.value || !hasSplashVideoFinished.value);
-const showSplashVideo = computed(() => !hasSplashVideoFinished.value);
+const showSplashVideo = computed(() => !hasSplashVideoFinished.value && !skipSplashVideo.value);
 
 const vehicles = [
   {
@@ -193,14 +198,23 @@ onMounted(async () => {
   void waitForClientAssets();
   await nextTick();
 
+  if (import.meta.client) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isSmallScreen = window.innerWidth < 768;
+    if (prefersReducedMotion || isSmallScreen) {
+      skipSplashVideo.value = true;
+      hasSplashVideoFinished.value = true;
+    }
+  }
+
   if (!pageRoot.value || !heroSection.value) {
     return;
   }
 
   mm = gsap.matchMedia();
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const page = pageRoot.value;
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const page = pageRoot.value;
 
     if (!page) {
       return;
@@ -233,23 +247,84 @@ onMounted(async () => {
       let currentScrollTween: gsap.core.Tween | null = null;
       let currentPhaseTween: gsap.core.Tween | null = null;
       let ignoreWheelUntil = 0;
+      let suppressSyncUntil = 0;
+      let scrollSnapTimer: ReturnType<typeof setTimeout> | null = null;
+      let touchSnapTimer: ReturnType<typeof setTimeout> | null = null;
+      const isMobile = window.matchMedia('(max-width: 639px)').matches;
+      const dur = (value: number) => (isMobile ? Math.max(0.7, value * 0.8) : value);
+      const sectionEnterOffset = isMobile ? 6 : 8;
+      const panelEnterOffset = isMobile ? 6 : 8;
+      const headingEnterY = isMobile ? 22 : 32;
+      const cardEnterY = isMobile ? 50 : 70;
+      const closingItemEnterY = isMobile ? 40 : 54;
+      const closingFooterEnterY = isMobile ? 26 : 34;
+      const heroIntroShift = isMobile ? -8 : -12;
+      const galleryScrollLockThreshold = isMobile ? 18 : 10;
+
+      clearScrollSnap = () => {
+        if (scrollSnapTimer) {
+          clearTimeout(scrollSnapTimer);
+          scrollSnapTimer = null;
+        }
+      };
+
+      clearTouchSnap = () => {
+        if (touchSnapTimer) {
+          clearTimeout(touchSnapTimer);
+          touchSnapTimer = null;
+        }
+      };
+
+      const getNearestPhase = (progress: number) => {
+        const offsets: Array<{ phase: PhaseIndex; offset: number }> = [
+          { phase: 0, offset: phaseOffsets[0] },
+          { phase: 1, offset: phaseOffsets[1] },
+          { phase: 2, offset: phaseOffsets[2] },
+          { phase: 3, offset: phaseOffsets[3] },
+          { phase: 4, offset: phaseOffsets[4] },
+        ];
+        return offsets.reduce((best, candidate) => {
+          return Math.abs(candidate.offset - progress) < Math.abs(best.offset - progress)
+            ? candidate
+            : best;
+        }).phase;
+      };
+
+      const shouldForceSnap = (progress: number, phase: PhaseIndex) => {
+        const threshold = isMobile ? 0.035 : 0.02;
+        return Math.abs(progress - phaseOffsets[phase]) > threshold;
+      };
+
+      const getGalleryLock = (
+        progress: number,
+        galleryEl: HTMLElement | null,
+        galleryMaxScrollTop: number,
+      ) => {
+        if (!galleryEl || galleryMaxScrollTop <= 0) {
+          return false;
+        }
+        if (progress < galleryPhaseStartOffset || progress >= galleryPhaseTransitionOffset) {
+          return false;
+        }
+        return galleryEl.scrollTop < (galleryMaxScrollTop - galleryScrollLockThreshold);
+      };
 
       gsap.set(heroShowcase.value, { autoAlpha: 0 });
       gsap.set(heroButton.value, { autoAlpha: 0, y: 28 });
-      gsap.set(heroGallery, { autoAlpha: 0, yPercent: 8 });
+      gsap.set(heroGallery, { autoAlpha: 0, yPercent: sectionEnterOffset });
       gsap.set(heroGalleryScroll, { scrollTop: 0 });
-      gsap.set(whyChooseSection, { autoAlpha: 0, yPercent: 8 });
-      gsap.set(whyChooseHeading, { autoAlpha: 0, y: 32 });
-      gsap.set(whyChooseCards, { autoAlpha: 0, y: 70, scale: 0.95 });
-      gsap.set(whyChoosePanels, { autoAlpha: 0, yPercent: 8, scale: 0.98 });
-      gsap.set(closingSection, { autoAlpha: 0, yPercent: 8 });
+      gsap.set(whyChooseSection, { autoAlpha: 0, yPercent: sectionEnterOffset });
+      gsap.set(whyChooseHeading, { autoAlpha: 0, y: headingEnterY });
+      gsap.set(whyChooseCards, { autoAlpha: 0, y: cardEnterY, scale: 0.95 });
+      gsap.set(whyChoosePanels, { autoAlpha: 0, yPercent: panelEnterOffset, scale: 0.98 });
+      gsap.set(closingSection, { autoAlpha: 0, yPercent: sectionEnterOffset });
       gsap.set(closingScroll, { scrollTop: 0 });
-      gsap.set(closingHeading, { autoAlpha: 0, y: 32 });
-      gsap.set([closingMap, closingForm], { autoAlpha: 0, y: 54, scale: 0.98 });
-      gsap.set(closingFooter, { autoAlpha: 0, y: 34 });
+      gsap.set(closingHeading, { autoAlpha: 0, y: headingEnterY });
+      gsap.set([closingMap, closingForm], { autoAlpha: 0, y: closingItemEnterY, scale: 0.98 });
+      gsap.set(closingFooter, { autoAlpha: 0, y: closingFooterEnterY });
       gsap.set(closingCar, { autoAlpha: 0, xPercent: 8, scale: 0.96 });
       gsap.set(phaseThreeCopies, { autoAlpha: 0, y: 40 });
-      gsap.set(phaseThreePanels, { yPercent: 8 });
+      gsap.set(phaseThreePanels, { yPercent: panelEnterOffset });
       gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, yPercent: 10 });
       phaseThreeImages.forEach((image, index) => {
         gsap.set(image, {
@@ -258,10 +333,11 @@ onMounted(async () => {
         });
       });
       gsap.set(cards, {
-        transformPerspective: 1600,
+        transformPerspective: isMobile ? 0 : 1600,
         transformOrigin: 'center center',
         autoAlpha: 0,
         yPercent: 14,
+        force3D: !isMobile,
       });
 
       gsap.from(heroFades, {
@@ -272,46 +348,49 @@ onMounted(async () => {
         ease: 'power3.out',
       });
 
-      const masterTimeline = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut' } });
+      const masterTimeline = gsap.timeline({
+        paused: true,
+        defaults: { ease: isMobile ? 'power2.out' : 'power2.inOut' },
+      });
 
       masterTimeline.addLabel('phase0', 0);
       masterTimeline
-        .to(heroOverlay.value, { opacity: 0.08, duration: 1.8 }, 0)
-        .to(heroIntro.value, { autoAlpha: 0, yPercent: -12, duration: 1.75 }, 0)
-        .to(heroShowcase.value, { autoAlpha: 1, duration: 1.2 }, 0.78)
+        .to(heroOverlay.value, { opacity: 0.08, duration: dur(1.8) }, 0)
+        .to(heroIntro.value, { autoAlpha: 0, yPercent: heroIntroShift, duration: dur(1.75) }, 0)
+        .to(heroShowcase.value, { autoAlpha: 1, duration: dur(1.2) }, 0.78)
         .to(cards, {
           autoAlpha: 1,
           yPercent: 0,
           rotationY: 0,
           rotation: 0,
           scale: 1,
-          duration: 1.8,
+          duration: dur(1.8),
           stagger: 0.22,
         }, 0.95)
-        .to(heroButton.value, { autoAlpha: 1, y: 0, duration: 1.15 }, 1.75)
+        .to(heroButton.value, { autoAlpha: 1, y: 0, duration: dur(1.15) }, 1.75)
         .addLabel('phase1', 2.35)
         .addLabel('phase2', 3.55)
-        .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: 1.4 }, 'phase2')
-        .to(heroOverlay.value, { opacity: 0.35, duration: 1.15 }, 'phase2')
-        .to(heroShowcase.value, { autoAlpha: 0, yPercent: -12, duration: 1.1 }, 'phase2')
-        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: 0.95 }, 'phase2')
-        .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: 1.2 }, 'phase2+=0.08')
-        .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.16 }, 'phase2+=0.2')
-        .to(phaseThreePanels, { yPercent: 0, duration: 1.2, stagger: 0.12 }, 'phase2+=0.14')
-        .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: 1.15, stagger: 0.14 }, 'phase2+=0.08')
+        .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: dur(1.4) }, 'phase2')
+        .to(heroOverlay.value, { opacity: 0.35, duration: dur(1.15) }, 'phase2')
+        .to(heroShowcase.value, { autoAlpha: 0, yPercent: heroIntroShift, duration: dur(1.1) }, 'phase2')
+        .to(heroButton.value, { autoAlpha: 0, y: -24, duration: dur(0.95) }, 'phase2')
+        .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: dur(1.2) }, 'phase2+=0.08')
+        .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: dur(1.1), stagger: 0.16 }, 'phase2+=0.2')
+        .to(phaseThreePanels, { yPercent: 0, duration: dur(1.2), stagger: 0.12 }, 'phase2+=0.14')
+        .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: dur(1.15), stagger: 0.14 }, 'phase2+=0.08')
         .addLabel('phase3', 5.45)
-        .to(heroGallery, { autoAlpha: 0, yPercent: -8, duration: 1.05 }, 'phase3')
-        .to(whyChooseSection, { autoAlpha: 1, yPercent: 0, duration: 1.05 }, 'phase3+=0.02')
-        .to(whyChooseHeading, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase3+=0.16')
-        .to(whyChoosePanels, { autoAlpha: 1, yPercent: 0, scale: 1, duration: 1, stagger: 0.12 }, 'phase3+=0.08')
-        .to(whyChooseCards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.95, stagger: 0.16 }, 'phase3+=0.22')
+        .to(heroGallery, { autoAlpha: 0, yPercent: -sectionEnterOffset, duration: dur(1.05) }, 'phase3')
+        .to(whyChooseSection, { autoAlpha: 1, yPercent: 0, duration: dur(1.05) }, 'phase3+=0.02')
+        .to(whyChooseHeading, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase3+=0.16')
+        .to(whyChoosePanels, { autoAlpha: 1, yPercent: 0, scale: 1, duration: dur(1), stagger: 0.12 }, 'phase3+=0.08')
+        .to(whyChooseCards, { autoAlpha: 1, y: 0, scale: 1, duration: dur(0.95), stagger: 0.16 }, 'phase3+=0.22')
         .addLabel('phase4', 7.3)
-        .to(whyChooseSection, { autoAlpha: 0, yPercent: -8, duration: 1 }, 'phase4')
-        .to(closingSection, { autoAlpha: 1, yPercent: 0, duration: 1.05 }, 'phase4+=0.02')
-        .to(closingHeading, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase4+=0.16')
-        .to([closingMap, closingForm], { autoAlpha: 1, y: 0, scale: 1, duration: 0.95, stagger: 0.14 }, 'phase4+=0.22')
-        .to(closingFooter, { autoAlpha: 1, y: 0, duration: 0.85 }, 'phase4+=0.34')
-        .to(closingCar, { autoAlpha: 1, xPercent: 0, scale: 1, duration: 1.2 }, 'phase4+=0.18');
+        .to(whyChooseSection, { autoAlpha: 0, yPercent: -sectionEnterOffset, duration: dur(1) }, 'phase4')
+        .to(closingSection, { autoAlpha: 1, yPercent: 0, duration: dur(1.05) }, 'phase4+=0.02')
+        .to(closingHeading, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase4+=0.16')
+        .to([closingMap, closingForm], { autoAlpha: 1, y: 0, scale: 1, duration: dur(0.95), stagger: 0.14 }, 'phase4+=0.22')
+        .to(closingFooter, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase4+=0.34')
+        .to(closingCar, { autoAlpha: 1, xPercent: 0, scale: 1, duration: dur(1.2) }, 'phase4+=0.18');
 
       phaseThreeImages.forEach((image) => {
         masterTimeline.to(image, {
@@ -353,28 +432,32 @@ onMounted(async () => {
         };
       }
 
-      if (cards[0]) {
-        masterTimeline.to(cards[0], { xPercent: -6, z: -40, duration: 1.8 }, 0.95);
+      if (!isMobile) {
+        if (cards[0]) {
+          masterTimeline.to(cards[0], { xPercent: -6, z: -40, duration: 1.8 }, 0.95);
+        }
+
+        if (cards[1]) {
+          masterTimeline.to(cards[1], { yPercent: -4, z: 80, scale: 1.04, duration: 1.8 }, 0.95);
+        }
+
+        if (cards[2]) {
+          masterTimeline.to(cards[2], { xPercent: 6, z: -40, duration: 1.8 }, 0.95);
+        }
       }
 
-      if (cards[1]) {
-        masterTimeline.to(cards[1], { yPercent: -4, z: 80, scale: 1.04, duration: 1.8 }, 0.95);
-      }
+      if (!isMobile) {
+        if (cards[0]) {
+          masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 1.35 }, 'phase2');
+        }
 
-      if (cards[2]) {
-        masterTimeline.to(cards[2], { xPercent: 6, z: -40, duration: 1.8 }, 0.95);
-      }
+        if (cards[1]) {
+          masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 1.35 }, 'phase2');
+        }
 
-      if (cards[0]) {
-        masterTimeline.to(cards[0], { xPercent: -42, yPercent: 14, rotationY: 32, rotation: -8, scale: 0.88, duration: 1.35 }, 'phase2');
-      }
-
-      if (cards[1]) {
-        masterTimeline.to(cards[1], { yPercent: -8, scale: 1.08, duration: 1.35 }, 'phase2');
-      }
-
-      if (cards[2]) {
-        masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 1.35 }, 'phase2');
+        if (cards[2]) {
+          masterTimeline.to(cards[2], { xPercent: 42, yPercent: 14, rotationY: -32, rotation: 8, scale: 0.88, duration: 1.35 }, 'phase2');
+        }
       }
 
       const phaseLabels: Record<PhaseIndex, 'phase0' | 'phase1' | 'phase2' | 'phase3' | 'phase4'> = {
@@ -409,8 +492,8 @@ onMounted(async () => {
         { phase: 1, offset: 0.09 },
       ];
 
-      const goToPhase = (nextPhase: PhaseIndex) => {
-        if (!heroSection.value || nextPhase === targetPhase) {
+      const goToPhase = (nextPhase: PhaseIndex, force = false) => {
+        if (!heroSection.value || (!force && nextPhase === targetPhase)) {
           return;
         }
 
@@ -434,6 +517,7 @@ onMounted(async () => {
         isTransitioning = true;
         targetPhase = nextPhase;
         ignoreWheelUntil = Date.now() + wheelIntentCooldown;
+        suppressSyncUntil = Date.now() + 120;
         currentScrollTween?.kill();
         currentPhaseTween?.kill();
 
@@ -442,16 +526,16 @@ onMounted(async () => {
         }
 
         currentScrollTween = gsap.to(window, {
-          scrollTo: targetY,
-          duration: phaseTransitionDuration,
-          ease: 'power2.out',
+          scrollTo: { y: targetY, autoKill: false },
+          duration: isMobile ? phaseTransitionDurationMobile : phaseTransitionDuration,
+          ease: isMobile ? 'power1.out' : 'power2.out',
           overwrite: true,
         });
 
         currentPhaseTween = gsap.to(masterTimeline, {
           time: targetTime,
-          duration: phaseTransitionDuration,
-          ease: 'power2.out',
+          duration: isMobile ? phaseTransitionDurationMobile : phaseTransitionDuration,
+          ease: isMobile ? 'power1.out' : 'power2.out',
           overwrite: true,
           onUpdate: () => {
             const progress = currentPhaseTween?.progress() ?? 0;
@@ -489,10 +573,23 @@ onMounted(async () => {
               closingScroll.scrollTop = 0;
             }
 
+            if (heroSection.value) {
+              const heroStart = heroSection.value.offsetTop;
+              const heroEnd = heroStart + heroSection.value.offsetHeight - window.innerHeight;
+              const totalDistance = heroEnd - heroStart;
+              if (totalDistance > 0) {
+                const targetY = heroStart + (totalDistance * phaseOffsets[nextPhase]);
+                if (Math.abs(window.scrollY - targetY) > 2) {
+                  window.scrollTo({ top: targetY, behavior: 'auto' });
+                }
+              }
+            }
+
             activePhase = nextPhase;
             targetPhase = nextPhase;
             isTransitioning = false;
             ignoreWheelUntil = Date.now() + 120;
+            suppressSyncUntil = Date.now() + 220;
             currentScrollTween = null;
             currentPhaseTween = null;
 
@@ -510,18 +607,20 @@ onMounted(async () => {
             currentScrollTween = null;
             currentPhaseTween = null;
             isTransitioning = false;
+            suppressSyncUntil = Date.now() + 120;
           },
         });
       };
 
       const syncTimelineToScroll = () => {
-        if (!heroSection.value || isTransitioning) {
+        if (!heroSection.value || isTransitioning || Date.now() < suppressSyncUntil) {
           return;
         }
 
         const heroStart = heroSection.value.offsetTop;
         const heroEnd = heroStart + heroSection.value.offsetHeight - window.innerHeight;
         const totalDistance = heroEnd - heroStart;
+        const withinHero = window.scrollY >= heroStart && window.scrollY <= heroEnd;
 
         if (totalDistance <= 0) {
           return;
@@ -546,12 +645,18 @@ onMounted(async () => {
         const galleryMaxScrollTop = galleryEl ? Math.max(0, galleryEl.scrollHeight - galleryEl.clientHeight) : 0;
         const closingEl = closingScroll;
         const closingMaxScrollTop = closingEl ? Math.max(0, closingEl.scrollHeight - closingEl.clientHeight) : 0;
+        const galleryLocked = getGalleryLock(progress, galleryEl, galleryMaxScrollTop);
         let desiredPhase: PhaseIndex = 0;
 
-        for (const threshold of phaseThresholds) {
-          if (progress >= threshold.offset) {
-            desiredPhase = threshold.phase;
-            break;
+        if (galleryLocked) {
+          desiredPhase = 2;
+        }
+        else {
+          for (const threshold of phaseThresholds) {
+            if (progress >= threshold.offset) {
+              desiredPhase = threshold.phase;
+              break;
+            }
           }
         }
 
@@ -635,6 +740,63 @@ onMounted(async () => {
 
         activePhase = desiredPhase;
         targetPhase = desiredPhase;
+
+        clearScrollSnap();
+        if (withinHero) {
+          scrollSnapTimer = setTimeout(() => {
+            if (isTransitioning) {
+              return;
+            }
+            let nearestPhase = getNearestPhase(progress);
+            if (galleryLocked && nearestPhase > 2) {
+              nearestPhase = 2;
+            }
+            if (nearestPhase !== activePhase) {
+              goToPhase(nearestPhase);
+              return;
+            }
+            if (shouldForceSnap(progress, activePhase)) {
+              goToPhase(activePhase, true);
+            }
+          }, isMobile ? 220 : 140);
+        }
+      };
+
+      const onTouchEnd = () => {
+        if (!heroSection.value || isTransitioning) {
+          return;
+        }
+        const heroStart = heroSection.value.offsetTop;
+        const heroEnd = heroStart + heroSection.value.offsetHeight - window.innerHeight;
+        const withinHero = window.scrollY >= heroStart && window.scrollY <= heroEnd;
+        if (!withinHero) {
+          return;
+        }
+        const totalDistance = heroEnd - heroStart;
+        if (totalDistance <= 0) {
+          return;
+        }
+        clearTouchSnap();
+        touchSnapTimer = setTimeout(() => {
+          if (isTransitioning) {
+            return;
+          }
+          const progress = gsap.utils.clamp(0, 1, (window.scrollY - heroStart) / totalDistance);
+          const galleryEl = heroGalleryScroll;
+          const galleryMaxScrollTop = galleryEl ? Math.max(0, galleryEl.scrollHeight - galleryEl.clientHeight) : 0;
+          const galleryLocked = getGalleryLock(progress, galleryEl, galleryMaxScrollTop);
+          let nearestPhase = getNearestPhase(progress);
+          if (galleryLocked && nearestPhase > 2) {
+            nearestPhase = 2;
+          }
+          if (nearestPhase !== activePhase) {
+            goToPhase(nearestPhase);
+            return;
+          }
+          if (shouldForceSnap(progress, activePhase)) {
+            goToPhase(activePhase, true);
+          }
+        }, 120);
       };
 
       const onWheel = (event: WheelEvent) => {
@@ -721,11 +883,15 @@ onMounted(async () => {
 
       window.addEventListener('wheel', onWheel, { passive: false });
       window.addEventListener('scroll', syncTimelineToScroll, { passive: true });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
       removeHeroWheelSnap = () => {
         window.removeEventListener('wheel', onWheel);
       };
       removeHeroScrollSync = () => {
         window.removeEventListener('scroll', syncTimelineToScroll);
+      };
+      removeHeroTouchSnap = () => {
+        window.removeEventListener('touchend', onTouchEnd);
       };
 
       syncTimelineToScroll();
@@ -740,6 +906,9 @@ onMounted(async () => {
       removeHeroWheelSnap = null;
       removeHeroScrollSync?.();
       removeHeroScrollSync = null;
+      removeHeroTouchSnap?.();
+      clearTouchSnap();
+      clearScrollSnap();
       ctx.revert();
     };
   });
@@ -753,6 +922,10 @@ onMounted(async () => {
     removeHeroWheelSnap = null;
     removeHeroScrollSync?.();
     removeHeroScrollSync = null;
+    removeHeroTouchSnap?.();
+    removeHeroTouchSnap = null;
+    clearTouchSnap();
+    clearScrollSnap();
     gsap.set([heroShowcase.value, heroButton.value, heroIntro.value], { clearProps: 'all' });
     gsap.set('.js-hero-card', { clearProps: 'all' });
     gsap.set(['.js-why-choose-us', '.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], { clearProps: 'all' });
@@ -769,6 +942,8 @@ onBeforeUnmount(() => {
   removeHeroWheelSnap = null;
   removeHeroScrollSync?.();
   removeHeroScrollSync = null;
+  removeHeroTouchSnap?.();
+  removeHeroTouchSnap = null;
   mm?.revert();
   mm = null;
 
