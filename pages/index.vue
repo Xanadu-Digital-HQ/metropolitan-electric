@@ -91,6 +91,8 @@ const vehicleDeck = ref<HTMLElement | null>(null);
 
 let mm: gsap.MatchMedia | null = null;
 let removeHeroScrollTrigger: (() => void) | null = null;
+let heroScrollTrigger: ScrollTrigger | null = null;
+const route = useRoute();
 
 const hasClientLoadedAssets = ref(false);
 const hasSplashVideoFinished = ref(false);
@@ -148,6 +150,53 @@ const onSplashVideoEnded = () => {
   hasSplashVideoFinished.value = true;
 };
 
+const phaseScrollProgress = {
+  intro: 0,
+  gallery: 0.22,
+  why: 0.55,
+  contact: 0.7,
+} as const;
+const phaseScrollPositions = ref<Partial<Record<keyof typeof phaseScrollProgress, number>>>({});
+
+const getPhaseQueryValue = (phase: typeof route.query.phase) => {
+  if (Array.isArray(phase)) {
+    return typeof phase[0] === 'string' ? phase[0] : undefined;
+  }
+
+  return typeof phase === 'string' ? phase : undefined;
+};
+
+const scrollToPhase = (phase: string | null | undefined) => {
+  if (!import.meta.client || !heroSection.value || !phase) {
+    return;
+  }
+
+  const mappedScrollTop = phaseScrollPositions.value[phase as keyof typeof phaseScrollPositions.value];
+
+  window.scrollTo({
+    top: typeof mappedScrollTop === 'number'
+      ? mappedScrollTop
+      : (() => {
+          const progress = phaseScrollProgress[phase as keyof typeof phaseScrollProgress];
+
+          if (typeof progress !== 'number') {
+            return window.scrollY;
+          }
+
+          const rect = heroSection.value!.getBoundingClientRect();
+          const sectionTop = window.scrollY + rect.top;
+          const scrollableDistance = Math.max(0, heroSection.value!.offsetHeight - window.innerHeight);
+          return sectionTop + (scrollableDistance * progress);
+        })(),
+    behavior: 'smooth',
+  });
+};
+
+const handlePhaseNavigation = (event: Event) => {
+  const phase = (event as CustomEvent<string>).detail;
+  scrollToPhase(phase);
+};
+
 const waitForWindowLoad = () => new Promise<void>((resolve) => {
   if (document.readyState === 'complete') {
     resolve();
@@ -198,6 +247,14 @@ onMounted(async () => {
 
   if (!pageRoot.value || !heroSection.value) {
     return;
+  }
+
+  const initialPhase = getPhaseQueryValue(route.query.phase);
+
+  if (typeof initialPhase === 'string') {
+    setTimeout(() => {
+      scrollToPhase(initialPhase);
+    }, 150);
   }
 
   mm = gsap.matchMedia();
@@ -303,6 +360,36 @@ onMounted(async () => {
       const masterTimeline = gsap.timeline({
         defaults: { ease: isMobile ? 'power2.out' : 'power2.inOut' },
       });
+      const syncPhaseScrollPositions = () => {
+        if (!heroScrollTrigger) {
+          return;
+        }
+
+        const duration = masterTimeline.duration();
+        const start = Number(heroScrollTrigger.start);
+        const end = Number(heroScrollTrigger.end);
+
+        if (!Number.isFinite(duration) || !Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+          return;
+        }
+
+        const getLabelScroll = (label: string) => {
+          const time = masterTimeline.labels[label];
+
+          if (typeof time !== 'number') {
+            return undefined;
+          }
+
+          return start + (((end - start) * time) / duration);
+        };
+
+        phaseScrollPositions.value = {
+          intro: start,
+          gallery: getLabelScroll('phase1Nav') ?? getLabelScroll('phase1'),
+          why: getLabelScroll('phase3Nav') ?? getLabelScroll('phase3'),
+          contact: getLabelScroll('phase4Nav') ?? getLabelScroll('phase4'),
+        };
+      };
 
       const galleryScrollDuration = isMobile ? 7.8 : 4.2;
       const closingScrollDuration = isMobile ? 7.2 : 5.2;
@@ -349,12 +436,14 @@ onMounted(async () => {
         }, 0.7)
         .to(heroButton.value, { autoAlpha: 1, y: 0, duration: dur(0.95) }, 0.7)
         .addLabel('phase1', 2.35)
+        .addLabel('phase1Nav', 1.9)
         .addLabel('phase2', 3.55)
         .to(heroBackdrop.value, { autoAlpha: 0.2, scale: 1.12, yPercent: 6, duration: dur(1.4) }, 'phase2')
         .to(heroOverlay.value, { opacity: 0.35, duration: dur(1.15) }, 'phase2')
         .to(heroShowcase.value, { autoAlpha: 0, yPercent: heroIntroShift, duration: dur(1.1) }, 'phase2')
         .to(heroButton.value, { autoAlpha: 0, y: -24, duration: dur(0.95) }, 'phase2')
         .to(heroGallery, { autoAlpha: 1, yPercent: 0, duration: dur(1.2) }, 'phase2+=0.08')
+        .addLabel('phase2Nav', 'phase2+=0.85')
         .to(phaseThreeCopies, { autoAlpha: 1, y: 0, duration: dur(1.1), stagger: 0.16 }, 'phase2+=0.2')
         .to(phaseThreePanels, { yPercent: 0, duration: dur(1.2), stagger: 0.12 }, 'phase2+=0.14')
         .to(phaseThreeImageWrappers, { autoAlpha: 1, yPercent: 0, duration: dur(1.15), stagger: 0.14 }, 'phase2+=0.08')
@@ -366,12 +455,14 @@ onMounted(async () => {
         .addLabel('phase3', `phase2+=${galleryScrollDuration + 1.4}`)
         .to(heroGallery, { autoAlpha: 0, yPercent: -sectionEnterOffset, duration: dur(1.05) }, 'phase3')
         .to(whyChooseSection, { autoAlpha: 1, yPercent: 0, duration: dur(1.05) }, 'phase3+=0.02')
+        .addLabel('phase3Nav', 'phase3+=0.95')
         .to(whyChooseHeading, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase3+=0.16')
         .to(whyChoosePanels, { autoAlpha: 1, yPercent: 0, scale: 1, duration: dur(1), stagger: 0.12 }, 'phase3+=0.08')
         .to(whyChooseCards, { autoAlpha: 1, y: 0, scale: 1, duration: dur(0.95), stagger: 0.16 }, 'phase3+=0.22')
         .addLabel('phase4', 'phase3+=1.9')
         .to(whyChooseSection, { autoAlpha: 0, yPercent: -sectionEnterOffset, duration: dur(1) }, 'phase4')
         .to(closingSection, { autoAlpha: 1, yPercent: 0, duration: dur(1.05) }, 'phase4+=0.02')
+        .addLabel('phase4Nav', 'phase4+=1.05')
         .to(closingHeading, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase4+=0.16')
         .to([closingMap, closingForm], { autoAlpha: 1, y: 0, scale: 1, duration: dur(0.95), stagger: 0.14 }, 'phase4+=0.22')
         .to(closingFooter, { autoAlpha: 1, y: 0, duration: dur(0.85) }, 'phase4+=0.34')
@@ -417,7 +508,7 @@ onMounted(async () => {
         }
       }
 
-      const scrollTrigger = ScrollTrigger.create({
+      heroScrollTrigger = ScrollTrigger.create({
         trigger: heroSection.value,
         start: 'top top',
         end: () => {
@@ -438,12 +529,16 @@ onMounted(async () => {
           gsap.set(closingTrack, { y: 0 });
           masterTimeline.invalidate();
           syncGalleryParallax();
+          syncPhaseScrollPositions();
         },
       });
 
       removeHeroScrollTrigger = () => {
-        scrollTrigger.kill();
+        heroScrollTrigger?.kill();
+        heroScrollTrigger = null;
       };
+
+      syncPhaseScrollPositions();
     }, page);
 
     ScrollTrigger.refresh();
@@ -466,6 +561,10 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+  if (import.meta.client) {
+    window.removeEventListener('home-phase-nav', handlePhaseNavigation as EventListener);
+  }
+
   removeHeroScrollTrigger?.();
   removeHeroScrollTrigger = null;
   mm?.revert();
@@ -483,4 +582,25 @@ watch(showSplash, (isVisible) => {
 
   document.body.style.overflow = isVisible ? 'hidden' : '';
 }, { immediate: true });
+
+onMounted(() => {
+  if (import.meta.client) {
+    window.addEventListener('home-phase-nav', handlePhaseNavigation as EventListener);
+  }
+});
+
+watch(
+  () => route.query.phase,
+  (phase) => {
+    const normalizedPhase = getPhaseQueryValue(phase);
+
+    if (typeof normalizedPhase !== 'string') {
+      return;
+    }
+
+    setTimeout(() => {
+      scrollToPhase(normalizedPhase);
+    }, 50);
+  },
+);
 </script>

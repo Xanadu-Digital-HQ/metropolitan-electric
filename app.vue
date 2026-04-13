@@ -1,7 +1,9 @@
 <template>
   <div class="overflow-visible">
     <NavBar class="fixed top-4 w-full z-30" />
+    <NavPhaseWheelMenu />
     <NuxtLayout  />
+
   </div>
 </template>
 
