@@ -2,7 +2,7 @@
 import type { Card, Media } from '~/types/types';
 const route = useRoute();
 
-const { data: posts } = await useAsyncData('posts', () => queryContent('/media-center').find());
+const { data: posts } = await useAsyncData('posts', () => queryCollection('mediaCenter').all());
 
 const cards: Card[] = [
   {

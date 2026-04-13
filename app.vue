@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-visible">
-    <NavBar class="fixed top-6 w-full z-30" />
+    <NavBar class="fixed top-4 w-full z-30" />
     <NuxtLayout  />
   </div>
 </template>
@@ -12,7 +12,7 @@ useHead({
   script: [
     {
       type: "application/ld+json",
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: "Metropolitan Electric Limited",

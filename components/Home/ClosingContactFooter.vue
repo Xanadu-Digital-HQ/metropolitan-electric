@@ -12,21 +12,21 @@
     <img
       src="/car_image.png"
       alt=""
-      class="js-home-closing-car pointer-events-none absolute left-[8%] top-[8%] hidden w-[42rem] max-w-[46vw] opacity-18 blur-[0.5px] lg:block"
+      class="js-home-closing-car pointer-events-none absolute left-[8%] top-[8%] hidden w-2xl max-w-[46vw] opacity-18 blur-[0.5px] lg:block"
     />
 
     <div
       :class="
         overlay
-          ? 'js-home-closing-scroll h-full overflow-y-auto'
-          : 'js-home-closing-scroll min-h-screen overflow-y-auto'
+          ? 'js-home-closing-scroll h-full overflow-hidden'
+          : 'js-home-closing-scroll min-h-screen overflow-hidden'
       "
     >
-      <div class="flex min-h-full flex-col">
+      <div class="js-home-closing-track flex min-h-full flex-col will-change-transform pt-10 sm:pt-16 lg:pt-20 pb-10 sm:pb-14 lg:pb-20 mt-10 md:mt-0">
         <div :class="container" class="js-home-closing-content flex-1 py-12 sm:py-16 lg:py-20">
           <div class="grid gap-8 lg:grid-cols-[0.98fr_1.35fr]">
           <div
-            class="js-home-closing-form relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#0b1217]/78 p-6 shadow-[0_24px_64px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-8"
+            class="js-home-closing-form relative overflow-hidden rounded-4xl border border-white/12 bg-[#0b1217]/78 p-6 shadow-[0_24px_64px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-8"
           >
             <div
               class="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-[#7397b5]/14 blur-3xl"
@@ -42,7 +42,7 @@
             >
               Reach the team behind Africa's next electric movement.
             </h2>
-            <p class="mt-2 max-w-md font-poppins text-sm leading-7 text-white/72 sm:text-base">
+            <p class="mt-2 max-w-md font-poppins text-sm md:leading-7 text-white/72 sm:text-base">
               Share your project, fleet plan, or partnership enquiry and we will get back to you
               with the right next step.
             </p>
@@ -85,7 +85,7 @@
                 <textarea
                   rows="4"
                   name="message"
-                  class="w-full resize-none rounded-[1.5rem] border border-white/12 bg-white/10 px-4 py-3 font-poppins text-sm text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-white/25"
+                  class="w-full resize-none rounded-3xl border border-white/12 bg-white/10 px-4 py-3 font-poppins text-sm text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-white/25"
                   placeholder="Tell us a little about your request."
                   required
                 />
@@ -96,7 +96,7 @@
                   id="closing-consent"
                   v-model="checkBox"
                   type="checkbox"
-                  class="mt-1 h-4 w-4 rounded border-white/20 bg-white/8 accent-brand focus:ring-white/30"
+                  class="mt-1 h-4 w-4 rounded-md border-white/20 bg-white/8 accent-brand focus:ring-white/30"
                   required
                 />
                 <label for="closing-consent" class="font-poppins text-xs leading-6 text-white/60">
@@ -129,13 +129,13 @@
           </div>
 
           <div
-            class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#14202a] shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
+            class="relative overflow-hidden rounded-4xl border border-white/10 bg-[#14202a] shadow-[0_30px_80px_rgba(0,0,0,0.28)]"
           >
             <div
               class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]"
             />
             <iframe
-              class="js-home-closing-map h-[24rem] w-full sm:h-[28rem] lg:h-full lg:min-h-[34rem]"
+              class="js-home-closing-map h-96 w-full sm:h-112 lg:h-full lg:min-h-136"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.730220431644!2d3.433507975679751!3d6.428694524256389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf535ed0cc7ab%3A0x4601420b48fe9092!2s77%20Sinari%20Daranijo%20St%2C%20Victoria%20Island%2C%20Lagos%20106104%2C%20Lagos!5e0!3m2!1sen!2sng!4v1720609776367!5m2!1sen!2sng"
               style="border: 0"
               allowfullscreen
@@ -146,7 +146,7 @@
         </div>
         </div>
 
-        <div class="mt-auto pt-10 lg:pt-14">
+        <div class="mt-auto pt-10 lg:pt-14 pb-10 sm:pb-14 lg:pb-20">
           <Footer class="js-home-closing-footer min-h-56 border-t border-white/8 lg:min-h-64" />
         </div>
       </div>

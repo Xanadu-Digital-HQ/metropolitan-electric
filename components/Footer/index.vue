@@ -15,10 +15,10 @@
       <div class="grid gap-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,2fr)] lg:gap-16">
         <div class="js-home-footer-copy max-w-md">
           <div class="flex items-center gap-4">
-            <img src="/logo.svg" alt="Metropolitan Electric" class="h-12 w-auto invert" />
+            <img src="/logo.svg" alt="Metropolitan Electric" class="h-10 md:h-12 w-auto invert" />
           </div>
 
-          <p class="mt-8 max-w-sm font-noto text-base leading-8 text-white/76">
+          <p class="mt-8 max-w-sm font-noto text-sm md:text-base md:leading-8 text-white/76">
             We are committed to revolutionizing transportation in Africa by delivering cutting-edge electric vehicles and sustainable mobility solutions.
           </p>
 
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div class="grid gap-10 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <div class="js-home-footer-column">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Explore
@@ -86,11 +86,11 @@
             </div>
           </div>
 
-          <div class="js-home-footer-column">
+          <div class="js-home-footer-column sm:col-span-2 lg:col-span-1">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Contact Info
             </p>
-            <div class="mt-5 space-y-5 font-poppins leading-8 text-white/84">
+            <div class="mt-5 space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base">
               <p>77 Sinari Daranijo St,Victoria Island, Lagos 106104, Lagos.</p>
               <a href="mailto:ev@metropolitanelectricng.com" :class="footerLinkStyle">
                 ev@metropolitanelectricng.com

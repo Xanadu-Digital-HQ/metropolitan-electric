@@ -13,5 +13,16 @@ export default defineContentConfig({
         minutesRead: z.number(),
       }),
     }),
+    mediaCenter: defineCollection({
+      type: "page",
+      source: "media-center/**/*.md",
+      schema: z.object({
+        content: z.string(),
+        tags: z.array(z.string()).optional(),
+        image: z.string().optional(),
+        date: z.string().optional(),
+        minutesRead: z.number().optional(),
+      }),
+    }),
   },
 });

@@ -19,15 +19,15 @@
       class="js-why-choose-panel panel-float-slow pointer-events-none absolute right-[10%] top-40 hidden h-[54%] w-[22%] border-l border-r border-white/55 bg-white/18 md:block"
     />
 
-    <div :class="overlay ? 'relative flex h-full items-center' : 'relative mx-auto max-w-7xl'">
+    <div :class="overlay ? 'relative flex h-full md:items-center' : 'relative mx-auto max-w-7xl'">
       <div :class="overlay ? 'mx-auto w-full max-w-7xl' : 'w-full'">
-        <div class="js-why-choose-heading">
-          <h2 class="font-opensans text-4xl font-semibold tracking-[-0.04em] text-brand sm:text-5xl">
+        <div class="js-why-choose-heading mt-14 md:mt-4">
+          <h2 class="font-opensans text-2xl md:text-4xl font-semibold tracking-[-0.04em] text-brand sm:text-5xl">
             Why Choose Us?
           </h2>
         </div>
 
-        <div class="relative mt-10 min-h-[30rem] sm:min-h-[32rem] lg:min-h-[24rem]">
+        <div class="relative mt-10 min-h-120 sm:min-h-128 lg:min-h-96">
           <Transition name="why-choose-stage" mode="out-in">
             <div
               :key="activePairIndex"
@@ -36,7 +36,7 @@
               <article
                 v-for="item in visibleItems"
                 :key="item.title"
-                class="js-why-choose-card group relative flex min-h-88 items-center justify-center px-6 py-10 transition-transform duration-500 will-change-transform hover:-translate-y-2 sm:px-8"
+                class="js-why-choose-card group relative flex md:min-h-88 items-center justify-center px-6 py-10 transition-transform duration-500 will-change-transform hover:-translate-y-2 sm:px-8"
               >
                 <div class="absolute inset-x-5 inset-y-0 bg-white/18 backdrop-blur-[1px] transition-all duration-500 group-hover:bg-white/25" />
 
@@ -45,15 +45,15 @@
 
                 <div class="relative z-10 mx-auto flex max-w-md flex-col items-center text-center">
                   <div
-                    class="icon-float mb-6 flex size-12 md:size-16 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#5a7693,#243b4f_72%)] text-white shadow-[0_18px_36px_rgba(36,59,79,0.22)] transition-transform duration-500 group-hover:scale-110"
+                    class="icon-float mb-6 flex size-10 md:size-16 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#5a7693,#243b4f_72%)] text-white shadow-[0_18px_36px_rgba(36,59,79,0.22)] transition-transform duration-500 group-hover:scale-110"
                   >
                     <component :is="item.icon" class="size-4 sm:size-7" weight="fill" />
                   </div>
 
-                  <h3 class="font-opensans text-xl md:text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1">
+                  <h3 class="font-opensans text-lg md:text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1">
                     {{ item.title }}
                   </h3>
-                  <p class="text-sm mt-4 max-w-sm font-poppins md:text-base md:leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80">
+                  <p class="text-xs mt-2 md:mt-4 max-w-sm font-poppins md:text-base md:leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80">
                     {{ item.description }}
                   </p>
                 </div>
@@ -83,7 +83,7 @@ withDefaults(defineProps<{
 });
 
 const activePairIndex = ref(0);
-let cycleInterval: ReturnType<typeof setInterval> | null = null;
+let cycleInterval: number | null = null;
 
 const items = [
   {
@@ -139,7 +139,7 @@ const visibleItems = computed(() => itemPairs.value[activePairIndex.value] ?? it
 onMounted(() => {
   cycleInterval = window.setInterval(() => {
     activePairIndex.value = (activePairIndex.value + 1) % itemPairs.value.length;
-  }, 4200);
+  }, 5000);
 });
 
 onBeforeUnmount(() => {
@@ -166,21 +166,49 @@ onBeforeUnmount(() => {
 .why-choose-stage-enter-active,
 .why-choose-stage-leave-active {
   transition:
-    opacity 0.55s ease,
-    transform 0.55s ease,
-    filter 0.55s ease;
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
 }
 
-.why-choose-stage-enter-from {
+.why-choose-stage-enter-from .js-why-choose-card {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(28px, 0, 0);
   filter: blur(8px);
 }
 
-.why-choose-stage-leave-to {
+.why-choose-stage-enter-active .js-why-choose-card {
+  transition:
+    opacity 0.95s ease,
+    transform 1.15s ease,
+    filter 0.95s ease;
+}
+
+.why-choose-stage-enter-active .js-why-choose-card:nth-child(1) {
+  transition-delay: 0.18s;
+}
+
+.why-choose-stage-enter-active .js-why-choose-card:nth-child(2) {
+  transition-delay: 0.55s;
+}
+
+.why-choose-stage-enter-to .js-why-choose-card {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.why-choose-stage-leave-active .js-why-choose-card {
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    filter 0.45s ease;
+}
+
+.why-choose-stage-leave-to .js-why-choose-card {
   opacity: 0;
-  transform: translate3d(0, -12px, 0);
-  filter: blur(8px);
+  transform: translate3d(-18px, 0, 0);
+  filter: blur(6px);
 }
 
 @keyframes panel-float-slow {

@@ -3,7 +3,7 @@ export default () => {
     navLinkStyle:
       'text-white text-sm font-noto hover:text-white/60 relative p-1 z-10 transition duration-200 cursor-pointer',
     footerLinkStyle:
-      'text-white/90 text-base font-opensans hover:text-white/60 relative py-1 z-10 transition duration-200 cursor-pointer',
+      'text-white/90 text-sm md:text-base font-opensans hover:text-white/60 relative  md:py-1 z-10 transition duration-200 cursor-pointer',
     container: 'max-w-full sm:max-w-3xl lg:max-w-368 mx-auto px-5 md:px-5',
     transition: 'transition ease-out duration-300 ',
     heading:
