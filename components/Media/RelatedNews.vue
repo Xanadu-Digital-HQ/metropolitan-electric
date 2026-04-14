@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-20 w-full">
     <div
-      class="flex flex-col gap-5 w-full order-last md:order-first p-0 md:p-2 bg-accent/5"
+      class="page-reveal page-reveal-soft flex flex-col gap-5 w-full order-last md:order-first p-0 md:p-2 bg-accent/5"
     >
       <h2 class="text-xl font-semibold">Related News</h2>
       <ContentList path="/media-center" v-slot="{ list }">
@@ -45,7 +45,7 @@
       </ContentList>
     </div>
 
-    <div class="flex flex-col gap-2.5 order-first md:order-last p-0 md:p-2">
+    <div class="page-reveal page-reveal-soft reveal-delay-1 flex flex-col gap-2.5 order-first md:order-last p-0 md:p-2">
       <h2 class="text-lg font-semibold">Follow Us</h2>
       <div class="flex gap-2">
         <NuxtLink

@@ -104,6 +104,7 @@
 </template>
 
 <script lang="ts" setup>
+import {URLS} from '~/utils/constants';
 import {
   PhFacebookLogo,
   PhInstagramLogo,
@@ -120,21 +121,21 @@ withDefaults(defineProps<{
 const { container, footerLinkStyle } = useTailwindConfig();
 
 const exploreLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'Services', href: '/services' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Home', href: URLS.HOME },
+  { label: 'Gallery', href: URLS.GALLERY },
+  { label: 'Services', href: URLS.SERVICES },
+  { label: 'Contact', href: URLS.CONTACT },
 ] as const;
 
 const otherLinks = [
-  { label: 'About', href: '/#about' },
-  { label: 'Media Center', href: '/media-center' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: URLS.ABOUT },
+  { label: 'Media Center', href: URLS.MEDIA },
+  { label: 'Blog', href: URLS.BLOG },
 ] as const;
 
 const vehicleLinks = [
-  { label: 'E-Bus', href: '/green-fleet' },
-  { label: 'E-Car', href: '/ryde' },
+  { label: 'E-Bus', href: URLS.GREENFLEET },
+  { label: 'E-Car', href: URLS.RYDE },
 ] as const;
 
 const socials = [

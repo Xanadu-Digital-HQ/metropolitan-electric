@@ -1,7 +1,7 @@
 <template>
   <div v-if="currentBlog" class="py-20 space-y-20 w-full">
     <div class="relative flex flex-col gap-5 md:gap-10 w-full">
-      <div class="flex flex-col items-center gap-5">
+      <div class="page-reveal reveal-delay-1 flex flex-col items-center gap-5">
         <h1 class="text-3xl text-center max-w-2xl w-full text-[#113a13]">
           {{ currentBlog.title }}
         </h1>
@@ -11,7 +11,7 @@
           <p class="italic">{{ currentBlog.minutesRead }} minutes</p>
         </div>
       </div>
-      <div class="relative w-full h-[500px]">
+      <div class="page-reveal reveal-delay-2 relative w-full h-[500px]">
         <img
           class="size-full object-cover"
           :src="currentBlog.image"
@@ -20,7 +20,7 @@
       </div>
       <div class="grid grid-cols-6 md:grid-cols-12 w-full gap-8 items-start">
         <div
-          class="md:sticky md:top-24 flex flex-col gap-10 col-span-6 md:col-span-4"
+          class="page-reveal reveal-delay-3 md:sticky md:top-24 flex flex-col gap-10 col-span-6 md:col-span-4"
         >
           <div class="flex flex-col gap-2.5">
             <p class="font-semibold text-lg">Table of Content</p>
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-6 md:col-span-8">
+        <div class="page-reveal reveal-delay-4 col-span-6 md:col-span-8">
           <ProseWrapper v-if="currentBlog">
             <ContentRenderer :value="currentBlog" />
           </ProseWrapper>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ArrowUpRightIcon } from "@heroicons/vue/20/solid";
-import { CalendarDaysIcon } from "@heroicons/vue/24/outline";
+import { ArrowRightIcon } from "@heroicons/vue/20/solid";
+import type { Blog } from "~/types/types";
 
 const { container } = useTailwindConfig();
 
@@ -17,28 +17,28 @@ const tags = [
   "Nigeria",
 ];
 
-const filteredBlogs = ref();
-const loadingBlogs = ref(false);
+const filteredBlogs = ref<Blog[] | null>(null);
 const activeTag = ref("All");
-const items: Ref<Record<string, any>[]> = ref([]);
+const { data: blogItems } = await useAsyncData<Blog[]>("blog-posts", () =>
+  queryCollection("blog").all()
+);
+
+const blogs = computed(() => [...(blogItems.value ?? [])].reverse());
+const featuredBlog = computed(() =>
+  blogs.value[0] ?? null
+);
+const secondaryBlogs = computed(() => blogs.value.slice(1, 4));
+
+const items: Ref<Blog[]> = ref([]);
 
 const filterBlogs = async (tag: string) => {
-  loadingBlogs.value = true;
   filteredBlogs.value = null;
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const { data } = await useAsyncData("filtered-blogs", async () => {
-    items.value = queryCollection("blog").all();
-    if (tag === "All") {
-      return items.value;
-    } else {
-      return items.value.filter((item: object) => item.tags?.includes(tag));
-    }
-  });
-
-  filteredBlogs.value = data.value;
-  loadingBlogs.value = false;
+  items.value = blogs.value;
+  filteredBlogs.value =
+    tag === "All"
+      ? items.value
+      : items.value.filter((item) => item.tags?.includes(tag));
 };
 
 const filter = (tag: string) => {
@@ -63,126 +63,135 @@ useSeoMeta({
 </script>
 
 <template>
-  <div :class="container" class="py-20 space-y-20">
-    <div class="space-y-10">
-      <div class="flex flex-col gap-2.5">
-        <h1 class="text-[#113912] text-3xl md:text-4xl">Blog & Articles</h1>
-        <p class="text-[#1C6220] text-lg sm:text-xl">
-          Insights, Stories, and Expert Opinions on Industry Trends
-        </p>
-      </div>
+  <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.12),transparent_28%),radial-gradient(circle_at_85%_12%,rgba(16,25,32,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
 
-      <div class="flex flex-col gap-2.5">
-        <ContentRenderer v-if="blogs" path="/blog" :value="blogs">
-          <div class="relative flex flex-col h-[500px] w-full justify-end">
-            <NuxtLink
-              :to="blogs[blogs.length - 1].path"
-              class="group relative flex flex-col h-[500px] w-full"
-            >
-              <div class="relative flex overflow-clip h-full items-end">
-                <img
-                  class="absolute top-0 left-0 size-full object-cover group-hover:scale-110 transition-all duration-200"
-                  :src="blogs[blogs.length - 1].image"
-                  alt="Green Drive Image"
-                />
-                <div
-                  class="relative flex flex-col gap-4 md:gap-6 p-2.5 md:p-5 bg-black/40 backdrop-blur-sm overflow-hidden h-fit"
-                >
-                  <div
-                    class="flex gap-2.5 w-full justify-between items-start transition-all duration-500 ease-in-out"
-                  >
-                    <div class="flex flex-col gap-1.5 md:gap-2.5">
-                      <h1
-                        class="text-white text-xl md:text-2xl font-main font-semibold md:font-bold max-w-[80%]"
-                      >
-                        {{ blogs[blogs.length - 1].title }}
-                      </h1>
-                      <p
-                        class="text-white text-sm sm:text-base md:text-lg font-noto line-clamp-2"
-                      >
-                        {{ blogs[blogs.length - 1].description }}
-                      </p>
-                    </div>
-                    <div
-                      class="flex items-center justify-center p-1.5 size-fit bg-black/80 rounded-full"
-                    >
-                      <ArrowUpRightIcon
-                        class="size-4 md:size-6 text-white shrink-0"
-                      />
-                    </div>
-                  </div>
+    <section :class="container" class="flex flex-col gap-14 py-28 md:py-32">
+      <div class="page-reveal reveal-delay-1 space-y-8">
+        <div class="space-y-6">
+          <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
+            Blog & Articles
+          </p>
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+            A cleaner editorial layer for EV thinking, operations and strategy.
+          </h1>
+          <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
+            Explore articles on electric fleets, charging, sustainability and the business logic shaping mobility in Africa.
+          </p>
+        </div>
 
-                  <div
-                    class="flex flex-wrap gap-2.5 justify-between items-center"
-                  >
-                    <div class="flex justify-between items-center gap-2">
-                      <div class="flex gap-2.5 items-center">
-                        <div
-                          class="flex justify-center items-center rounded-full bg-[#101920] p-1.5 size-fit"
-                        >
-                          <img
-                            class="size-4 md:size-5"
-                            src="/wheel.svg"
-                            alt="Logo Wheel Image"
-                          />
-                        </div>
-                        <p class="text-white text-sm sm:text-base md:text-lg">
-                          Metropolitan Electric
-                        </p>
-                      </div>
-                      <div class="flex items-center gap-1.5">
-                        <div
-                          class="flex justify-center items-center border rounded-full border-white size-7 p-1"
-                        >
-                          <CalendarDaysIcon class="size-fit text-white" />
-                        </div>
-                        <p class="text-white text-sm md:text-lg">
-                          {{ blogs[blogs.length - 1].date }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex flex-wrap gap-1.5 items-center">
-                      <p
-                        v-for="tag in blogs[blogs.length - 1].tags"
-                        :key="tag"
-                        class="text-white hover:underline text-sm md:text-base"
-                      >
-                        #{{ tag }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </NuxtLink>
+        <div class="grid gap-4 sm:grid-cols-3 lg:max-w-3xl lg:ml-auto">
+          <div class="rounded-[1.75rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm">
+            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Articles</p>
+            <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">{{ blogs.length }}</p>
           </div>
-        </ContentRenderer>
-      </div>
-    </div>
-
-    <div class="space-y-10">
-      <div class="flex">
-        <div class="tag-container-scroll flex gap-5 overflow-x-auto">
-          <button
-            v-for="tag in tags"
-            class="text-nowrap text-sm md:text-base hover:text-accent-hovered focus:text-accent-hovered py-1.5 px-5 w-fit rounded-full transition-all duration-300"
-            :class="
-              activeTag === tag
-                ? 'text-accent bg-accent/20'
-                : 'text-brand bg-accent/5'
-            "
-            @click="filter(tag)"
-          >
-            {{ tag }}
-          </button>
+          <div class="rounded-[1.75rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm">
+            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Focus</p>
+            <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">EV Trends</p>
+          </div>
+          <div class="rounded-[1.75rem] border border-[#101920]/8 bg-[#101920] p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
+            <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">View</p>
+            <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">Editorial</p>
+          </div>
         </div>
       </div>
 
-      <div class="flex justify-center items-center min-h-[700px] md:min-h-96">
-        <div v-if="filteredBlogs" class="flex flex-wrap size-full">
+      <section class="grid gap-6 lg:grid-cols-[1.12fr_0.88fr]">
+        <NuxtLink
+          v-if="featuredBlog"
+          :to="featuredBlog._path!"
+          class="page-reveal reveal-delay-2 group overflow-hidden rounded-[2rem] border border-[#d8dfd5] bg-white/92 shadow-[0_24px_80px_rgba(16,32,39,0.08)] transition-all duration-300 hover:-translate-y-1"
+        >
+          <div class="relative h-[420px] sm:h-[520px]">
+            <img
+              :src="featuredBlog.image"
+              :alt="featuredBlog.title"
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#101920] via-[#101920]/28 to-transparent" />
+            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:p-8">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="tag in featuredBlog.tags.slice(0, 3)"
+                  :key="tag"
+                  class="rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/86 backdrop-blur-sm"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+              <h2 class="max-w-3xl font-opensans text-3xl font-semibold tracking-[-0.045em] text-white sm:text-4xl">
+                {{ featuredBlog.title }}
+              </h2>
+              <p class="max-w-2xl text-sm leading-7 text-white/76 sm:text-base">
+                {{ featuredBlog.description }}
+              </p>
+              <div class="inline-flex items-center gap-2 text-sm font-medium text-white">
+                Read Article
+                <ArrowRightIcon class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+            </div>
+          </div>
+        </NuxtLink>
+
+        <div class="grid gap-4">
+          <NuxtLink
+            v-for="(blog, index) in secondaryBlogs"
+            :key="blog._path"
+            :to="blog._path!"
+            class="page-reveal page-reveal-soft group flex gap-4 overflow-hidden rounded-[1.5rem] border border-[#d8dfd5] bg-white/92 p-4 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
+            :style="{ '--reveal-delay': `${210 + (index * 75)}ms` }"
+          >
+            <img
+              :src="blog.image"
+              :alt="blog.title!"
+              class="h-28 w-28 rounded-[1.2rem] object-cover transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+            />
+            <div class="flex flex-1 flex-col gap-3">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#6b8177]">
+                {{ blog.minutesRead }} mins
+              </p>
+              <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+                {{ blog.title }}
+              </h3>
+              <p class="line-clamp-2 text-sm leading-7 text-[#41555d]">
+                {{ blog.description }}
+              </p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <section class="space-y-6">
+        <div class="page-reveal reveal-delay-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Browse by Theme</p>
+            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920] sm:text-4xl">
+              Filter the EV editorial stream.
+            </h2>
+          </div>
+
+          <div class="tag-container-scroll flex gap-3 overflow-x-auto">
+            <button
+              v-for="tag in tags"
+              :key="tag"
+              class="rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-300"
+              :class="
+                activeTag === tag
+                  ? 'bg-[#101920] text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
+                  : 'bg-white/92 text-[#31464d] hover:bg-[#e9eee7]'
+              "
+              @click="filter(tag)"
+            >
+              {{ tag }}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <BlogItem
-            v-if="filteredBlogs.length > 0"
-            v-for="blog in filteredBlogs.slice(0).reverse()"
-            :key="blog.id"
+            v-for="(blog, index) in filteredBlogs ?? []"
+            :key="blog._path"
             :title="blog.title!"
             :description="blog.description"
             :content="blog.content"
@@ -191,29 +200,20 @@ useSeoMeta({
             :tags="blog.tags"
             :date="blog.date"
             :minutes-read="blog.minutesRead"
-            class="cursor-pointer"
+            class="page-reveal page-reveal-soft cursor-pointer"
+            :style="{ '--reveal-delay': `${260 + (index * 65)}ms` }"
           />
-
-          <div v-else class="flex size-full justify-center items-center">
-            <p class="text-brand text-lg md:text-xl">No Blogs Found</p>
-          </div>
         </div>
 
-        <div v-else class="flex my-auto justify-center items-center">
-          <div class="animate-spin">
-            <IconsLoadingWheel class="animate-ping size-16 fill-[#101920]" />
-          </div>
+        <div v-if="filteredBlogs && filteredBlogs.length === 0" class="page-reveal reveal-delay-4 rounded-[1.75rem] border border-[#d8dfd5] bg-white/92 p-8 text-center text-[#41555d]">
+          No blogs found for this theme.
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </template>
 
 <style scoped>
-body::-webkit-scrollbar {
-  display: none;
-}
-
 .tag-container-scroll::-webkit-scrollbar {
   display: none;
 }

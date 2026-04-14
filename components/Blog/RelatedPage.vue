@@ -48,7 +48,7 @@ const scrollLeft = () => {
           :class="transition"
         />
       </button>
-      <h2 class="text-[#113912] text-xl md:text-2xl">Related Blogs</h2>
+      <h2 class="page-reveal reveal-delay-1 text-[#113912] text-xl md:text-2xl">Related Blogs</h2>
       <div
         ref="scrollContainer"
         class="blog-container-scroll flex gap-5 overflow-x-auto"
@@ -56,7 +56,7 @@ const scrollLeft = () => {
         <ContentRenderer v-for="blog in list" :value="blog">
           <BlogItem
             :key="blog.id"
-            class="min-w-[310px] max-w-[310px]"
+            class="page-reveal page-reveal-soft min-w-[310px] max-w-[310px]"
             :title="blog.title!"
             :description="blog.description"
             :content="blog.content"
@@ -65,6 +65,7 @@ const scrollLeft = () => {
             :tags="blog.tags"
             :date="blog.date"
             :minutes-read="blog.minutesRead"
+            :style="{ '--reveal-delay': `${120 + ((list.findIndex((item) => item.id === blog.id)) * 60)}ms` }"
           />
         </ContentRenderer>
       </div>

@@ -42,6 +42,10 @@ export const routes: (Link & position)[] = [
         name: "Blog",
         path: URLS.BLOG,
       },
+      {
+        name: "Faq",
+        path: URLS.FAQ,
+      }
     ],
     pos: 3,
   },

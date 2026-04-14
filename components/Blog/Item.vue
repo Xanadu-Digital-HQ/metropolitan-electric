@@ -1,37 +1,40 @@
 <template>
-  <NuxtLink :to="slug" class="group hover:shadow p-2 h-fit">
-    <div class="flex flex-col gap-3.5 w-full max-w-full lg:max-w-[310px] pb-5">
-      <div class="w-full h-36 overflow-clip">
-        <img
-          class="group-hover:scale-125 size-full object-cover transition-all duration-200"
-          :src="image"
-          :alt="title"
-        />
+  <NuxtLink
+    :to="slug"
+    class="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#d8dfd5] bg-white/80 shadow-[0_16px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(16,32,39,0.09)]"
+  >
+    <div class="relative overflow-hidden">
+      <img
+        class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        :src="image"
+        :alt="title"
+      />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101920]/30 via-transparent to-transparent" />
+    </div>
+
+    <div class="flex flex-1 flex-col gap-4 p-5">
+      <div class="flex flex-wrap gap-2">
+        <span
+          v-for="(tag, index) in tags.slice(0, 3)"
+          :key="`tag${index}`"
+          class="rounded-full border border-[#dce4d9] bg-[#f6f8f5] px-3 py-1.5 text-[11px] font-medium text-[#31464d]"
+        >
+          #{{ tag }}
+        </span>
       </div>
-      <div class="flex flex-col gap-1.5">
-        <p class="line-clamp-1 space-x-2">
-          <span
-            v-for="(tag, index) in tags"
-            :key="`tag${index}`"
-            class="text-[#101920] text-xs"
-          >
-            #{{ tag }}
-          </span>
-        </p>
-        <h1
-          class="group-hover:text-black/80 text-lg font-semibold max-w-full md:max-w-[90%] transition-all duration-200"
-        >
+
+      <div class="space-y-3">
+        <h2 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
           {{ title }}
-        </h1>
-        <p
-          class="group-hover:text-black/50 text-sm sm:text-base text-black/60 line-clamp-2 transition-all duration-200 w-full"
-        >
+        </h2>
+        <p class="line-clamp-3 text-sm leading-7 text-[#41555d] sm:text-base">
           {{ description }}
         </p>
       </div>
-      <div class="flex justify-between mt-2">
-        <span class="text-xs">{{ minutesRead }} mins</span>
-        <span class="text-xs">{{ date }}</span>
+
+      <div class="mt-auto flex items-center justify-between gap-4 border-t border-[#e3eae0] pt-4 text-xs uppercase tracking-[0.18em] text-[#73867d]">
+        <span>{{ minutesRead }} mins</span>
+        <span>{{ date }}</span>
       </div>
     </div>
   </NuxtLink>

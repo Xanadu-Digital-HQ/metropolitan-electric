@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-fit">
-    <div class="relative w-full h-[60vh]">
+    <div class="page-reveal reveal-delay-1 relative w-full h-[60vh]">
       <img
         class="size-full object-cover"
         :src="currentNews.image"
@@ -15,7 +15,7 @@
       <div
         class="grid grid-cols-6 lg:grid-cols-12 grid-flow-row-dense justify-center w-full gap-16"
       >
-        <div class="flex flex-col col-span-6 lg:col-span-9 gap-5 w-full">
+        <div class="page-reveal reveal-delay-2 flex flex-col col-span-6 lg:col-span-9 gap-5 w-full">
           <div class="flex flex-col gap-2.5 w-full">
             <h1
               class="text-2xl md:text-[28px] leading-tight w-full font-semibold md:font-medium"
@@ -35,7 +35,7 @@
         </div>
 
         <div
-          class="flex flex-col items-start col-span-6 lg:col-span-3 gap-5 w-full"
+          class="page-reveal reveal-delay-3 flex flex-col items-start col-span-6 lg:col-span-3 gap-5 w-full"
         >
           <MediaRelatedNews />
         </div>

@@ -1,52 +1,42 @@
 <script lang="ts" setup>
-import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/vue/20/solid";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Navigation } from "swiper/modules";
-import type { Media } from "~/types/types";
+import { ArrowRightIcon } from "@heroicons/vue/20/solid";
+import type { Media, NewsItem } from "~/types/types";
 
 const { container } = useTailwindConfig();
-const isLoading = ref(false);
-const progressCircle = ref();
-const progressContent = ref<HTMLElement | null>(null);
-const loadMoreActive = ref(false);
-const gallerySize = ref(1020);
-const gallerySizeIncrement = ref();
 
-let windowWidth = 0;
-const numberOfGalleryItems = ref(0);
+const mediaItems: Media[] = [
+  {
+    title: "Electric Vehicle Revolution in Africa",
+    description:
+      "An overview of how electric vehicles are reshaping transportation across African nations.",
+    image: "https://utfs.io/f/3VcV2KI5zmFpOcuKWNy9z1hrGfodksTLgApeIXyCRMKxwJiZ",
+  },
+  {
+    title: "MetroCharge Charging Stations Launch",
+    description:
+      "Highlights from the grand opening of MetroCharge EV charging stations in Lagos.",
+    image: "https://utfs.io/f/3VcV2KI5zmFp61iEAa3XCTs2yNM35wcUnzDgS0eah7vGxrtB",
+  },
+  {
+    title: "Sustainable Mobility: A Global Perspective",
+    description:
+      "Exploring the global impact of sustainable transportation initiatives.",
+    image: "https://utfs.io/f/3VcV2KI5zmFpSjLdMRruzCJ8psB7v4MOYXomiyIbtTdQn9Zr",
+  },
+];
 
-onMounted(() => {
-  windowWidth = window.innerWidth;
-  gallerySizeIncrement.value = Size.value;
-  updateGalleryItemCount();
-});
+const { data: newsItems } = await useAsyncData<NewsItem[]>(
+  "media-center-news",
+  () => queryCollection("mediaCenter").all()
+);
 
-const itemsPerPage = computed(() => {
-  return windowWidth <= 768 ? 2 : 3;
-});
-const Size = computed(() => {
-  return windowWidth <= 768 ? 510 : 1020;
-});
+const visibleMediaCount = ref(4);
 
-const props = defineProps<{ media: Media[] }>();
-
-const updateGalleryItemCount = () => {
-  numberOfGalleryItems.value = itemsPerPage.value;
-  if (numberOfGalleryItems.value >= props.media.length) {
-    loadMoreActive.value = false;
-  } else {
-    loadMoreActive.value = true;
-  }
-};
-
-const onAutoplayTimeLeft = (s: any, time: number, progress: any) => {
-  if (progressCircle.value) {
-    progressCircle.value.style.setProperty("--progress", 1 - progress);
-  }
-  if (progressContent.value) {
-    progressContent.value.textContent = `${Math.ceil(time / 1000)}s`;
-  }
-};
+const sortedNews = computed(() => [...(newsItems.value ?? [])].reverse());
+const featuredNews = computed(() => sortedNews.value[0] ?? null);
+const secondaryNews = computed(() => sortedNews.value.slice(1, 5));
+const visibleMedia = computed(() => mediaItems.slice(0, visibleMediaCount.value));
+const canLoadMoreMedia = computed(() => visibleMediaCount.value < mediaItems.length);
 
 useSeoMeta({
   title: "Media Center",
@@ -60,209 +50,120 @@ useSeoMeta({
 });
 
 const loadMore = () => {
-  isLoading.value = true;
-  setTimeout(() => {
-    if (numberOfGalleryItems.value >= props.media.length) {
-      loadMoreActive.value = false;
-    } else {
-      gallerySize.value += gallerySizeIncrement.value;
-      numberOfGalleryItems.value =
-        numberOfGalleryItems.value + itemsPerPage.value;
-      if (numberOfGalleryItems.value >= props.media.length) {
-        loadMoreActive.value = false;
-      }
-    }
-    isLoading.value = false;
-  }, 500);
+  visibleMediaCount.value = Math.min(visibleMediaCount.value + 2, mediaItems.length);
 };
 </script>
 
 <template>
-  <div :class="container" class="py-20 space-y-20">
-    <div class="space-y-10">
-      <div class="flex flex-col gap-2.5">
-        <h1 class="text-[#113912] text-3xl md:text-4xl">MEDIA Center</h1>
-        <p class="text-[#1C6220] text-lg sm:text-xl">
-          Discover Our Latest News, Updates, and Visual Highlights
-        </p>
-      </div>
+  <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.14),transparent_28%),radial-gradient(circle_at_84%_10%,rgba(16,25,32,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
 
-      <div class="flex flex-col gap-2.5">
-        <div class="relative flex flex-col h-[500px] w-full justify-end">
-          <video
-            src="/metro_motion.webm"
-            autoplay
-            muted
-            class="absolute top-0 left-0 size-full object-cover"
-          ></video>
-          <div class="p-5 bg-black/20 backdrop-blur-sm gap-2.5">
-            <p class="text-white text-base md:text-lg font-noto">
-              Powering the Future
-            </p>
-            <h2
-              class="text-white text-2xl md:text-[28px] font-main font-semibold md:font-bold"
-            >
-              Next-gen EVs for a cleaner tomorrow.
-            </h2>
+    <section :class="container" class="flex flex-col gap-14 py-28 md:py-32">
+      <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <div class="page-reveal reveal-delay-1 space-y-6">
+          <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
+            Media Center
+          </p>
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+            EV stories, launches and visual updates shaped like a modern newsroom.
+          </h1>
+          <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
+            Discover rollout updates, charging infrastructure milestones, and the visual language behind Metropolitan Electric's mobility shift.
+          </p>
+        </div>
+
+        <div class="page-reveal reveal-delay-2 overflow-hidden rounded-[2rem] border border-[#d8dfd5] bg-[#101920] shadow-[0_28px_90px_rgba(16,32,39,0.14)]">
+          <div class="relative h-[300px] sm:h-[360px]">
+            <video
+              src="/metro_motion.webm"
+              autoplay
+              muted
+              loop
+              playsinline
+              class="absolute inset-0 h-full w-full object-cover opacity-65"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#101920] via-[#101920]/35 to-transparent" />
+            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-8">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">Signal</p>
+              <h2 class="max-w-md font-opensans text-3xl font-semibold tracking-[-0.045em] text-white">
+                Powering the next electric mobility chapter.
+              </h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="space-y-10">
-      <div class="flex flex-col gap-2.5">
-        <h1 class="text-[#113912] text-2xl md:text-3xl">Latest News</h1>
-        <p class="text-[#1C6220]">
-          Stay Informed with the Latest News and Updates
-        </p>
-      </div>
 
-      <div class="flex flex-col items-center gap-2.5">
-        <ContentList path="/media-center" v-slot="{ list: news }">
-          <MediaNews
-            v-if="news"
-            class="w-full"
-            :title="news[news.length - 1].title!"
-            :description="news[news.length - 1].description"
-            :slug="news[news.length - 1]._path!"
-            :image="news[news.length - 1].image"
-          />
-          <div class="flex w-full">
-            <Swiper
-              :modules="[Autoplay, Navigation]"
-              class="size-full"
-              :direction="'horizontal'"
-              :space-between="0"
-              :navigation="true"
-              :slidesPerView="1"
-              :loop="true"
-              :grabCursor="true"
-              :autoplay="{
-                delay: 10000,
-                disableOnInteraction: false,
-              }"
-              @autoplayTimeLeft="onAutoplayTimeLeft"
-              :breakpoints="{
-                '640': {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-              }"
-            >
-              <SwiperSlide
-                v-if="news.length >= 2"
-                v-for="(newsItem, index) in news"
-                :key="index"
-                class="size-full"
-              >
-                <MediaNews
-                  :title="newsItem.title!"
-                  :description="newsItem.description"
-                  :slug="newsItem._path!"
-                  :image="newsItem.image"
-                />
-              </SwiperSlide>
-              <template v-if="news.length >= 4" #container-end>
-                <div class="autoplay-progress">
-                  <svg class="size-6" viewBox="0 0 48 48" ref="progressCircle">
-                    <circle cx="24" cy="24" r="20"></circle>
-                  </svg>
-                  <span ref="progressContent"></span>
-                </div>
-              </template>
-            </Swiper>
+      <section class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <MediaNews
+          v-if="featuredNews"
+          :title="featuredNews.title!"
+          :description="featuredNews.description"
+          :slug="featuredNews._path!"
+          :image="featuredNews.image"
+          class="page-reveal reveal-delay-3"
+        />
+
+        <div class="grid gap-4">
+          <NuxtLink
+            v-for="(newsItem, index) in secondaryNews"
+            :key="newsItem._path"
+            :to="newsItem._path!"
+            class="page-reveal page-reveal-soft group flex gap-4 overflow-hidden rounded-[1.5rem] border border-[#d8dfd5] bg-white/92 p-4 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
+            :style="{ '--reveal-delay': `${260 + (index * 70)}ms` }"
+          >
+            <img
+              :src="newsItem.image"
+              :alt="newsItem.title!"
+              class="h-28 w-28 rounded-[1.2rem] object-cover transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+            />
+            <div class="flex flex-1 flex-col gap-3">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#6b8177]">Latest News</p>
+              <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+                {{ newsItem.title }}
+              </h3>
+              <p class="line-clamp-2 text-sm leading-7 text-[#41555d]">
+                {{ newsItem.description }}
+              </p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <section class="space-y-6">
+        <div class="page-reveal reveal-delay-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Visual Archive</p>
+            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920] sm:text-4xl">
+              EV moments and campaign visuals.
+            </h2>
           </div>
-        </ContentList>
-      </div>
-    </div>
-    <div class="space-y-10">
-      <div class="flex flex-col gap-2.5">
-        <h1 class="text-[#113912] text-2xl md:text-3xl">Gallery</h1>
-        <p class="text-[#1C6220]">
-          Explore Our Collection of Moments and Visual Highlights
-        </p>
-      </div>
+          <p class="max-w-lg text-sm leading-7 text-[#41555d]">
+            A cleaner gallery treatment for launch material, milestone snapshots, and branded mobility narratives.
+          </p>
+        </div>
 
-      <div class="flex flex-col items-center gap-2.5">
-        <div
-          class="relative grid grid-flow-row-dense justify-center w-full gap-2.5 overflow-hidden transition-all duration-300 ease-in h-fit"
-          :style="`height:${gallerySize}px`"
-        >
+        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <MediaItem
-            v-for="(mediaItem, index) in media"
-            :key="index"
-            class="col-span-12"
-            :class="
-              index == 0 || index % 3 == 0 ? 'md:col-span-12' : 'md:col-span-6'
-            "
+            v-for="(mediaItem, index) in visibleMedia"
+            :key="`${mediaItem.title}-${index}`"
             :title="mediaItem.title"
             :description="mediaItem.description"
             :image="mediaItem.image"
+            class="page-reveal page-reveal-soft"
+            :style="{ '--reveal-delay': `${320 + (index * 65)}ms` }"
           />
         </div>
 
         <button
-          v-if="loadMoreActive"
+          v-if="canLoadMoreMedia"
           @click="loadMore"
-          class="mt-5 flex justify-center items-center py-3 px-8 text-white bg-brand/80 hover:bg-brand gap-2.5 w-fit disabled:opacity-10"
-          :disabled="!loadMoreActive"
+          class="page-reveal reveal-delay-5 inline-flex items-center gap-2 rounded-full bg-[#101920] px-5 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
         >
-          Load More
-          <ArrowDownIcon
-            v-if="!isLoading"
-            class="size-6 text-white font-main"
-          />
-          <ArrowPathIcon class="animate-spin size-6 mx-auto" v-if="isLoading" />
+          Load More Visuals
+          <ArrowRightIcon class="size-4" />
         </button>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </template>
-
-<style>
-.autoplay-progress {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: #10b526;
-}
-
-.autoplay-progress svg {
-  --progress: 0;
-  position: absolute;
-  left: 0;
-  top: 0px;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  stroke-width: 4px;
-  stroke: #10b526;
-  fill: none;
-  stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
-  stroke-dasharray: 125.6;
-  transform: rotate(-90deg);
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  width: 32px;
-  height: 32px;
-  background-color: #0a8210;
-  border-radius: 50%;
-  box-shadow: 4px 10px 10.770329614269007px -3.75px rgba(0, 0, 0, 0.0625);
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-weight: bold;
-  font-size: 18px;
-  left: 16px;
-  color: white;
-}
-</style>

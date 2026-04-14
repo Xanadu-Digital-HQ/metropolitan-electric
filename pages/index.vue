@@ -63,9 +63,6 @@
 <script lang="ts" setup>
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import type { Card } from '~/types/types.js';
-
-defineProps<{ data: Card[] }>();
 
 useSeoMeta({
   title: 'Leading the Electric Vehicles (EV) Revolution across the Continent',

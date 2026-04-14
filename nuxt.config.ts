@@ -1,86 +1,99 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ["~/assets/css/tailwind.css"],
+  css: ['~/assets/css/tailwind.css'],
   nitro: {
     prerender: {
-      routes: ["/"],
+      routes: ['/'],
     },
   },
   build: {
-    transpile: ["@phosphor-icons/vue"],
+    transpile: ['@phosphor-icons/vue'],
   },
   app: {
     head: {
-      charset: "UTF-8",
-      viewport: "width=device-width, initial-scale=1",
-      title: "Metropolitan Electric",
+      charset: 'UTF-8',
+      viewport: 'width=device-width, initial-scale=1',
+      title: 'Metropolitan Electric',
       meta: [
         {
-          name: "description",
+          name: 'description',
           content:
-            "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+            'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
         },
         {
-          name: "og:description",
+          name: 'og:description',
           content:
-            "Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.",
+            'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
         },
         {
-          name: "og:image",
-          content: "logo.svg",
+          name: 'og:image',
+          content: 'logo.svg',
         },
-        { name: "twitter:card", content: "summary_large_image" },
+        { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [
         {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap",
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap',
         },
         {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap",
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap',
         },
       ],
     },
-    pageTransition: { name: "page", mode: "out-in" },
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
-  modules: ["@nuxtjs/color-mode", "motion-v/nuxt", "@nuxtjs/seo", "@nuxt/content", "@nuxt/scripts", "@nuxt/image", "nuxt-swiper", "shadcn-nuxt", "nuxt-og-image"],
+  modules: [
+    '@nuxtjs/color-mode',
+    'motion-v/nuxt',
+    '@nuxtjs/seo',
+    '@nuxt/content',
+    '@nuxt/scripts',
+    '@nuxt/image',
+    'nuxt-swiper',
+    'shadcn-nuxt',
+    'nuxt-og-image',
+  ],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ['radix-vue', 'lucide-vue-next', 'clsx', 'tailwind-merge'],
+    },
   },
   shadcn: {
     /**
      * Prefix for all the imported componen
      */
-    prefix: "",
+    prefix: '',
     /**
      * Directory that the component lives in.
      * @default
      */
-    componentDir: "./components/ui",
+    componentDir: './components/ui',
   },
   colorMode: {
-    classSuffix: "",
-    preference: "light",
-    storage: "cookie",
+    classSuffix: '',
+    preference: 'light',
+    storage: 'cookie',
     // fallback: "light",
   },
   site: {
-    url: "https://metropolitanelectricng.com",
-    name: "Metropolitan Electric Limited",
-    defaultLocale: "en",
+    url: 'https://metropolitanelectricng.com',
+    name: 'Metropolitan Electric Limited',
+    defaultLocale: 'en',
   },
   robots: {
-    disallow: ["/_nuxt/", "/_nuxt/builds/", "/_nuxt/meta/", "/api/"],
+    disallow: ['/_nuxt/', '/_nuxt/builds/', '/_nuxt/meta/', '/api/'],
   },
   sitemap: {
-    exclude: ["/_nuxt/**"],
+    exclude: ['/_nuxt/**'],
   },
 
   devtools: { enabled: true },
-  compatibilityDate: "2024-07-02",
+  compatibilityDate: '2024-07-02',
   scripts: {
     registry: {
       googleTagManager: true,
@@ -89,7 +102,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      Emailjs: "75u1MbtaSAXCYENAL",
+      Emailjs: '75u1MbtaSAXCYENAL',
       scripts: {
         googleAnalytics: {
           id: process.env.NUXT_GOOGLE_ANALYTICS_ID!,
@@ -97,18 +110,18 @@ export default defineNuxtConfig({
         googleTagManager: {
           id: process.env.NUXT_GTM_ID!,
           queryParams: {
-            gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
-            gtm_preview: "env-4",
-            gtm_cookies_win: "x",
+            gtm_auth: 'AB7cDEf3GHIjkl-MnOP8qr',
+            gtm_preview: 'env-4',
+            gtm_cookies_win: 'x',
           },
           defer: false,
           compatibility: false,
-          nonce: "2726c7f26c",
+          nonce: '2726c7f26c',
           enabled: true,
           debug: true,
           loadScript: true,
           enableRouterSync: true,
-          ignoredViews: ["homepage"],
+          ignoredViews: ['homepage'],
           trackOnNextTick: false,
           devtools: true,
         },

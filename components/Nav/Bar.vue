@@ -2,6 +2,14 @@
 import { routes } from "~/utils/routes";
 import { PhList, PhX } from "@phosphor-icons/vue";
 const menuToggled = ref(false);
+const route = useRoute();
+
+watch(
+  () => route.fullPath,
+  () => {
+    menuToggled.value = false;
+  }
+);
 
 </script>
 
