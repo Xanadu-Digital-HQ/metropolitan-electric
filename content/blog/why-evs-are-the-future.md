@@ -1,11 +1,11 @@
 ---
-title: "Why EVs Are the Future: 5 Key Benefits Driving the Transition"
-description: "Discover why electric vehicles (EVs) are more than just a trend—they represent a revolutionary shift toward a cleaner, smarter, and more sustainable future. Learn about their environmental benefits, cost efficiency, innovation, and more."
-date: 2025-01-10
-tags: ["Electric Vehicles", "Sustainability", "Technology", "Nigeria"]
-slug: "why-evs-are-the-future"
+title: 'Why EVs Are the Future: 5 Key Benefits Driving the Transition'
+description: 'Discover why electric vehicles (EVs) are more than just a trend—they represent a revolutionary shift toward a cleaner, smarter, and more sustainable future. Learn about their environmental benefits, cost efficiency, innovation, and more.'
+date: '10 January, 2025'
+tags: ['Electric Vehicles', 'Sustainability', 'Technology', 'Nigeria']
+slug: 'why-evs-are-the-future'
 minutesRead: 5
-image: "https://accflm9g1s.ufs.sh/f/3VcV2KI5zmFp17w8dsMCaI8SxKBQRNWqonGsmpcg5Ck9jHdA"
+image: 'https://accflm9g1s.ufs.sh/f/3VcV2KI5zmFp17w8dsMCaI8SxKBQRNWqonGsmpcg5Ck9jHdA'
 ---
 
 # Why EVs Are the Future: 5 Key Benefits Driving the Transition

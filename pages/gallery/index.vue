@@ -36,6 +36,11 @@ const activeVehicle = computed<vehicle | undefined>(() => {
 const activeVehicleSlug = computed(() =>
   activeVehicle.value ? getVehicleSlug(activeVehicle.value.name) : ""
 );
+const isMobile = ref(false);
+
+const updateViewportState = () => {
+  isMobile.value = window.innerWidth < 1280;
+};
 
 const openActiveVehicleDetails = async () => {
   if (!activeVehicleSlug.value) {
@@ -68,9 +73,27 @@ const selectCategory = (category: (typeof categories)[number]) => {
   activeCategory.value = category;
 };
 
+const openVehicleFromCard = async (vehicleItem: vehicle) => {
+  if (isMobile.value) {
+    await navigateTo(`/gallery/${getVehicleSlug(vehicleItem.name)}`);
+    return;
+  }
+
+  activeVehicleName.value = vehicleItem.name;
+};
+
 const selectVehicle = (name: string) => {
   activeVehicleName.value = name;
 };
+
+onMounted(() => {
+  updateViewportState();
+  window.addEventListener("resize", updateViewportState);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateViewportState);
+});
 </script>
 
 <template>
@@ -79,21 +102,20 @@ const selectVehicle = (name: string) => {
     <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section class="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
-      <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="flex flex-col gap-8 lg:gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div class="page-reveal reveal-delay-1 max-w-4xl space-y-5">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
-            Electric Vehicle Gallery
+            Explore Our EVs
           </p>
-          <h1 class="font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
-            Sleek catalog browsing for a growing fleet.
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
+            Efficient. powerful. Electric.
           </h1>
-          <p class="max-w-2xl text-sm leading-7 text-[#41555d] sm:text-base">
-            Designed as a scalable gallery rather than a one-off product page. Browse vehicles,
-            switch categories, inspect details, and keep the interface clean even as the lineup grows.
+          <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
+            Browse our growing lineup of electric vehicles built for performance, efficiency, and real-world use.
           </p>
         </div>
 
-        <div class="page-reveal reveal-delay-2 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div class="page-reveal reveal-delay-2 grid grid-cols-1  xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-4 w-full md:w-fit">
           <div class="rounded-[1.75rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm">
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Total</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">{{ vehicles.length }}</p>
@@ -102,7 +124,7 @@ const selectVehicle = (name: string) => {
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Filtered</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">{{ filteredVehicles.length }}</p>
           </div>
-          <div class="col-span-2 rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)] sm:col-span-1">
+          <div class="rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)] col-span-1 xs:col-span-full sm:col-span-1 lg:col-span-full">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Active</p>
             <p class="mt-3 truncate font-opensans text-2xl font-semibold tracking-[-0.04em]">
               {{ activeVehicle?.name ?? "None" }}
@@ -112,12 +134,12 @@ const selectVehicle = (name: string) => {
       </div>
 
       <div class="page-reveal reveal-delay-3 rounded-4xl border border-[#d8dfd5] bg-white/86 p-4 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-5">
-        <div class="flex flex-wrap gap-3">
+        <div class="category-scroll flex gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <button
             v-for="category in categories"
             :key="category"
             type="button"
-            class="rounded-full px-4 py-2.5 text-sm font-medium capitalize transition-all duration-300"
+            class="shrink-0 rounded-full px-4 py-2.5 text-sm font-medium capitalize transition-all duration-300"
             :class="
               activeCategory === category
                 ? 'bg-brand text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
@@ -144,7 +166,7 @@ const selectVehicle = (name: string) => {
                   : 'border-[#d8dfd5] bg-white/92 text-brand shadow-[0_16px_50px_rgba(16,32,39,0.05)] hover:-translate-y-1 hover:border-[#a6b7a0]'
               "
               :style="{ '--reveal-delay': `${240 + (index * 65)}ms` }"
-              @click="selectVehicle(vehicleItem.name)"
+              @click="openVehicleFromCard(vehicleItem)"
             >
               <div class="flex items-start justify-between gap-4">
                 <div class="space-y-3">
@@ -203,7 +225,7 @@ const selectVehicle = (name: string) => {
         </div>
 
         <aside
-          v-if="activeVehicle"
+          v-if="activeVehicle && !isMobile"
           class="page-reveal reveal-delay-4 h-fit rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm xl:sticky xl:top-32"
         >
           <p class="text-[11px] uppercase tracking-[0.28em] text-[#6b8177]">Selected Vehicle</p>
@@ -248,3 +270,10 @@ const selectVehicle = (name: string) => {
     </section>
   </div>
 </template>
+
+<style scoped>
+.category-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

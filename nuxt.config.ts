@@ -58,6 +58,12 @@ export default defineNuxtConfig({
     'nuxt-og-image',
   ],
   vite: {
+    build: {
+      sourcemap: false,
+      modulePreload: {
+        polyfill: false,
+      },
+    },
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: ['radix-vue', 'lucide-vue-next', 'clsx', 'tailwind-merge'],

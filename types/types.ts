@@ -32,11 +32,22 @@ export interface Card {
   title: string;
   description: string;
 }
-export interface Media {
+export interface MediaImage {
+  type: "image";
   image: string;
   title: string;
   description: string;
 }
+
+export interface MediaStory {
+  type: "story";
+  image: string;
+  title: string;
+  description: string;
+  slug: string;
+}
+
+export type Media = MediaImage | MediaStory;
 export interface NewsItem {
   slug: string;
   image: string;

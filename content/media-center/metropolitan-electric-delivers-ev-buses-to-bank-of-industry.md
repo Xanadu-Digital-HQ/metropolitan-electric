@@ -4,6 +4,7 @@ description: Metropolitan Electric Limited, a leading electric vehicle manufactu
 image: https://utfs.io/f/3VcV2KI5zmFpOcuKWNy9z1hrGfodksTLgApeIXyCRMKxwJiZ
 date: October 14, 2024
 slug: metropolitan-electric-delivers-ev-buses-to-bank-of-industry
+type: story
 ---
 
 In a significant step towards promoting sustainable mobility across Nigeria, Metropolitan Electric Limited, a leader in electric vehicle (EV) solutions, has successfully delivered a fleet of energy-efficient buses to the Bank of Industry (BOI). This marks a milestone in Metropolitan Electric’s mission to revolutionize transportation through cutting-edge technology and sustainable solutions tailored to meet the needs of the African market.

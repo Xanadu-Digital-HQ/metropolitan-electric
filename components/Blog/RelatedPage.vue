@@ -5,7 +5,10 @@ const route = useRoute();
 const { transition } = useTailwindConfig();
 
 const { data: list } = await useAsyncData(route.path, () => {
-  return queryCollection("blog").limit(10).all();
+  return queryCollection("blog")
+    .select("id", "path", "title", "description", "image", "date", "minutesRead", "tags")
+    .limit(10)
+    .all();
 });
 
 const scrollContainer = ref<HTMLDivElement | null>(null);
@@ -51,15 +54,13 @@ const scrollLeft = () => {
       <h2 class="page-reveal reveal-delay-1 text-accent-hovered text-xl md:text-2xl">Related Blogs</h2>
       <div
         ref="scrollContainer"
-        class="blog-container-scroll flex gap-5 overflow-x-auto"
+        class="blog-container-scroll flex gap-7 overflow-x-auto px-1 sm:px-2"
       >
-        <ContentRenderer v-for="blog in list" :value="blog">
+        <template v-for="blog in list" :key="blog.id">
           <BlogItem
-            :key="blog.id"
-            class="page-reveal page-reveal-soft min-w-77.5 max-w-77.5"
+            class="page-reveal page-reveal-soft min-w-92 max-w-92 sm:min-w-100 sm:max-w-100 lg:min-w-104 lg:max-w-104"
             :title="blog.title!"
             :description="blog.description"
-            :content="blog.content"
             :slug="blog.path!"
             :image="blog.image"
             :tags="blog.tags"
@@ -67,7 +68,7 @@ const scrollLeft = () => {
             :minutes-read="blog.minutesRead"
             :style="{ '--reveal-delay': `${120 + ((list.findIndex((item) => item.id === blog.id)) * 60)}ms` }"
           />
-        </ContentRenderer>
+        </template>
       </div>
     </div>
   </div>

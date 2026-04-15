@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ArrowRightIcon } from '@heroicons/vue/20/solid';
+import { PhCircuitry, PhStrategy, PhStack } from '@phosphor-icons/vue';
 import { serviceCatalog } from '~/utils/serviceCatalog';
 
 useSeoMeta({
@@ -14,10 +15,19 @@ useSeoMeta({
 });
 
 const highlightStatements = [
-  'Integrated EV deployment across fleet, charging, and aftercare.',
-  'Service architecture designed for operators, institutions, and public systems.',
-  'Cleaner mobility with operational logic, not just product supply.',
-];
+  {
+    text: 'Integrated EV deployment across fleet, charging, and aftercare.',
+    icon: PhStack,
+  },
+  {
+    text: 'Service architecture designed for operators, institutions, and public systems.',
+    icon: PhCircuitry,
+  },
+  {
+    text: 'Cleaner mobility with operational logic, not just product supply.',
+    icon: PhStrategy,
+  },
+] as const;
 </script>
 
 <template>
@@ -35,17 +45,16 @@ const highlightStatements = [
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
-            EV Service Platform
+            EV Services
           </p>
           <h1
             class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
           >
-            Services designed around electric mobility systems, not isolated transactions.
+            Powering every journey.
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
-            From corporate fleets and public transport renewal to charging, assembly, shared
-            mobility, and long-term aftercare, our services are structured to support EV adoption at
-            operating scale.
+            Discover the services that support our electric ecosystem—including EV care, charging
+            solutions, and infrastructure designed for seamless performance.
           </p>
         </div>
         <div class="grid gap-4 sm:grid-cols-3 lg:max-w-3xl lg:ml-auto">
@@ -68,18 +77,24 @@ const highlightStatements = [
           >
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Positioning</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">EV-Centric</p>
-            
           </div>
         </div>
       </div>
       <div class="grid gap-4 lg:grid-cols-3">
         <div
           v-for="(statement, index) in highlightStatements"
-          :key="statement"
+          :key="statement.text"
           class="page-reveal page-reveal-soft rounded-[1.75rem] border border-[#d8dfd5] bg-white/88 p-5 text-sm leading-7 text-[#31464d] shadow-[0_16px_50px_rgba(16,32,39,0.05)] backdrop-blur-sm"
-          :style="{ '--reveal-delay': `${180 + (index * 70)}ms` }"
+          :style="{ '--reveal-delay': `${180 + index * 70}ms` }"
         >
-          {{ statement }}
+          <div class="flex items-start gap-4">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#eef5eb,#dce7d8_58%,#cad8ca_100%)] text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+              <component :is="statement.icon" class="size-5" weight="fill" />
+            </div>
+            <p class="pt-1 text-sm leading-7 text-[#31464d]">
+              {{ statement.text }}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -89,7 +104,7 @@ const highlightStatements = [
           :key="service.slug"
           :to="`/services/${service.slug}`"
           class="page-reveal page-reveal-soft group overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_18px_60px_rgba(16,32,39,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(16,32,39,0.1)]"
-          :style="{ '--reveal-delay': `${260 + (index * 80)}ms` }"
+          :style="{ '--reveal-delay': `${260 + index * 80}ms` }"
         >
           <div class="grid gap-0 md:grid-cols-[0.95fr_1.05fr]">
             <div class="relative min-h-70 overflow-hidden">
@@ -124,16 +139,18 @@ const highlightStatements = [
                 </p>
               </div>
 
-              <div class="grid gap-3 sm:grid-cols-3">
+              <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 <div
                   v-for="metric in service.metrics"
                   :key="metric.label"
-                  class="rounded-[1.25rem] bg-[#fbfdfb] p-4"
+                  class="flex min-h-30 flex-col rounded-[1.25rem] bg-[#fbfdfb] p-4"
                 >
-                  <p class="text-[11px] uppercase tracking-[0.22em] text-[#73867d]">
+                  <p class="text-[11px] uppercase tracking-[0.18em] leading-5 text-[#73867d] wrap-break-word">
                     {{ metric.label }}
                   </p>
-                  <p class="mt-2 text-sm font-medium text-brand">{{ metric.value }}</p>
+                  <p class="mt-3 text-sm leading-6 font-medium text-brand wrap-break-word">
+                    {{ metric.value }}
+                  </p>
                 </div>
               </div>
 

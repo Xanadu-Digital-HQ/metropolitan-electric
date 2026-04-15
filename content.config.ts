@@ -18,6 +18,8 @@ export default defineContentConfig({
       source: "media-center/**/*.md",
       schema: z.object({
         content: z.string(),
+        slug: z.string().optional(),
+        type: z.enum(["story", "image"]).optional(),
         tags: z.array(z.string()).optional(),
         image: z.string().optional(),
         date: z.string().optional(),

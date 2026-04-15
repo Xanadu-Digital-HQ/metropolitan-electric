@@ -30,14 +30,14 @@
               :aria-label="item.label"
               target="_blank"
               rel="noreferrer"
-              class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand transition-transform duration-300 hover:-translate-y-1 hover:bg-white/90"
+              class="flex h-11 w-11 items-center justify-center rounded-full bg-[#d7e4d1] text-brand transition-transform duration-300 hover:-translate-y-1 hover:bg-[#e3edde]"
             >
               <component :is="item.icon" class="h-5 w-5" weight="fill" />
             </a>
           </div>
         </div>
 
-        <div class="grid gap-10 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div class="grid gap-10 xs:grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 lg:gap-10">
           <div class="js-home-footer-column">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Explore
@@ -86,13 +86,13 @@
             </div>
           </div>
 
-          <div class="js-home-footer-column sm:col-span-2 lg:col-span-1">
+          <div class="js-home-footer-column col-span-full sm:col-span-2 lg:col-span-2">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Contact Info
             </p>
-            <div class="mt-5 space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base">
+            <div class="mt-5 sm:space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base">
               <p>77 Sinari Daranijo St,Victoria Island, Lagos 106104, Lagos.</p>
-              <a href="mailto:ev@metropolitanelectricng.com" :class="footerLinkStyle">
+              <a href="mailto:ev@metropolitanelectricng.com" :class="footerLinkStyle" class="text-wrap! w-full">
                 ev@metropolitanelectricng.com
               </a>
             </div>
@@ -105,6 +105,8 @@
 
 <script lang="ts" setup>
 import {URLS} from '~/utils/constants';
+import { vehicles } from '~/utils/vehicles';
+import { getVehicleSlug } from '~/utils/vehicleCatalog';
 import {
   PhFacebookLogo,
   PhInstagramLogo,
@@ -131,17 +133,20 @@ const otherLinks = [
   { label: 'About', href: URLS.ABOUT },
   { label: 'Media Center', href: URLS.MEDIA },
   { label: 'Blog', href: URLS.BLOG },
+  { label: 'FAQ', href: URLS.FAQ },
 ] as const;
 
-const vehicleLinks = [
-  { label: 'E-Bus', href: URLS.GREENFLEET },
-  { label: 'E-Car', href: URLS.RYDE },
-] as const;
+const vehicleLinks = computed(() =>
+  vehicles.map((vehicle) => ({
+    label: vehicle.name,
+    href: `/gallery/${getVehicleSlug(vehicle.name)}`,
+  }))
+);
 
 const socials = [
-  { label: 'X', href: 'https://x.com/', icon: PhXLogo },
-  { label: 'LinkedIn', href: 'https://linkedin.com/', icon: PhLinkedinLogo },
-  { label: 'Instagram', href: 'https://instagram.com/', icon: PhInstagramLogo },
-  { label: 'Facebook', href: 'https://facebook.com/', icon: PhFacebookLogo },
+  { label: 'X', href: 'https://x.com/metroelectricev', icon: PhXLogo },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/metropolitan-electric/', icon: PhLinkedinLogo },
+  { label: 'Instagram', href: 'https://www.instagram.com/metroelectricev', icon: PhInstagramLogo },
+  { label: 'Facebook', href: 'https://www.facebook.com/people/Metropolitan-Electric/61562743835022/', icon: PhFacebookLogo },
 ] as const;
 </script>

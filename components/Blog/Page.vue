@@ -1,116 +1,285 @@
 <template>
-  <div v-if="currentBlog" class="py-20 space-y-20 w-full">
-    <div class="relative flex flex-col gap-5 md:gap-10 w-full">
-      <div class="page-reveal reveal-delay-1 flex flex-col items-center gap-5">
-        <h1 class="text-3xl text-center max-w-2xl w-full text-[#113a13]">
-          {{ currentBlog.title }}
-        </h1>
-        <div class="flex items-center gap-2.5">
-          <p class="italic">{{ currentBlog.date }}</p>
-          <span class="size-1.5 bg-[#113912] rounded-full"></span>
-          <p class="italic">{{ currentBlog.minutesRead }} minutes</p>
+  <article v-if="currentBlog" class="min-h-screen text-brand">
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.14),transparent_30%),radial-gradient(circle_at_82%_8%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_56%,#eff5ee_100%)]"
+    />
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 opacity-45 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
+    />
+
+    <section
+      class="mx-auto flex max-w-7xl flex-col gap-12 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40"
+    >
+      <div class="page-reveal reveal-delay-1 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+        <div class="space-y-7">
+          <div class="flex flex-wrap items-center gap-3">
+            <span
+              class="rounded-full border border-[#cbd7c5] bg-white/92 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#5d7368] shadow-[0_10px_30px_rgba(16,32,39,0.05)]"
+            >
+              EV Editorial
+            </span>
+            <span
+              class="rounded-full border border-[#d9e3d6] bg-[#f4f8f3] px-4 py-2 text-[11px] uppercase tracking-[0.26em] text-[#6f8379]"
+            >
+              {{ currentBlog.minutesRead }} Min Read
+            </span>
+          </div>
+
+          <div class="space-y-5">
+            <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
+              Blog & Articles
+            </p>
+            <h1
+              class="max-w-5xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-7xl"
+            >
+              {{ currentBlog.title }}
+            </h1>
+            <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
+              {{ currentBlog.description }}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-sm text-[#5a6f66]">
+            <div
+              class="rounded-full border border-[#d8e1d5] bg-white/88 px-4 py-2 shadow-[0_10px_24px_rgba(16,32,39,0.04)]"
+            >
+              Published {{ currentBlog.date }}
+            </div>
+            <div
+              class="rounded-full border border-[#d8e1d5] bg-white/88 px-4 py-2 shadow-[0_10px_24px_rgba(16,32,39,0.04)]"
+            >
+              EV Strategy Insight
+            </div>
+          </div>
+        </div>
+
+        <div class="page-reveal reveal-delay-2 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          <div
+            class="rounded-[1.8rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+          >
+            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Category</p>
+            <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
+              Electric Mobility
+            </p>
+          </div>
+          <div
+            class="rounded-[1.8rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+          >
+            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Read Time</p>
+            <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
+              {{ currentBlog.minutesRead }} Minutes
+            </p>
+          </div>
+          <div
+            class="rounded-[1.8rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]"
+          >
+            <p class="text-[11px] uppercase tracking-[0.28em] text-white/45">Perspective</p>
+            <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em]">EV-Centric</p>
+          </div>
         </div>
       </div>
-      <div class="page-reveal reveal-delay-2 relative w-full h-[500px]">
+
+      <div
+        class="page-reveal reveal-delay-2 relative overflow-hidden rounded-[2.5rem] border border-[#d8dfd5] bg-brand shadow-[0_30px_100px_rgba(16,32,39,0.14)]"
+      >
         <img
-          class="size-full object-cover"
+          class="h-104 w-full object-cover opacity-80 sm:h-110 lg:h-140"
           :src="currentBlog.image"
           :alt="currentBlog.title"
         />
-      </div>
-      <div class="grid grid-cols-6 md:grid-cols-12 w-full gap-8 items-start">
         <div
-          class="page-reveal reveal-delay-3 md:sticky md:top-24 flex flex-col gap-10 col-span-6 md:col-span-4"
-        >
-          <div class="flex flex-col gap-2.5">
-            <p class="font-semibold text-lg">Table of Content</p>
-            <div class="flex gap-2">
-              <ul
-                class="mt-1 space-y-3.5 font-noto text-black/80 md:text-black/60 text-sm w-full"
-              >
-                <li v-for="item in currentBlog.body.toc.links" :key="item.id">
-                  <NuxtLink
-                    :href="`#${item.id}`"
-                    class="transition-all duration-300"
-                    :class="{
-                      'md:text-green-500 md:font-bold md:text-lg md:pl-2':
-                        activeSection === item.id,
-                    }"
-                    >{{ item.text }}</NuxtLink
-                  >
-                  <ul
-                    v-if="item.children && item.children.length"
-                    class="space-y-2 mt-2"
-                  >
-                    <li
-                      v-for="child in item.children"
-                      :key="child.id"
-                      class="pl-2 transition-all duration-300"
-                      :class="{
-                        'md:text-green-500 md:pl-4': activeSection === child.id,
-                      }"
-                    >
-                      <NuxtLink :href="`#${child.id}`" active-class="text-">
-                        {{ child.text }}
-                      </NuxtLink>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+          class="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,32,39,0.04)_0%,rgba(16,32,39,0.18)_38%,rgba(16,32,39,0.82)_100%)] sm:bg-[linear-gradient(180deg,rgba(16,32,39,0.08)_0%,rgba(16,32,39,0.32)_42%,rgba(16,32,39,0.92)_100%)]"
+        />
+        <div class="absolute inset-x-0 bottom-0 flex flex-col p-5 sm:p-8 lg:p-10">
+          <div class="grid gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div class="flex flex-col gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="tag in currentBlog.tags.slice(0, 4)"
+                  :key="tag"
+                  class="rounded-full border border-white/14 bg-white/10 px-3 py-1.5 text-xxs font-medium text-white/88 backdrop-blur-sm sm:text-[11px]"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+              <div class="max-w-3xl">
+                <p class="text-xxs font-semibold uppercase tracking-[0.28em] text-white/52 sm:text-[11px] sm:tracking-[0.32em]">
+                  Article Focus
+                </p>
+                <p class="mt-2 max-w-2xl text-[0.92rem] leading-6 text-white/76 sm:mt-3 sm:max-w-3xl sm:text-base sm:leading-7">
+                  A refined editorial surface for electric mobility strategy, operational thinking,
+                  and the practical logic behind EV adoption.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="flex flex-col gap-2.5">
-            <p class="font-semibold">Share Article</p>
-            <div class="flex gap-2">
-              <SocialShareButton
-                v-for="item in socialMedia"
-                :key="item"
-                :platform="item"
-                :url="`https://metropolitanelectricng.com/blog/${currentBlog?.slug}`"
-                :title="currentBlog.title"
-              >
-                <SocialIcon :name="item" />
-              </SocialShareButton>
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-2.5">
-            <p class="font-semibold">Tags</p>
-            <div class="flex flex-wrap gap-2">
-              <p
-                v-for="tag in currentBlog.tags"
-                :key="tag"
-                class="text-xs p-2.5 bg-[#113912]/10"
-              >
-                #{{ tag }}
+            <div
+              class="hidden rounded-[1.7rem] border border-white/10 bg-white/8 p-5 backdrop-blur-sm sm:block"
+            >
+              <p class="text-[11px] uppercase tracking-[0.26em] text-white/46">Why It Matters</p>
+              <p class="mt-3 text-sm leading-7 text-white/80">
+                Cleaner transport decisions depend on infrastructure awareness, operating clarity,
+                and a better understanding of how EV systems perform in the real world.
               </p>
             </div>
           </div>
         </div>
-        <div class="page-reveal reveal-delay-4 col-span-6 md:col-span-8">
-          <ProseWrapper v-if="currentBlog">
-            <ContentRenderer :value="currentBlog" />
-          </ProseWrapper>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">
+        <aside class="page-reveal reveal-delay-3 lg:sticky lg:top-28 lg:self-start">
+          <div class="space-y-6">
+            <section
+              class="rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
+                Table of Contents
+              </p>
+              <div class="mt-5">
+                <ul class="space-y-3">
+                  <li v-for="item in topLevelTocLinks" :key="item.id">
+                    <NuxtLink
+                      :href="`#${item.id}`"
+                      class="block rounded-2xl px-3 py-2 text-sm leading-6 transition-all duration-300"
+                      :class="
+                        activeSection === item.id
+                          ? 'bg-brand text-white shadow-[0_10px_30px_rgba(16,32,39,0.12)]'
+                          : 'text-[#41555d] hover:bg-[#f4f7f2] hover:text-brand'
+                      "
+                    >
+                      {{ item.text }}
+                    </NuxtLink>
+
+                    <ul v-if="item.children?.length" class="mt-2 space-y-2 pl-3">
+                      <li v-for="child in item.children" :key="child.id">
+                        <NuxtLink
+                          :href="`#${child.id}`"
+                          class="block rounded-[0.95rem] px-3 py-2 text-sm transition-all duration-300"
+                          :class="
+                            activeSection === child.id
+                              ? 'bg-[#ebf2e8] text-brand'
+                              : 'text-[#60756c] hover:bg-[#f4f7f2] hover:text-brand'
+                          "
+                        >
+                          {{ child.text }}
+                        </NuxtLink>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <section
+              class="rounded-4xl border border-[#d8dfd5] bg-brand p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)]"
+            >
+              <p class="text-[11px] uppercase tracking-[0.28em] text-white/46">Share Article</p>
+              <div class="mt-5 flex flex-wrap items-center gap-4">
+                <SocialShareButton
+                  v-for="item in socialMedia"
+                  :key="item"
+                  :platform="item"
+                  :url="shareUrl"
+                  :title="currentBlog.title"
+                  :aria-label="item"
+                  class="flex h-11 w-11 items-center justify-center rounded-full bg-[#d7e4d1] text-brand transition-transform duration-300 hover:-translate-y-1 hover:bg-[#e3edde]"
+                >
+                  <component :is="socialIcons[item]" class="h-5 w-5" weight="fill" />
+                </SocialShareButton>
+              </div>
+            </section>
+
+            <section
+              class="rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
+                Article Tags
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2.5">
+                <span
+                  v-for="tag in currentBlog.tags"
+                  :key="tag"
+                  class="rounded-full border border-[#d8dfd5] bg-[#f6f8f5] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[#31464d]"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+            </section>
+          </div>
+        </aside>
+
+        <div class="page-reveal reveal-delay-4 space-y-8">
+          <section
+            class="overflow-hidden rounded-[2.2rem] border border-[#d8dfd5] bg-white/92 shadow-[0_22px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm"
+          >
+            <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
+              <div class="p-6 sm:p-8">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
+                  EV Editorial Note
+                </p>
+                <h2
+                  class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.045em] text-brand"
+                >
+                  Electric mobility decisions get stronger when the story is grounded in deployment
+                  reality.
+                </h2>
+              </div>
+
+              <div
+                class="border-t border-[#e5ece2] bg-[#f7faf6] p-6 sm:p-8 lg:border-l lg:border-t-0"
+              >
+                <p class="text-sm leading-7 text-[#41555d] sm:text-base">
+                  This article sits inside Metropolitan Electric&apos;s EV knowledge layer, where
+                  infrastructure, operations, fleets, and market adoption are treated as one
+                  connected system.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="rounded-[2.2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8 lg:p-10"
+          >
+            <ProseWrapper v-if="currentBlog">
+              <ContentRenderer :value="currentBlog" />
+            </ProseWrapper>
+          </section>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 
 <script lang="ts" setup>
-import type { Collections } from "@nuxt/content";
+import type { Collections } from '@nuxt/content';
+import {
+  PhFacebookLogo,
+  PhInstagramLogo,
+  PhLinkedinLogo,
+  PhWhatsappLogo,
+  PhXLogo,
+} from '@phosphor-icons/vue';
+
+const route = useRoute();
 const activeSection = ref<string | null>(null);
-type BlogItem = Collections["blog"];
+type BlogItem = Collections['blog'];
 const props = defineProps<{ currentBlog: BlogItem }>();
 
-const socialMedia = [
-  "Twitter",
-  "Facebook",
-  "Linkedin",
-  "Whatsapp",
-  "Instagram",
-];
+const socialMedia = ['Twitter', 'Facebook', 'Linkedin', 'Whatsapp', 'Instagram'] as const;
+
+const socialIcons = {
+  Twitter: PhXLogo,
+  Facebook: PhFacebookLogo,
+  Linkedin: PhLinkedinLogo,
+  Whatsapp: PhWhatsappLogo,
+  Instagram: PhInstagramLogo,
+} as const;
+
+const shareUrl = computed(() => `https://metropolitanelectricng.com${route.path}`);
+const topLevelTocLinks = computed(() => props.currentBlog.body?.toc?.links ?? []);
+const tocLinks = computed(() =>
+  topLevelTocLinks.value.flatMap((item) => [item, ...(item.children ?? [])]),
+);
 
 useSeoMeta({
   title: props.currentBlog.title,
@@ -118,30 +287,46 @@ useSeoMeta({
   description: props.currentBlog.description,
   ogDescription: props.currentBlog.description,
   ogImage: props.currentBlog.image,
-  twitterCard: "summary_large_image",
+  twitterCard: 'summary_large_image',
 });
 
-const setupScrollWatcher = () => {
-  const sections = document.querySelectorAll("[id]");
-  console.log("Sections", sections);
+const updateActiveSection = () => {
+  const links = tocLinks.value;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeSection.value = entry.target.id;
-        }
-      });
-    },
-    { threshold: 0.9 }
-  );
+  if (!links.length) {
+    activeSection.value = null;
+    return;
+  }
 
-  sections.forEach((section) => observer.observe(section));
+  const offset = 180;
+  let currentId = links[0]?.id ?? null;
 
-  onBeforeUnmount(() => {
-    sections.forEach((section) => observer.unobserve(section));
+  links.forEach((item) => {
+    const element = document.getElementById(item.id);
+    if (!element) {
+      return;
+    }
+
+    if (element.getBoundingClientRect().top - offset <= 0) {
+      currentId = item.id;
+    }
   });
+
+  activeSection.value = currentId;
 };
 
-onMounted(setupScrollWatcher);
+const handleScroll = () => {
+  window.requestAnimationFrame(updateActiveSection);
+};
+
+onMounted(() => {
+  updateActiveSection();
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleScroll);
+});
 </script>
