@@ -1,8 +1,18 @@
 <script lang="ts" setup>
 import { ArrowRightIcon } from "@heroicons/vue/20/solid";
-import type { Blog } from "~/types/types";
 
 const { container } = useTailwindConfig();
+
+type BlogListItem = {
+  _path: string;
+  title: string;
+  description: string;
+  content: string;
+  image: string;
+  date: string;
+  minutesRead: number;
+  tags: string[];
+};
 
 const tags = [
   "All",
@@ -17,10 +27,19 @@ const tags = [
   "Nigeria",
 ];
 
-const filteredBlogs = ref<Blog[] | null>(null);
+const filteredBlogs = ref<BlogListItem[] | null>(null);
 const activeTag = ref("All");
-const { data: blogItems } = await useAsyncData<Blog[]>("blog-posts", () =>
-  queryCollection("blog").all()
+const { data: blogItems } = await useAsyncData<BlogListItem[]>("blog-posts", async () =>
+  (await queryCollection("blog").all()).map((item) => ({
+    _path: item.path,
+    title: item.title,
+    description: item.description,
+    content: item.content,
+    image: item.image,
+    date: item.date,
+    minutesRead: item.minutesRead,
+    tags: item.tags,
+  }))
 );
 
 const blogs = computed(() => [...(blogItems.value ?? [])].reverse());
@@ -29,7 +48,7 @@ const featuredBlog = computed(() =>
 );
 const secondaryBlogs = computed(() => blogs.value.slice(1, 4));
 
-const items: Ref<Blog[]> = ref([]);
+const items: Ref<BlogListItem[]> = ref([]);
 
 const filterBlogs = async (tag: string) => {
   filteredBlogs.value = null;
@@ -63,9 +82,9 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+  <div class="min-h-screen bg-[#fbfdfb] text-brand">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.12),transparent_28%),radial-gradient(circle_at_85%_12%,rgba(16,25,32,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section :class="container" class="flex flex-col gap-14 py-28 md:py-32">
       <div class="page-reveal reveal-delay-1 space-y-8">
@@ -73,7 +92,7 @@ useSeoMeta({
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
             Blog & Articles
           </p>
-          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
             A cleaner editorial layer for EV thinking, operations and strategy.
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -90,7 +109,7 @@ useSeoMeta({
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Focus</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">EV Trends</p>
           </div>
-          <div class="rounded-[1.75rem] border border-[#101920]/8 bg-[#101920] p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
+          <div class="rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">View</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">Editorial</p>
           </div>
@@ -101,15 +120,15 @@ useSeoMeta({
         <NuxtLink
           v-if="featuredBlog"
           :to="featuredBlog._path!"
-          class="page-reveal reveal-delay-2 group overflow-hidden rounded-[2rem] border border-[#d8dfd5] bg-white/92 shadow-[0_24px_80px_rgba(16,32,39,0.08)] transition-all duration-300 hover:-translate-y-1"
+          class="page-reveal reveal-delay-2 group overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_24px_80px_rgba(16,32,39,0.08)] transition-all duration-300 hover:-translate-y-1"
         >
-          <div class="relative h-[420px] sm:h-[520px]">
+          <div class="relative h-105 sm:h-130">
             <img
               :src="featuredBlog.image"
               :alt="featuredBlog.title"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-[#101920] via-[#101920]/28 to-transparent" />
+            <div class="absolute inset-0 bg-linear-to-t from-brand via-brand/28 to-transparent" />
             <div class="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:p-8">
               <div class="flex flex-wrap gap-2">
                 <span
@@ -139,7 +158,7 @@ useSeoMeta({
             v-for="(blog, index) in secondaryBlogs"
             :key="blog._path"
             :to="blog._path!"
-            class="page-reveal page-reveal-soft group flex gap-4 overflow-hidden rounded-[1.5rem] border border-[#d8dfd5] bg-white/92 p-4 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
+            class="page-reveal page-reveal-soft group flex gap-4 overflow-hidden rounded-3xl border border-[#d8dfd5] bg-white/92 p-4 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
             :style="{ '--reveal-delay': `${210 + (index * 75)}ms` }"
           >
             <img
@@ -151,7 +170,7 @@ useSeoMeta({
               <p class="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#6b8177]">
                 {{ blog.minutesRead }} mins
               </p>
-              <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+              <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
                 {{ blog.title }}
               </h3>
               <p class="line-clamp-2 text-sm leading-7 text-[#41555d]">
@@ -166,7 +185,7 @@ useSeoMeta({
         <div class="page-reveal reveal-delay-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Browse by Theme</p>
-            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920] sm:text-4xl">
+            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-brand sm:text-4xl">
               Filter the EV editorial stream.
             </h2>
           </div>
@@ -178,7 +197,7 @@ useSeoMeta({
               class="rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-300"
               :class="
                 activeTag === tag
-                  ? 'bg-[#101920] text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
+                  ? 'bg-brand text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
                   : 'bg-white/92 text-[#31464d] hover:bg-[#e9eee7]'
               "
               @click="filter(tag)"

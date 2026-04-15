@@ -11,21 +11,21 @@
         :src="image"
         :alt="title"
       />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101920]/36 via-transparent to-transparent" />
+      <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/36 via-transparent to-transparent" />
     </div>
 
     <div class="flex flex-1 flex-col gap-3 p-5">
       <p class="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#6b8177]">
         Visual Highlight
       </p>
-      <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+      <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
         {{ title }}
       </h3>
       <p class="line-clamp-3 text-sm leading-7 text-[#41555d]">
         {{ description }}
       </p>
 
-      <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-[#101920]">
+      <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-brand">
         Open Image
         <ArrowRightIcon class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </div>

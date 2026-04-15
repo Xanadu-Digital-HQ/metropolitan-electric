@@ -76,7 +76,7 @@ const selectVehicle = (name: string) => {
 <template>
   <div class="min-h-screen bg-[#fbfdfb] text-[#102027]">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(124,151,116,0.12),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section class="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
       <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -84,7 +84,7 @@ const selectVehicle = (name: string) => {
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
             Electric Vehicle Gallery
           </p>
-          <h1 class="font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+          <h1 class="font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
             Sleek catalog browsing for a growing fleet.
           </h1>
           <p class="max-w-2xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -102,7 +102,7 @@ const selectVehicle = (name: string) => {
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Filtered</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">{{ filteredVehicles.length }}</p>
           </div>
-          <div class="col-span-2 rounded-[1.75rem] border border-[#101920]/8 bg-[#101920] p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)] sm:col-span-1">
+          <div class="col-span-2 rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)] sm:col-span-1">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Active</p>
             <p class="mt-3 truncate font-opensans text-2xl font-semibold tracking-[-0.04em]">
               {{ activeVehicle?.name ?? "None" }}
@@ -111,7 +111,7 @@ const selectVehicle = (name: string) => {
         </div>
       </div>
 
-      <div class="page-reveal reveal-delay-3 rounded-[2rem] border border-[#d8dfd5] bg-white/86 p-4 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-5">
+      <div class="page-reveal reveal-delay-3 rounded-4xl border border-[#d8dfd5] bg-white/86 p-4 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-5">
         <div class="flex flex-wrap gap-3">
           <button
             v-for="category in categories"
@@ -120,7 +120,7 @@ const selectVehicle = (name: string) => {
             class="rounded-full px-4 py-2.5 text-sm font-medium capitalize transition-all duration-300"
             :class="
               activeCategory === category
-                ? 'bg-[#101920] text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
+                ? 'bg-brand text-white shadow-[0_10px_30px_rgba(16,32,39,0.18)]'
                 : 'bg-[#f4f7f2] text-[#31464d] hover:bg-[#e9eee7]'
             "
             @click="selectCategory(category)"
@@ -137,11 +137,11 @@ const selectVehicle = (name: string) => {
               v-for="(vehicleItem, index) in filteredVehicles"
               :key="vehicleItem.name"
               type="button"
-              class="page-reveal page-reveal-soft group rounded-[2rem] border p-5 text-left transition-all duration-300"
+              class="page-reveal page-reveal-soft group rounded-4xl border p-5 text-left transition-all duration-300"
               :class="
                 activeVehicle?.name === vehicleItem.name
-                  ? 'border-[#101920] bg-[#101920] text-white shadow-[0_26px_80px_rgba(16,32,39,0.18)]'
-                  : 'border-[#d8dfd5] bg-white/92 text-[#101920] shadow-[0_16px_50px_rgba(16,32,39,0.05)] hover:-translate-y-1 hover:border-[#a6b7a0]'
+                  ? 'border-brand bg-brand text-white shadow-[0_26px_80px_rgba(16,32,39,0.18)]'
+                  : 'border-[#d8dfd5] bg-white/92 text-brand shadow-[0_16px_50px_rgba(16,32,39,0.05)] hover:-translate-y-1 hover:border-[#a6b7a0]'
               "
               :style="{ '--reveal-delay': `${240 + (index * 65)}ms` }"
               @click="selectVehicle(vehicleItem.name)"
@@ -167,7 +167,7 @@ const selectVehicle = (name: string) => {
                 </div>
               </div>
 
-              <div class="mt-6 rounded-[1.5rem] bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4">
+              <div class="mt-6 rounded-3xl bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4">
                 <img
                   :src="vehicleItem.images[0]"
                   :alt="vehicleItem.name"
@@ -204,23 +204,23 @@ const selectVehicle = (name: string) => {
 
         <aside
           v-if="activeVehicle"
-          class="page-reveal reveal-delay-4 h-fit rounded-[2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm xl:sticky xl:top-32"
+          class="page-reveal reveal-delay-4 h-fit rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_24px_80px_rgba(16,32,39,0.07)] backdrop-blur-sm xl:sticky xl:top-32"
         >
           <p class="text-[11px] uppercase tracking-[0.28em] text-[#6b8177]">Selected Vehicle</p>
-          <h2 class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920]">
+          <h2 class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.045em] text-brand">
             {{ activeVehicle.name }}
           </h2>
           <p class="mt-2 text-sm capitalize text-[#547067]">{{ activeVehicle.category }}</p>
 
           <div class="mt-8 space-y-4">
-            <div class="rounded-[1.5rem] bg-[#fbfdfb] p-4">
+            <div class="rounded-3xl bg-[#fbfdfb] p-4">
               <p class="text-[11px] uppercase tracking-[0.24em] text-[#73867d]">Price</p>
-              <p class="mt-2 text-lg font-medium text-[#101920]">{{ activeVehicle.price }}</p>
+              <p class="mt-2 text-lg font-medium text-brand">{{ activeVehicle.price }}</p>
             </div>
 
-            <div class="rounded-[1.5rem] bg-[#fbfdfb] p-4">
+            <div class="rounded-3xl bg-[#fbfdfb] p-4">
               <p class="text-[11px] uppercase tracking-[0.24em] text-[#73867d]">Range</p>
-              <p class="mt-2 text-lg font-medium text-[#101920]">
+              <p class="mt-2 text-lg font-medium text-brand">
                 {{ activeVehicle.specification.find((item) => item.label === "RANGE")?.value ?? "Available on request" }}
               </p>
             </div>
@@ -229,7 +229,7 @@ const selectVehicle = (name: string) => {
           <div class="mt-8 space-y-3">
             <NuxtLink
               to="/contact"
-              class="flex items-center justify-between rounded-full bg-[#101920] px-5 py-4 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
+              class="flex items-center justify-between rounded-full bg-brand px-5 py-4 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
             >
               Contact Sales
               <ArrowRightIcon class="size-4" />
@@ -237,7 +237,7 @@ const selectVehicle = (name: string) => {
             <button
               type="button"
               @click="openActiveVehicleDetails"
-              class="flex items-center justify-between rounded-full border border-[#dce4d9] bg-[#fbfdfb] px-5 py-4 text-sm font-medium text-[#101920] transition-transform duration-300 hover:-translate-y-0.5"
+              class="flex items-center justify-between rounded-full border border-[#dce4d9] bg-[#fbfdfb] px-5 py-4 text-sm font-medium text-brand transition-transform duration-300 hover:-translate-y-0.5"
             >
               View Details
               <ArrowRightIcon class="size-4" />

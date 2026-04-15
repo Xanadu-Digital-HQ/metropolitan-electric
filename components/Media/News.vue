@@ -9,7 +9,7 @@
         :src="image"
         :alt="title"
       />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101920]/55 via-[#101920]/12 to-transparent" />
+      <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/55 via-brand/12 to-transparent" />
       <div class="absolute left-5 top-5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/88 backdrop-blur-sm">
         Media Story
       </div>
@@ -22,7 +22,7 @@
       </div>
 
       <div class="space-y-3">
-        <h2 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+        <h2 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
           {{ title }}
         </h2>
         <p class="line-clamp-3 text-sm leading-7 text-[#41555d] sm:text-base">
@@ -30,7 +30,7 @@
         </p>
       </div>
 
-      <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-[#101920]">
+      <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-brand">
         Read Story
         <ArrowRightIcon class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </div>

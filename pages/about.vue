@@ -90,9 +90,9 @@ const operatingModel = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+  <div class="min-h-screen bg-[#fbfdfb] text-brand">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.12),transparent_28%),radial-gradient(circle_at_86%_10%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section class="mx-auto flex max-w-7xl flex-col gap-14 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
       <div class="page-reveal reveal-delay-1 space-y-8">
@@ -100,7 +100,7 @@ const operatingModel = [
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
             About Metropolitan Electric
           </p>
-          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
             Building an EV ecosystem for Africa, not just a catalog of electric vehicles.
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -119,7 +119,7 @@ const operatingModel = [
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Approach</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">Systems</p>
           </div>
-          <div class="rounded-[1.75rem] border border-[#101920]/8 bg-[#101920] p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
+          <div class="rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Direction</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">EV-Centric</p>
           </div>
@@ -129,7 +129,7 @@ const operatingModel = [
       <section class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
         <div class="page-reveal reveal-delay-2 overflow-hidden rounded-[2.2rem] border border-[#d8dfd5] bg-white/92 shadow-[0_28px_90px_rgba(16,32,39,0.08)] backdrop-blur-sm">
           <div class="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-            <div class="relative overflow-hidden bg-[#101920] p-6 text-white sm:p-8">
+            <div class="relative overflow-hidden bg-brand p-6 text-white sm:p-8">
               <div class="pointer-events-none absolute -right-10 top-0 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
               <div class="pointer-events-none absolute bottom-0 left-0 h-36 w-36 rounded-full bg-[#719f63]/25 blur-3xl" />
 
@@ -163,11 +163,11 @@ const operatingModel = [
                 </p>
               </div>
 
-              <div class="rounded-[1.5rem] bg-[#fbfdfb] p-5">
+              <div class="rounded-3xl bg-[#fbfdfb] p-5">
                 <p class="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#73867d]">
                   Operating Lens
                 </p>
-                <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+                <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
                   Cleaner mobility should also be easier to deploy, finance, and maintain.
                 </p>
               </div>
@@ -187,7 +187,7 @@ const operatingModel = [
                 <component :is="pillar.icon" class="size-5" weight="fill" />
               </div>
               <div class="space-y-2">
-                <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+                <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
                   {{ pillar.title }}
                 </h3>
                 <p class="text-sm leading-7 text-[#41555d]">
@@ -205,7 +205,7 @@ const operatingModel = [
             <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
               What Defines Us
             </p>
-            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920] sm:text-4xl">
+            <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.045em] text-brand sm:text-4xl">
               EV values translated into operating principles.
             </h2>
           </div>
@@ -221,10 +221,10 @@ const operatingModel = [
             class="page-reveal page-reveal-soft group rounded-[1.85rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_16px_50px_rgba(16,32,39,0.05)] transition-transform duration-300 hover:-translate-y-1"
             :style="{ '--reveal-delay': `${280 + (index * 65)}ms` }"
           >
-            <div class="flex size-14 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#eff4eb,#dce6d7_55%,#cad8ca_100%)] text-[#101920] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+            <div class="flex size-14 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#eff4eb,#dce6d7_55%,#cad8ca_100%)] text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
               <component :is="card.icon" class="size-6" weight="fill" />
             </div>
-            <h3 class="mt-5 font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+            <h3 class="mt-5 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
               {{ card.title }}
             </h3>
             <p class="mt-3 text-sm leading-7 text-[#41555d]">
@@ -235,7 +235,7 @@ const operatingModel = [
       </section>
 
       <section class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-        <div class="page-reveal reveal-delay-4 rounded-[2rem] border border-[#d8dfd5] bg-[#101920] p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
+        <div class="page-reveal reveal-delay-4 rounded-4xl border border-[#d8dfd5] bg-brand p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
           <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
             Operating Model
           </p>
@@ -256,11 +256,11 @@ const operatingModel = [
             :style="{ '--reveal-delay': `${350 + (index * 70)}ms` }"
           >
             <div class="flex items-start gap-4">
-              <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#fbfdfb] text-[#101920]">
+              <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#fbfdfb] text-brand">
                 <component :is="item.icon" class="size-5" weight="fill" />
               </div>
               <div>
-                <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+                <h3 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
                   {{ item.label }}
                 </h3>
                 <p class="mt-2 text-sm leading-7 text-[#41555d]">
@@ -290,7 +290,7 @@ const operatingModel = [
           <div class="flex flex-col gap-3 sm:flex-row">
             <NuxtLink
               to="/services"
-              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-medium text-[#101920] transition-transform duration-300 hover:-translate-y-0.5"
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-medium text-brand transition-transform duration-300 hover:-translate-y-0.5"
             >
               Explore Services
             </NuxtLink>

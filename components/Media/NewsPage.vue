@@ -47,11 +47,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { NewsItem } from "~/types/types";
+import type { Collections } from "@nuxt/content";
 import { ProseWrapper } from "#components";
 
 const { container } = useTailwindConfig();
-const props = defineProps<{ currentNews: NewsItem; news: NewsItem[] }>();
+type MediaCenterItem = Collections["mediaCenter"];
+const props = defineProps<{ currentNews: MediaCenterItem; news: MediaCenterItem[] }>();
 
 useSeoMeta({
   title: props.currentNews.title,

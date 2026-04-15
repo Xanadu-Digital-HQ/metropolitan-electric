@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+  <div class="min-h-screen bg-[#fbfdfb] text-brand">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.12),transparent_30%),radial-gradient(circle_at_88%_8%,rgba(16,25,32,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section class="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-14 pt-34 sm:px-8 lg:px-12 lg:pb-20 lg:pt-40">
       <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
@@ -12,7 +12,7 @@
           >
             {{ eyebrow }}
           </p>
-          <h1 class="max-w-4xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+          <h1 class="max-w-4xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
             {{ title }}
           </h1>
           <p class="max-w-2xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -28,7 +28,7 @@
             :style="{ '--reveal-delay': `${140 + (index * 70)}ms` }"
           >
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#73867d]">{{ metric.label }}</p>
-            <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+            <p class="mt-3 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
               {{ metric.value }}
             </p>
           </div>
@@ -45,7 +45,7 @@
               }"
             >
               <img
-                class="h-[280px] w-full object-cover rounded-[1.3rem] sm:h-[420px] lg:h-[520px]"
+                class="h-70 w-full object-cover rounded-[1.3rem] sm:h-105 lg:h-130"
                 :src="`/card/${image}`"
                 :alt="title"
               />
@@ -54,7 +54,7 @@
         </div>
 
         <div class="flex flex-col gap-8">
-          <section class="page-reveal reveal-delay-4 rounded-[2rem] bg-[#101920] p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
+          <section class="page-reveal reveal-delay-4 rounded-4xl bg-brand p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/45">Service Lens</p>
             <h2 class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.045em]">
               EV-first planning, deployment and long-term support.
@@ -65,7 +65,7 @@
             </p>
           </section>
 
-          <section class="page-reveal reveal-delay-5 rounded-[2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_20px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
+          <section class="page-reveal reveal-delay-5 rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_20px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6b8177]">Key Pillars</p>
             <div class="mt-5 flex flex-wrap gap-3">
               <span

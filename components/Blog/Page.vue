@@ -99,8 +99,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { Collections } from "@nuxt/content";
 const activeSection = ref<string | null>(null);
-const props = defineProps(["currentBlog"]);
+type BlogItem = Collections["blog"];
+const props = defineProps<{ currentBlog: BlogItem }>();
 
 const socialMedia = [
   "Twitter",

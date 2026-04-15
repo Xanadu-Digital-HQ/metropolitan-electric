@@ -6,11 +6,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { Collections } from "@nuxt/content";
 const { container } = useTailwindConfig();
 
 const route = useRoute();
+type BlogItem = Collections["blog"];
 
-const { data }: any = await useAsyncData(`content-${route.path}`, () =>
-  queryContent().where({ _path: route.path }).findOne()
+const { data } = await useAsyncData<BlogItem | null>(`content-${route.path}`, () =>
+  queryCollection("blog").path(route.path).first()
 );
 </script>

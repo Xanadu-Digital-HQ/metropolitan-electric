@@ -9,7 +9,7 @@
         :src="image"
         :alt="title"
       />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101920]/30 via-transparent to-transparent" />
+      <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/30 via-transparent to-transparent" />
     </div>
 
     <div class="flex flex-1 flex-col gap-4 p-5">
@@ -24,7 +24,7 @@
       </div>
 
       <div class="space-y-3">
-        <h2 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+        <h2 class="font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
           {{ title }}
         </h2>
         <p class="line-clamp-3 text-sm leading-7 text-[#41555d] sm:text-base">

@@ -47,7 +47,7 @@ const selectImage = (index: number) => {
 <template>
   <div class="min-h-screen bg-[#fbfdfb] text-[#102027]">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(124,151,116,0.12),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section v-if="activeVehicle" class="mx-auto flex max-w-7xl flex-col gap-8 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
       <div class="page-reveal reveal-delay-1 flex flex-wrap items-center justify-between gap-4">
@@ -61,7 +61,7 @@ const selectImage = (index: number) => {
 
         <NuxtLink
           to="/contact"
-          class="inline-flex items-center gap-2 rounded-full bg-[#101920] px-5 py-3 text-sm font-medium text-white shadow-[0_14px_40px_rgba(16,32,39,0.12)]"
+          class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-medium text-white shadow-[0_14px_40px_rgba(16,32,39,0.12)]"
         >
           Contact Sales
           <ArrowRightIcon class="size-4" />
@@ -73,12 +73,12 @@ const selectImage = (index: number) => {
           <div class="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#6b8177]">Preview</p>
-              <h1 class="mt-2 font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+              <h1 class="mt-2 font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
                 {{ activeVehicle.name }}
               </h1>
             </div>
 
-            <div class="rounded-full bg-[#101920] px-4 py-2.5 text-sm font-medium text-white">
+            <div class="rounded-full bg-brand px-4 py-2.5 text-sm font-medium text-white">
               {{ activeVehicle.price }}
             </div>
           </div>
@@ -87,7 +87,7 @@ const selectImage = (index: number) => {
             <img
               :src="activeImage"
               :alt="activeVehicle.name"
-              class="h-[280px] w-full object-contain sm:h-[420px] lg:h-[520px]"
+              class="h-70 w-full object-contain sm:h-105 lg:h-130"
             />
           </div>
 
@@ -99,7 +99,7 @@ const selectImage = (index: number) => {
               class="overflow-hidden rounded-2xl border bg-white transition-all duration-300"
               :class="
                 currentImageIndex === index
-                  ? 'border-[#101920] shadow-[0_10px_30px_rgba(16,32,39,0.16)]'
+                  ? 'border-brand shadow-[0_10px_30px_rgba(16,32,39,0.16)]'
                   : 'border-[#dbe3d8] opacity-75 hover:opacity-100'
               "
               @click="selectImage(index)"
@@ -114,7 +114,7 @@ const selectImage = (index: number) => {
         </div>
 
         <div class="flex flex-col gap-8">
-          <section class="page-reveal reveal-delay-3 rounded-[2rem] bg-[#101920] p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
+          <section class="page-reveal reveal-delay-3 rounded-4xl bg-brand p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/45">Overview</p>
             <p class="mt-4 text-sm leading-7 text-white/72 sm:text-base">
               {{ activeVehicle.description }}
@@ -132,11 +132,11 @@ const selectImage = (index: number) => {
             </div>
           </section>
 
-          <section class="page-reveal reveal-delay-4 rounded-[2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_20px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
+          <section class="page-reveal reveal-delay-4 rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_20px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p class="text-[11px] uppercase tracking-[0.28em] text-[#6b8177]">Feature Set</p>
-                <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.04em] text-[#101920]">
+                <h2 class="mt-2 font-opensans text-3xl font-semibold tracking-[-0.04em] text-brand">
                   Designed for real-world deployment.
                 </h2>
               </div>

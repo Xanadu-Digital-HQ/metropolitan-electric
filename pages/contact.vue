@@ -1,6 +1,6 @@
-<template>   <div class="min-h-screen bg-[#fbfdfb] text-[#101920]">
+<template>   <div class="min-h-screen bg-[#fbfdfb] text-brand">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.14),transparent_28%),radial-gradient(circle_at_85%_12%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 [background-image:linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
     <section class="mx-auto flex max-w-7xl flex-col gap-12 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
       <div class="page-reveal reveal-delay-1 space-y-8">
@@ -8,7 +8,7 @@
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
             Contact Metropolitan Electric
           </p>
-          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-[#101920] sm:text-5xl lg:text-6xl">
+          <h1 class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl">
             Start the next EV conversation with a cleaner, more direct contact flow.
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -26,7 +26,7 @@
             <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Focus</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">EV Systems</p>
           </div>
-          <div class="rounded-[1.75rem] border border-[#101920]/8 bg-[#101920] p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
+          <div class="rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Location</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">Lagos</p>
           </div>
@@ -35,7 +35,7 @@
 
       <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <aside class="flex flex-col gap-6">
-          <div class="page-reveal reveal-delay-2 rounded-[2rem] border border-[#d8dfd5] bg-[#101920] p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
+          <div class="page-reveal reveal-delay-2 rounded-4xl border border-[#d8dfd5] bg-brand p-6 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-8">
             <p class="text-[11px] uppercase tracking-[0.28em] text-white/45">Direct Lines</p>
             <div class="mt-6 space-y-5">
               <a href="tel:+2349041595102" class="block rounded-[1.35rem] border border-white/10 bg-white/5 p-4 transition-colors duration-300 hover:bg-white/8">
@@ -60,7 +60,7 @@
             </div>
           </div>
 
-          <div class="page-reveal reveal-delay-3 rounded-[2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm sm:p-8">
+          <div class="page-reveal reveal-delay-3 rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm sm:p-8">
             <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Best For</p>
             <div class="mt-5 flex flex-wrap gap-3">
               <span
@@ -75,10 +75,10 @@
         </aside>
 
         <div class="grid gap-8">
-          <section class="page-reveal reveal-delay-3 rounded-[2rem] border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_22px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
+          <section class="page-reveal reveal-delay-3 rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_22px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm sm:p-8">
             <div class="flex flex-col gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Send Enquiry</p>
-              <h2 class="font-opensans text-3xl font-semibold tracking-[-0.045em] text-[#101920] sm:text-4xl">
+              <h2 class="font-opensans text-3xl font-semibold tracking-[-0.045em] text-brand sm:text-4xl">
                 Tell us what you are building or planning.
               </h2>
               <p class="max-w-2xl text-sm leading-7 text-[#41555d] sm:text-base">
@@ -93,7 +93,7 @@
                   <input
                     type="text"
                     name="from_name"
-                    class="w-full rounded-[1.15rem] border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-[#101920] placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-[#101920]/15"
+                    class="w-full rounded-[1.15rem] border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-brand placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-brand/15"
                     placeholder="Jane Smith"
                     required
                   />
@@ -104,7 +104,7 @@
                   <input
                     type="email"
                     name="from_email"
-                    class="w-full rounded-[1.15rem] border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-[#101920] placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-[#101920]/15"
+                    class="w-full rounded-[1.15rem] border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-brand placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-brand/15"
                     placeholder="you@example.com"
                     required
                   />
@@ -116,7 +116,7 @@
                 <textarea
                   rows="6"
                   name="message"
-                  class="w-full resize-none rounded-[1.5rem] border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-[#101920] placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-[#101920]/15"
+                  class="w-full resize-none rounded-3xl border border-[#d9e1d7] bg-[#fdfefd] px-4 py-3 text-sm text-brand placeholder:text-[#7a8d84] focus:outline-none focus:ring-2 focus:ring-brand/15"
                   placeholder="Share your fleet size, infrastructure goal, city, partnership idea, or operational challenge."
                   required
                 />
@@ -127,7 +127,7 @@
                   id="contact-consent"
                   v-model="checkBox"
                   type="checkbox"
-                  class="mt-1 h-4 w-4 rounded border-[#cad4c7] accent-[#101920]"
+                  class="mt-1 h-4 w-4 rounded border-[#cad4c7] accent-brand"
                   required
                 />
                 <label for="contact-consent" class="text-sm leading-7 text-[#41555d]">
@@ -137,20 +137,20 @@
 
               <p
                 v-if="response"
-                class="rounded-[1rem] bg-green-500/10 px-4 py-3 text-sm text-green-900"
+                class="rounded-2xl bg-green-500/10 px-4 py-3 text-sm text-green-900"
               >
                 {{ response }}
               </p>
               <p
                 v-else-if="errorMsg"
-                class="rounded-[1rem] bg-red-500/10 px-4 py-3 text-sm text-red-900"
+                class="rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-red-900"
               >
                 {{ errorMsg }}
               </p>
 
               <button
                 type="submit"
-                class="inline-flex min-w-44 items-center justify-center rounded-full bg-[#101920] px-6 py-3.5 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
+                class="inline-flex min-w-44 items-center justify-center rounded-full bg-brand px-6 py-3.5 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
               >
                 <ArrowPathIcon v-if="isLoading" class="h-5 w-5 animate-spin" />
                 <span v-else>Send Enquiry</span>
@@ -159,15 +159,15 @@
           </section>
 
         </div>
-        <section class="page-reveal reveal-delay-4 overflow-hidden col-span-full rounded-[2rem] border border-[#d8dfd5] bg-white/92 shadow-[0_22px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm w-full">
+        <section class="page-reveal reveal-delay-4 overflow-hidden col-span-full rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_22px_70px_rgba(16,32,39,0.07)] backdrop-blur-sm w-full">
           <div class="border-b border-[#e2e9df] px-6 py-5 sm:px-8">
             <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">Office Map</p>
-            <h2 class="mt-2 font-opensans text-2xl font-semibold tracking-[-0.04em] text-[#101920]">
+            <h2 class="mt-2 font-opensans text-2xl font-semibold tracking-[-0.04em] text-brand">
               Victoria Island, Lagos
             </h2>
           </div>
           <iframe
-            class="h-[420px] w-full"
+            class="h-105 w-full"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.730220431644!2d3.433507975679751!3d6.428694524256389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf535ed0cc7ab%3A0x4601420b48fe9092!2s77%20Sinari%20Daranijo%20St%2C%20Victoria%20Island%2C%20Lagos%20106104%2C%20Lagos!5e0!3m2!1sen!2sng!4v1720609776367!5m2!1sen!2sng"
             style="border: 0"
             allowfullscreen
