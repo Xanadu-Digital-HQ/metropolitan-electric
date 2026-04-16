@@ -66,7 +66,8 @@ export default defineNuxtConfig({
     },
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ['radix-vue', 'lucide-vue-next', 'clsx', 'tailwind-merge'],
+      include: ['radix-vue', 'lucide-vue-next', 'clsx', 'tailwind-merge','@vue/devtools-core',
+        '@vue/devtools-kit'],
     },
   },
   shadcn: {
