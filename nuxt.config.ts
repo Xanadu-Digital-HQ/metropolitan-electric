@@ -107,7 +107,7 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  compatibilityDate: '2024-07-02',
+  compatibilityDate: '2026-04-17',
   scripts: {
     registry: {
       googleTagManager: true,

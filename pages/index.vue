@@ -32,7 +32,7 @@
             class="absolute inset-x-0 bottom-0 z-30 flex flex-col items-center gap-y-8 px-4 pb-8 sm:gap-y-10 sm:px-6 sm:pb-10 lg:px-8 lg:pb-12"
           >
             <div
-              class="relative flex w-full max-w-7xl items-end justify-start gap-4 overflow-x-auto pb-4 md:justify-center md:overflow-visible md:pb-0 md:gap-4 lg:gap-6 snap-x snap-mandatory md:perspective-[1600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              class="relative flex w-full max-w-7xl items-end justify-start gap-4 overflow-x-auto px-[6vw] pb-4 md:justify-center md:overflow-visible md:px-0 md:pb-0 md:gap-4 lg:gap-6 snap-x snap-mandatory md:perspective-[1600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div
                 v-for="vehicle in vehicles"
