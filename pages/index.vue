@@ -90,9 +90,8 @@ const route = useRoute();
 
 const hasClientLoadedAssets = ref(false);
 const hasSplashVideoFinished = ref(false);
-const skipSplashVideo = ref(false);
 const showSplash = computed(() => !hasClientLoadedAssets.value || !hasSplashVideoFinished.value);
-const showSplashVideo = computed(() => !hasSplashVideoFinished.value && !skipSplashVideo.value);
+const showSplashVideo = computed(() => !hasSplashVideoFinished.value);
 
 const vehicles = [
   { name: 'Vehicle 1', image: '/images/vehicle1.png' },
@@ -223,16 +222,6 @@ const waitForClientAssets = async () => {
 onMounted(async () => {
   void waitForClientAssets();
   await nextTick();
-
-  if (import.meta.client) {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isSmallScreen = window.innerWidth < 768;
-
-    if (prefersReducedMotion || isSmallScreen) {
-      skipSplashVideo.value = true;
-      hasSplashVideoFinished.value = true;
-    }
-  }
 
   if (!pageRoot.value || !heroSection.value) {
     return;
