@@ -77,7 +77,7 @@ let closeTimer: ReturnType<typeof setTimeout> | null = null;
 
 const phaseLinks = [
   { phase: 'intro', label: 'Intro', shortLabel: 'Intro', angle: -90, radius: wheelRadius },
-  { phase: 'gallery', label: 'Gallery', shortLabel: 'Gallery', angle: 0, radius: wheelRadius },
+  { phase: 'vehicles', label: 'Gallery', shortLabel: 'Gallery', angle: 0, radius: wheelRadius },
   { phase: 'why', label: 'Why Choose Us', shortLabel: 'Why Us', angle: 90, radius: wheelRadius },
   { phase: 'contact', label: 'Contact', shortLabel: 'Contact', angle: 180, radius: wheelRadius },
 ] as const;
