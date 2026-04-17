@@ -22,7 +22,7 @@
           : 'js-home-closing-scroll min-h-screen overflow-hidden'
       "
     >
-      <div class="js-home-closing-track flex min-h-full flex-col will-change-transform pt-10 sm:pt-16 lg:pt-20 pb-10 sm:pb-14 lg:pb-20 mt-10 md:mt-0">
+      <div class="js-home-closing-track mt-10 flex min-h-full flex-col pt-10 sm:pt-16 lg:pt-20 md:mt-0 will-change-transform">
         <div :class="container" class="js-home-closing-content flex-1 py-12 sm:py-16 lg:py-20">
           <div class="grid gap-8 lg:grid-cols-[0.98fr_1.35fr]">
           <div
@@ -146,7 +146,7 @@
         </div>
         </div>
 
-        <div class="mt-auto pt-10 lg:pt-14 pb-10 sm:pb-14 lg:pb-20">
+        <div class="mt-auto pt-10 lg:pt-14">
           <Footer class="js-home-closing-footer min-h-56 border-t border-white/8 lg:min-h-64" />
         </div>
       </div>

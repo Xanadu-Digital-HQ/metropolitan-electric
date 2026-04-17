@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 });
 </script>
 <template>
-  <button class="group flex gap-2 items-center w-auto py-3 px-8 bg-accent rounded-full text-white font-medium hover:bg-accent-hover transition-all duration-500 cursor-pointer">
+  <button class="group flex gap-2 items-center w-auto py-3 px-8 bg-accent text-sm md:text-base rounded-full text-white font-medium hover:bg-accent-hover transition-all duration-500 cursor-pointer">
     <span v-if="isIcon" class="">
         <component :is="icon ?? PhMinus " class="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform" />
     </span>

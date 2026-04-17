@@ -1,7 +1,7 @@
 <template>
-  <div class="js-phase-three-gallery absolute inset-0 z-25 overflow-hidden bg-white">
-    <div class="js-phase-three-gallery-scroll h-full overflow-hidden px-4 py-16 sm:px-8 lg:px-12 will-change-transform">
-      <div class="js-phase-three-gallery-track mx-auto flex min-h-full max-w-368 flex-col justify-start gap-20 pb-24 lg:gap-28 lg:pb-32 will-change-transform mt-40">
+  <section class="js-phase-three-gallery relative overflow-hidden bg-white">
+    <div class="js-phase-three-gallery-scroll overflow-hidden px-4 py-16 sm:px-8 lg:px-12">
+      <div class="js-phase-three-gallery-track mx-auto mt-16 flex max-w-368 flex-col justify-start gap-20 pb-24 lg:mt-24 lg:gap-28 lg:pb-32">
         <article
           v-for="feature in features"
           :key="feature.title"
@@ -34,7 +34,7 @@
         </article>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
