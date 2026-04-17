@@ -190,7 +190,7 @@ const loadMore = () => {
             :description="mediaItem.description"
             :image="mediaItem.image"
             :type="mediaItem.type"
-            :slug="mediaItem.type === 'story' ? mediaItem.slug : undefined"
+            :slug="mediaItem.type === 'story' ? getMediaCenterLink(mediaItem) : undefined"
             class="page-reveal page-reveal-soft"
             :style="{ '--reveal-delay': `${320 + index * 65}ms` }"
           />

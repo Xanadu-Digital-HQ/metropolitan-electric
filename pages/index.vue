@@ -143,8 +143,11 @@ const getElementPageTop = (element: Element | null | undefined) => {
 };
 
 const syncPhaseScrollPositions = () => {
+  const heroTop = getElementPageTop(heroSection.value) ?? 0;
+
   phaseScrollPositions.value = {
-    intro: getElementPageTop(heroSection.value) ?? 0,
+    intro: heroTop,
+    vehicles: heroTop + (window.innerHeight * 0.7),
     gallery: getElementPageTop(gallerySection.value?.$el ?? null) ?? 0,
     why: getElementPageTop(whyChooseSection.value?.$el ?? null) ?? 0,
     contact: getElementPageTop(closingSection.value?.$el ?? null) ?? 0,
@@ -283,7 +286,7 @@ onMounted(async () => {
       gsap.set(phaseThreeCopies, { autoAlpha: 0, y: 32 });
       gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, y: 36 });
       phaseThreeImages.forEach((image, index) => {
-        gsap.set(image, { yPercent: 18 + (index * 2), scale: 1.12 });
+        gsap.set(image, { yPercent: 28 + (index * 3), scale: 1.14 });
       });
       gsap.set(whyHeading, { autoAlpha: 0, y: 24 });
       gsap.set(whyCards, { autoAlpha: 0, y: 28 });
@@ -308,6 +311,12 @@ onMounted(async () => {
           start: 'top top',
           end: isMobile ? '+=35%' : 'bottom bottom',
           scrub: isMobile ? 0.12 : 0.7,
+          snap: {
+            snapTo: [0, 1],
+            duration: { min: 0.16, max: 0.32 },
+            delay: 0.04,
+            ease: 'power1.inOut',
+          },
           invalidateOnRefresh: true,
         },
       });
@@ -364,8 +373,8 @@ onMounted(async () => {
 
         if (image) {
           gsap.to(image, {
-            yPercent: -16,
-            scale: 1.02,
+            yPercent: -28,
+            scale: 1.04,
             ease: 'none',
             scrollTrigger: {
               trigger: panel,

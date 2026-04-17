@@ -139,11 +139,11 @@ const highlightStatements = [
                 </p>
               </div>
 
-              <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
                 <div
                   v-for="metric in service.metrics"
                   :key="metric.label"
-                  class="flex min-h-30 flex-col rounded-[1.25rem] bg-[#fbfdfb] p-4"
+                  class="flex h-fit flex-col rounded-[1.25rem] bg-[#fbfdfb] p-4"
                 >
                   <p class="text-[11px] uppercase tracking-[0.18em] leading-5 text-[#73867d] wrap-break-word">
                     {{ metric.label }}

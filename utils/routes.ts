@@ -1,57 +1,57 @@
-import type { Link } from "~/types/types";
-import { URLS } from "./constants";
+import type { Link } from '~/types/types';
+import { URLS } from './constants';
 
 type position = {
-  pos : number
-}
+  pos: number;
+};
 export const routes: (Link & position)[] = [
   {
-    state: "normal",
-    name: "Home",
+    state: 'normal',
+    name: 'Home',
     path: URLS.HOME,
     pos: 0,
   },
   {
-    state: "subnavLink",
-    name: "Explore",
+    state: 'subnavLink',
+    name: 'Explore',
     subItems: [
       {
-        name: "Gallery",
+        name: 'About',
+        path: URLS.ABOUT,
+      },
+      {
+        name: 'Gallery',
         path: URLS.GALLERY,
       },
       {
-        name: "Services",
+        name: 'Services',
         path: URLS.SERVICES,
       },
     ],
     pos: 1,
   },
   {
-    state: "subnavLink",
-    name: "Other",
+    state: 'subnavLink',
+    name: 'Other',
     subItems: [
       {
-        name: "About",
-        path: URLS.ABOUT,
-      },
-      {
-        name: "Media Center",
+        name: 'Media Center',
         path: URLS.MEDIA,
       },
       {
-        name: "Blog",
+        name: 'Blog',
         path: URLS.BLOG,
       },
       {
-        name: "Faq",
+        name: 'Faq',
         path: URLS.FAQ,
-      }
+      },
     ],
     pos: 3,
   },
   {
-    state: "button",
-    name: "Contact",
+    state: 'button',
+    name: 'Contact',
     path: URLS.CONTACT,
     pos: 4,
   },
