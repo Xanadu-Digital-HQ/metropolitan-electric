@@ -97,7 +97,7 @@ const loadMore = () => {
         <div
           class="page-reveal reveal-delay-2 overflow-hidden rounded-4xl border border-[#d8dfd5] bg-brand shadow-[0_28px_90px_rgba(16,32,39,0.14)]"
         >
-          <div class="relative h-75 sm:h-90">
+          <div class="relative h-88 sm:h-90">
             <video
               src="/metro_motion.webm"
               autoplay
@@ -107,12 +107,12 @@ const loadMore = () => {
               class="absolute inset-0 h-full w-full object-cover opacity-65"
             />
             <div class="absolute inset-0 bg-linear-to-t from-brand via-brand/35 to-transparent" />
-            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-8">
+            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-5 sm:gap-3 sm:p-8">
               <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
                 Signal
               </p>
               <h2
-                class="max-w-md font-opensans text-3xl font-semibold tracking-[-0.045em] text-white"
+                class="max-w-60 font-opensans text-[1.7rem] font-semibold leading-[1.04] tracking-[-0.035em] text-white sm:max-w-md sm:text-3xl sm:tracking-[-0.045em]"
               >
                 Powering the next electric mobility chapter.
               </h2>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-col gap-6">
     <section
-      class="page-reveal page-reveal-soft overflow-hidden rounded-[2rem] border border-[#d8dfd5] bg-white/94 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+      class="page-reveal page-reveal-soft overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/94 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
     >
       <div class="border-b border-[#e4ebe1] px-5 py-5 sm:px-6">
         <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
@@ -25,7 +25,7 @@
             />
             <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/45 via-transparent to-transparent" />
             <div
-              class="absolute left-4 top-4 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur-sm"
+              class="absolute left-4 top-4 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xxs font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur-sm"
             >
               Media Story
             </div>
@@ -63,7 +63,7 @@
               <PhLightning class="h-4 w-4" weight="fill" />
             </div>
             <div class="min-w-0 space-y-2">
-              <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#73867d]">
+              <p class="text-xxs font-semibold uppercase tracking-[0.24em] text-[#73867d]">
                 {{ newItem.date ?? 'EV Update' }}
               </p>
               <h4 class="line-clamp-2 font-opensans text-lg font-semibold leading-[1.15] tracking-[-0.03em] text-brand">
@@ -93,7 +93,7 @@
     </section>
 
     <section
-      class="page-reveal page-reveal-soft reveal-delay-1 rounded-[2rem] border border-[#d8dfd5] bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-6"
+      class="page-reveal page-reveal-soft reveal-delay-1 rounded-4xl border border-[#d8dfd5] bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.12)] sm:p-6"
     >
       <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">
         Follow Us

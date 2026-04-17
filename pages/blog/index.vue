@@ -135,15 +135,15 @@ useSeoMeta({
           :to="featuredBlog.path!"
           class="page-reveal reveal-delay-2 group overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_24px_80px_rgba(16,32,39,0.08)] transition-all duration-300 hover:-translate-y-1"
         >
-          <div class="relative h-105 sm:h-130">
+          <div class="relative h-136 sm:h-130">
             <img
               :src="featuredBlog.image"
               :alt="featuredBlog.title"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div class="absolute inset-0 bg-linear-to-t from-brand via-brand/28 to-transparent" />
-            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-6 sm:p-8">
-              <div class="flex flex-wrap gap-2">
+            <div class="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-5 sm:gap-4 sm:p-8">
+              <div class="flex flex-wrap gap-2 max-sm:hidden">
                 <span
                   v-for="tag in featuredBlog.tags.slice(0, 3)"
                   :key="tag"
@@ -153,14 +153,14 @@ useSeoMeta({
                 </span>
               </div>
               <h2
-                class="max-w-3xl font-opensans text-[1.9rem] font-semibold leading-[1.06] tracking-[-0.045em] text-white sm:text-[2.4rem]"
+                class="max-w-3xl font-opensans text-[1.6rem] font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-[2.4rem] sm:tracking-[-0.045em]"
               >
                 {{ featuredBlog.title }}
               </h2>
-              <p class="max-w-2xl text-[0.95rem] leading-7 text-white/76">
+              <p class="max-w-xl line-clamp-3 text-[0.9rem] leading-6 text-white/76 sm:max-w-2xl sm:text-[0.95rem] sm:leading-7">
                 {{ featuredBlog.description }}
               </p>
-              <div class="inline-flex items-center gap-2 text-sm font-medium text-white">
+              <div class="inline-flex items-center gap-2 pt-1 text-sm font-medium text-white">
                 Read Article
                 <ArrowRightIcon
                   class="size-4 transition-transform duration-300 group-hover:translate-x-1"
