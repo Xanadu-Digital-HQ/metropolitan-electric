@@ -24,8 +24,8 @@ export const routes: (Link & position)[] = [
         path: URLS.GALLERY,
       },
       {
-        name: 'Services',
-        path: URLS.SERVICES,
+        name: 'Solutions',
+        path: URLS.SOLUTIONS,
       },
     ],
     pos: 1,

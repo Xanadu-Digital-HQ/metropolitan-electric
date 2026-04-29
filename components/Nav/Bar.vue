@@ -8,7 +8,7 @@ const route = useRoute();
 const mobilePrimaryLinks = [
   { label: 'Home', href: URLS.HOME },
   { label: 'Gallery', href: URLS.GALLERY },
-  { label: 'Services', href: URLS.SERVICES },
+  { label: 'Solutions', href: URLS.SOLUTIONS },
   { label: 'About', href: URLS.ABOUT },
   { label: 'Media Center', href: URLS.MEDIA },
   { label: 'Blog', href: URLS.BLOG },
@@ -41,7 +41,7 @@ watch(
           </NuxtLink>
         </div>
 
-        <div class="flex items-center justify-between  sm:hidden z-10 w-full px-2">
+        <div class="flex items-center justify-between sm:hidden z-10 w-full px-2">
           <NuxtLink to="/" class="mx-4" aria-label="Navigate to Home Page">
             <img class="h-8 aspect-square" src="/wheel.svg" alt="Metropolitan Logo" />
           </NuxtLink>
@@ -92,8 +92,7 @@ watch(
               @click="menuToggled = !menuToggled"
             >
               Contact
-            </NuxtLink
-            >
+            </NuxtLink>
           </div>
         </div>
       </Transition>

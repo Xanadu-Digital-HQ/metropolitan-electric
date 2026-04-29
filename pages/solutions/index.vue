@@ -4,12 +4,12 @@ import { PhCircuitry, PhStrategy, PhStack } from '@phosphor-icons/vue';
 import { serviceCatalog } from '~/utils/serviceCatalog';
 
 useSeoMeta({
-  title: 'Our Services',
-  ogTitle: 'Our Services',
+  title: 'Our Solutions',
+  ogTitle: 'Our Solutions',
   description:
-    "Explore Metropolitan Electric's EV-focused services across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
+    "Explore Metropolitan Electric's EV-focused solutions across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
   ogDescription:
-    "Explore Metropolitan Electric's EV-focused services across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
+    "Explore Metropolitan Electric's EV-focused solutions across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
   ogImage: 'https://metropolitanelectricng.com/logo.svg',
   twitterCard: 'summary_large_image',
 });
@@ -45,7 +45,7 @@ const highlightStatements = [
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
-            EV Services
+            EV Solutions
           </p>
           <h1
             class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
@@ -53,7 +53,7 @@ const highlightStatements = [
             Powering every journey.
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
-            Discover the services that support our electric ecosystem—including EV care, charging
+            Discover the solutions that support our electric ecosystem—including EV care, charging
             solutions, and infrastructure designed for seamless performance.
           </p>
         </div>
@@ -61,7 +61,7 @@ const highlightStatements = [
           <div
             class="rounded-[1.75rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
           >
-            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Service Lines</p>
+            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Solution Lines</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">
               {{ serviceCatalog.length }}
             </p>
@@ -102,7 +102,7 @@ const highlightStatements = [
         <NuxtLink
           v-for="(service, index) in serviceCatalog"
           :key="service.slug"
-          :to="`/services/${service.slug}`"
+          :to="`${URLS.SOLUTIONS}/${service.slug}`"
           class="page-reveal page-reveal-soft group overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_18px_60px_rgba(16,32,39,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(16,32,39,0.1)]"
           :style="{ '--reveal-delay': `${260 + index * 80}ms` }"
         >

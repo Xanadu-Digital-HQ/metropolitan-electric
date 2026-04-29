@@ -23,7 +23,7 @@ export const serviceCatalog: ServiceItem[] = [
     eyebrow: "Corporate EV Fleets",
     description:
       "We offer comprehensive Electric Vehicles (EV) solutions tailored to corporate clients in Africa. Our services include supplying a diverse range of Electric Vehicles, such as Cars, Buses, tricycles, and Pickups, that facilitate employee mobility and dispatch.",
-    image: "corporate.webp",
+    image: "corporate.png",
     accent: "#5c8d73",
     metrics: [
       { label: "Use Case", value: "Employee Mobility" },
@@ -65,7 +65,7 @@ export const serviceCatalog: ServiceItem[] = [
     eyebrow: "Charging Infrastructure",
     description:
       "Recognising the importance of supporting infrastructure, Metro Charge is our network of Electric Vehicles (EV) charging stations in partnership with Sunphos, dedicated to ensuring seamless and convenient charging for all Electric Vehicles (EV) users. Our stations will be strategically located to provide easy access and reliability, supporting the growing adoption of EVs across the continent.",
-    image: "metro.webp",
+    image: "metro.png",
     accent: "#7a9aab",
     metrics: [
       { label: "Purpose", value: "Charging Access" },

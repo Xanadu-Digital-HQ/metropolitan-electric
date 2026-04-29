@@ -12,7 +12,7 @@
     <img
       src="/car_image.png"
       alt=""
-      class="js-home-closing-car pointer-events-none absolute left-[8%] top-[8%] hidden w-2xl max-w-[46vw] opacity-18 blur-[0.5px] lg:block"
+      class="js-home-closing-car pointer-events-none absolute left-0 top-5 hidden w-2xl max-w-[46vw] opacity-18 blur-[0.5px] lg:block"
     />
 
     <div

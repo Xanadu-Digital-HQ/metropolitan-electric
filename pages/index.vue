@@ -39,7 +39,7 @@
                 :key="vehicle.name"
                 class="js-hero-card flex-none shrink-0 w-[88vw] max-w-[24rem] snap-center md:flex-1 md:w-auto md:max-w-none"
               >
-                <HeroVehicleCard />
+                <HeroVehicleCard :vehicle="vehicle" />
               </div>
             </div>
             <div ref="heroButton" class="js-hero-button">
@@ -94,32 +94,35 @@ const showSplash = computed(() => !hasClientLoadedAssets.value || !hasSplashVide
 const showSplashVideo = computed(() => !hasSplashVideoFinished.value);
 
 const vehicles = [
-  { name: 'Vehicle 1', image: '/images/vehicle1.png' },
-  { name: 'Vehicle 2', image: '/images/vehicle2.png' },
-  { name: 'Vehicle 3', image: '/images/vehicle3.png' },
-];
+  { name: 'Metro Electric Car', image: '/showcase/car_front_resized.png' },
+  { name: 'Metro Charge', image: '/showcase/charger_resized.png' },
+  { name: 'Metro Electric Bus', image: '/showcase/bus_resized.png' },
+] as const;
 
 const phaseThreeFeatures = [
   {
-    title: 'Technology Meets Transportation',
+    title: 'Fleet 360',
+    subTitle: 'Corporate EV Fleet',
     description:
-      'A refined cabin, clean interface, and connected controls designed to make every journey feel deliberate, calm, and future-facing.',
-    image: 'https://picsum.photos/id/1071/1400/900',
-    reverse: false,
-  },
-  {
-    title: 'Space To Share',
-    description:
-      'Flexible storage, generous proportions, and a practical layout that adapts to weekday movement and longer-distance travel with ease.',
-    image: 'https://picsum.photos/id/1068/1400/900',
+      'Offers comprehensive electric vehicle solutions tailored to corporate clients in Africa. Our services include supplying a diverse range of electric vehicles such ad cars, buses, tricycle, and pickups, this facilitates employee mobility and dispatch.',
+    image: '/fleet.png',
     reverse: true,
   },
   {
-    title: 'Designed For The Long Run',
+    title: 'Metro Charge',
+    subTitle: 'EV Charging Infrastructure',
     description:
-      'A composed driving experience, quiet cabin atmosphere, and balanced proportions that make every trip feel lighter, smoother, and more intentional.',
-    image: 'https://picsum.photos/id/1050/1400/900',
+      'Recognizing the importance of supporting infrastructure, metro charge is our network of electric vehicle charging station in partnership with Sunphos, dedicating to ensure seamless and convenient charging for all electric vehicles’ users. Our stations will be strategically located to provide easily access and reliability, supporting the growing adoption of EVs across the continent.',
+    image: '/charger.png',
     reverse: false,
+  },
+  {
+    title: 'EV Care',
+    subTitle: 'EV Maintenance Services',
+    description:
+      'Electric Vehicle care offers comprehensive maintenance services to ensure your EV fleets longevity and optimal performance. Our network of specialized service and maintenance garages are equipped with the latest technology and staffed by trained professionals. From routine maintenance to advance repairs, we provide support to keep your electric vehicles running smoothly and efficiently.',
+    image: '/maintenance.jpg',
+    reverse: true,
   },
 ] as const;
 
@@ -146,7 +149,7 @@ const syncPhaseScrollPositions = () => {
 
   phaseScrollPositions.value = {
     intro: heroTop,
-    vehicles: heroTop + (window.innerHeight * 0.7),
+    vehicles: heroTop + window.innerHeight * 0.7,
     gallery: getElementPageTop(gallerySection.value?.$el ?? null) ?? 0,
     why: getElementPageTop(whyChooseSection.value?.$el ?? null) ?? 0,
     contact: getElementPageTop(closingSection.value?.$el ?? null) ?? 0,
@@ -182,37 +185,39 @@ const handlePhaseNavigation = (event: Event) => {
   scrollToPhase((event as CustomEvent<string>).detail);
 };
 
-const waitForWindowLoad = () => new Promise<void>((resolve) => {
-  if (document.readyState === 'complete') {
-    resolve();
-    return;
-  }
+const waitForWindowLoad = () =>
+  new Promise<void>((resolve) => {
+    if (document.readyState === 'complete') {
+      resolve();
+      return;
+    }
 
-  const onLoad = () => {
-    window.removeEventListener('load', onLoad);
-    resolve();
-  };
+    const onLoad = () => {
+      window.removeEventListener('load', onLoad);
+      resolve();
+    };
 
-  window.addEventListener('load', onLoad, { once: true });
-});
+    window.addEventListener('load', onLoad, { once: true });
+  });
 
-const preloadImage = (src: string) => new Promise<void>((resolve) => {
-  const img = new Image();
-  img.onload = () => resolve();
-  img.onerror = () => resolve();
-  img.src = src;
-});
+const preloadImage = (src: string) =>
+  new Promise<void>((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+    img.src = src;
+  });
 
 const waitForClientAssets = async () => {
-  const fontReady = 'fonts' in document
-    ? (document as Document & { fonts: FontFaceSet }).fonts.ready.catch(() => undefined)
-    : Promise.resolve();
+  const fontReady =
+    'fonts' in document
+      ? (document as Document & { fonts: FontFaceSet }).fonts.ready.catch(() => undefined)
+      : Promise.resolve();
 
   await Promise.all([
     waitForWindowLoad(),
-    preloadImage('/homeBg.png'),
-    preloadImage('/building.png'),
     preloadImage('/wheel.svg'),
+    ...vehicles.map((vehicle) => preloadImage(vehicle.image)),
     fontReady,
   ]);
 
@@ -241,9 +246,14 @@ onMounted(async () => {
       const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
       const phaseThreePanels = gsap.utils.toArray<HTMLElement>('.js-phase-three-panel');
-      const phaseThreeCopies = gsap.utils.toArray<HTMLElement>('.js-phase-three-copy');
-      const phaseThreeImageWrappers = gsap.utils.toArray<HTMLElement>('.js-phase-three-image-wrapper');
+      const phaseThreeImageWrappers = gsap.utils.toArray<HTMLElement>(
+        '.js-phase-three-image-wrapper',
+      );
       const phaseThreeImages = gsap.utils.toArray<HTMLElement>('.js-phase-three-image');
+      const phaseThreeTextItems = gsap.utils.toArray<HTMLElement>(
+        '.js-phase-three-title, .js-phase-three-subtitle, .js-phase-three-description',
+      );
+      const phaseThreeCta = page.querySelector<HTMLElement>('.js-phase-three-cta');
       const whyHeading = page.querySelector<HTMLElement>('.js-why-choose-heading');
       const whyCards = gsap.utils.toArray<HTMLElement>('.js-why-choose-card');
       const whyPanels = gsap.utils.toArray<HTMLElement>('.js-why-choose-panel');
@@ -272,10 +282,11 @@ onMounted(async () => {
       if (cards[2]) {
         gsap.set(cards[2], { xPercent: 8, rotationY: 0, rotation: 0, scale: 0.96 });
       }
-      gsap.set(phaseThreeCopies, { autoAlpha: 0, y: 32 });
       gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, y: 36 });
+      gsap.set(phaseThreeTextItems, { autoAlpha: 0, y: 24 });
+      gsap.set(phaseThreeCta, { autoAlpha: 0, y: 28 });
       phaseThreeImages.forEach((image, index) => {
-        gsap.set(image, { yPercent: 28 + (index * 3), scale: 1.14 });
+        gsap.set(image, { yPercent: 28 + index * 3, scale: 1.14 });
       });
       gsap.set(whyHeading, { autoAlpha: 0, y: 24 });
       gsap.set(whyCards, { autoAlpha: 0, y: 28 });
@@ -314,50 +325,84 @@ onMounted(async () => {
         .to(heroOverlay.value, { opacity: isMobile ? 0.2 : 0.1, duration: isMobile ? 0.3 : 1.1 }, 0)
         .to(
           heroBackdrop.value,
-          { scale: isMobile ? 1 : 1.08, yPercent: isMobile ? 0 : 5, duration: isMobile ? 0.01 : 1.2 },
+          {
+            scale: isMobile ? 1 : 1.08,
+            yPercent: isMobile ? 0 : 5,
+            duration: isMobile ? 0.01 : 1.2,
+          },
           0,
         )
-        .to(heroIntro.value, { autoAlpha: 0, yPercent: isMobile ? -4 : -10, duration: isMobile ? 0.3 : 1 }, 0.02)
-        .to(heroShowcase.value, { autoAlpha: 1, y: 0, duration: isMobile ? 0.28 : 0.85 }, isMobile ? 0.12 : 0.45)
-        .to(cards, {
-          autoAlpha: 1,
-          yPercent: index => (index === 1 ? -5 : 0),
-          duration: isMobile ? 0.28 : 0.95,
-          stagger: isMobile ? 0.04 : 0.14,
-        }, isMobile ? 0.16 : 0.58)
-        .to(heroButton.value, { autoAlpha: 1, y: 0, duration: isMobile ? 0.24 : 0.75 }, isMobile ? 0.2 : 0.7);
+        .to(
+          heroIntro.value,
+          { autoAlpha: 0, yPercent: isMobile ? -4 : -10, duration: isMobile ? 0.3 : 1 },
+          0.02,
+        )
+        .to(
+          heroShowcase.value,
+          { autoAlpha: 1, y: 0, duration: isMobile ? 0.28 : 0.85 },
+          isMobile ? 0.12 : 0.45,
+        )
+        .to(
+          cards,
+          {
+            autoAlpha: 1,
+            yPercent: (index) => (index === 1 ? -5 : 0),
+            duration: isMobile ? 0.28 : 0.95,
+            stagger: isMobile ? 0.04 : 0.14,
+          },
+          isMobile ? 0.16 : 0.58,
+        )
+        .to(
+          heroButton.value,
+          { autoAlpha: 1, y: 0, duration: isMobile ? 0.24 : 0.75 },
+          isMobile ? 0.2 : 0.7,
+        );
 
       phaseThreePanels.forEach((panel, index) => {
-        const copy = phaseThreeCopies[index];
         const imageWrapper = phaseThreeImageWrappers[index];
         const image = phaseThreeImages[index];
+        const textItems = gsap.utils.toArray<HTMLElement>(
+          panel.querySelectorAll(
+            '.js-phase-three-title, .js-phase-three-subtitle, .js-phase-three-description',
+          ),
+        );
 
-        if (copy) {
-          gsap.to(copy, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.75,
-            ease: 'power2.out',
+        if (imageWrapper || textItems.length) {
+          const panelReveal = gsap.timeline({
             scrollTrigger: {
               trigger: panel,
               start: 'top 82%',
               once: true,
             },
-          });
-        }
-
-        if (imageWrapper) {
-          gsap.to(imageWrapper, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: panel,
-              start: 'top 85%',
-              once: true,
+            defaults: {
+              ease: 'power2.out',
             },
           });
+
+          if (imageWrapper) {
+            panelReveal.to(
+              imageWrapper,
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.78,
+              },
+              0,
+            );
+          }
+
+          if (textItems.length) {
+            panelReveal.to(
+              textItems,
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.68,
+                stagger: 0.08,
+              },
+              0.12,
+            );
+          }
         }
 
         if (image) {
@@ -374,6 +419,20 @@ onMounted(async () => {
           });
         }
       });
+
+      if (phaseThreeCta) {
+        gsap.to(phaseThreeCta, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: phaseThreeCta,
+            start: 'top 88%',
+            once: true,
+          },
+        });
+      }
 
       if (whySection) {
         ScrollTrigger.create({
@@ -414,8 +473,20 @@ onMounted(async () => {
               stagger: 0.12,
               ease: 'power2.out',
             });
-            gsap.to(closingFooter, { autoAlpha: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power2.out' });
-            gsap.to(closingCar, { autoAlpha: 1, xPercent: 0, scale: 1, duration: 0.95, ease: 'power2.out' });
+            gsap.to(closingFooter, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.7,
+              delay: 0.1,
+              ease: 'power2.out',
+            });
+            gsap.to(closingCar, {
+              autoAlpha: 1,
+              xPercent: 0,
+              scale: 1,
+              duration: 0.95,
+              ease: 'power2.out',
+            });
           },
         });
       }
@@ -440,9 +511,30 @@ onMounted(async () => {
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set([heroShowcase.value, heroButton.value, heroIntro.value], { clearProps: 'all' });
     gsap.set('.js-hero-card', { clearProps: 'all' });
-    gsap.set(['.js-phase-three-copy', '.js-phase-three-image-wrapper', '.js-phase-three-image'], { clearProps: 'all' });
-    gsap.set(['.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], { clearProps: 'all' });
-    gsap.set(['.js-home-closing-heading', '.js-home-closing-map', '.js-home-closing-form', '.js-home-closing-car', '.js-home-closing-footer'], { clearProps: 'all' });
+    gsap.set(
+      [
+        '.js-phase-three-title',
+        '.js-phase-three-subtitle',
+        '.js-phase-three-description',
+        '.js-phase-three-image-wrapper',
+        '.js-phase-three-image',
+        '.js-phase-three-cta',
+      ],
+      { clearProps: 'all' },
+    );
+    gsap.set(['.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], {
+      clearProps: 'all',
+    });
+    gsap.set(
+      [
+        '.js-home-closing-heading',
+        '.js-home-closing-map',
+        '.js-home-closing-form',
+        '.js-home-closing-car',
+        '.js-home-closing-footer',
+      ],
+      { clearProps: 'all' },
+    );
     syncPhaseScrollPositions();
   });
 
@@ -466,13 +558,17 @@ onBeforeUnmount(() => {
   mm = null;
 });
 
-watch(showSplash, (isVisible) => {
-  if (!import.meta.client) {
-    return;
-  }
+watch(
+  showSplash,
+  (isVisible) => {
+    if (!import.meta.client) {
+      return;
+    }
 
-  document.body.style.overflow = isVisible ? 'hidden' : '';
-}, { immediate: true });
+    document.body.style.overflow = isVisible ? 'hidden' : '';
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   if (import.meta.client) {

@@ -125,7 +125,7 @@ const { container, footerLinkStyle } = useTailwindConfig();
 const exploreLinks = [
   { label: 'Home', href: URLS.HOME },
   { label: 'Gallery', href: URLS.GALLERY },
-  { label: 'Services', href: URLS.SERVICES },
+  { label: 'Solutions', href: URLS.SOLUTIONS },
   { label: 'Contact', href: URLS.CONTACT },
 ] as const;
 

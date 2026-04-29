@@ -1,16 +1,26 @@
-  <template>
+<template>
   <section
+    @mouseenter="pauseCycle"
+    @mouseleave="resumeCycle"
     :class="[
       overlay
         ? 'js-why-choose-us absolute inset-0 isolate overflow-hidden bg-[#f5f6f7] px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28'
         : 'js-why-choose-us relative isolate overflow-hidden bg-[#f5f6f7] px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28',
     ]"
   >
-    <div class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[linear-gradient(90deg,rgba(255,255,255,0.86),rgba(255,255,255,0))]" />
-    <div class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-[linear-gradient(270deg,rgba(255,255,255,0.86),rgba(255,255,255,0))]" />
-    <div class="pointer-events-none absolute inset-y-0 left-0 w-full opacity-50 bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.75)_0,rgba(255,255,255,0.75)_2px,transparent_2px,transparent_18px)]" />
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[linear-gradient(90deg,rgba(255,255,255,0.86),rgba(255,255,255,0))]"
+    />
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-[linear-gradient(270deg,rgba(255,255,255,0.86),rgba(255,255,255,0))]"
+    />
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 w-full opacity-50 bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.75)_0,rgba(255,255,255,0.75)_2px,transparent_2px,transparent_18px)]"
+    />
 
-    <div class="panel-float-slow pointer-events-none absolute inset-x-[15%] top-20 h-[72%] bg-white/30 blur-3xl" />
+    <div
+      class="panel-float-slow pointer-events-none absolute inset-x-[15%] top-20 h-[72%] bg-white/30 blur-3xl"
+    />
 
     <div
       class="js-why-choose-panel panel-float-fast pointer-events-none absolute left-[14%] top-24 hidden h-[70%] w-[33%] bg-[#edf1f4] md:block"
@@ -22,7 +32,9 @@
     <div :class="overlay ? 'relative flex h-full md:items-center' : 'relative mx-auto max-w-7xl'">
       <div :class="overlay ? 'mx-auto w-full max-w-7xl' : 'w-full'">
         <div class="js-why-choose-heading mt-14 md:mt-4">
-          <h2 class="font-opensans text-2xl md:text-4xl font-semibold tracking-[-0.04em] text-brand sm:text-5xl">
+          <h2
+            class="font-opensans text-2xl md:text-4xl font-semibold tracking-[-0.04em] text-brand sm:text-5xl"
+          >
             Why Choose Us?
           </h2>
         </div>
@@ -38,10 +50,16 @@
                 :key="item.title"
                 class="js-why-choose-card group relative flex md:min-h-88 items-center justify-center px-6 py-10 transition-transform duration-500 will-change-transform hover:-translate-y-2 sm:px-8"
               >
-                <div class="absolute inset-x-5 inset-y-0 bg-white/18 backdrop-blur-[1px] transition-all duration-500 group-hover:bg-white/25" />
+                <div
+                  class="absolute inset-x-5 inset-y-0 bg-white/18 backdrop-blur-[1px] transition-all duration-500 group-hover:bg-white/25"
+                />
 
-                <div class="pointer-events-none absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-brand/80 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1" />
-                <div class="pointer-events-none absolute right-0 bottom-0 h-8 w-8 border-b-2 border-r-2 border-brand/80 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
+                <div
+                  class="pointer-events-none absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-brand/80 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1"
+                />
+                <div
+                  class="pointer-events-none absolute right-0 bottom-0 h-8 w-8 border-b-2 border-r-2 border-brand/80 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1"
+                />
 
                 <div class="relative z-10 mx-auto flex max-w-md flex-col items-center text-center">
                   <div
@@ -50,10 +68,14 @@
                     <component :is="item.icon" class="size-4 sm:size-7" weight="fill" />
                   </div>
 
-                  <h3 class="font-opensans text-lg md:text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1">
+                  <h3
+                    class="font-opensans text-lg md:text-2xl font-medium tracking-[-0.03em] text-brand transition-transform duration-500 group-hover:-translate-y-1"
+                  >
                     {{ item.title }}
                   </h3>
-                  <p class="text-xs mt-2 md:mt-4 max-w-sm font-poppins md:text-base md:leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80">
+                  <p
+                    class="text-xs mt-2 md:mt-4 max-w-sm font-poppins md:text-base md:leading-7 text-brand/65 transition-colors duration-500 group-hover:text-brand/80"
+                  >
                     {{ item.description }}
                   </p>
                 </div>
@@ -76,16 +98,27 @@ import {
   PhWrench,
 } from '@phosphor-icons/vue';
 
-withDefaults(defineProps<{
-  overlay?: boolean;
-}>(), {
-  overlay: false,
-});
+withDefaults(
+  defineProps<{
+    overlay?: boolean;
+  }>(),
+  {
+    overlay: false,
+  },
+);
 
 const activePairIndex = ref(0);
+const isCyclePaused = ref(false);
 let cycleInterval: number | null = null;
+const cycleDelay = 9000;
 
 const items = [
+  {
+    title: 'Sustainable Mobility Vision',
+    description:
+      'Our solutions are built around long-term urban impact, helping organisations move toward cleaner transport without sacrificing usability or quality.',
+    icon: PhLeaf,
+  },
   {
     title: 'Advanced Vehicle Intelligence',
     description:
@@ -110,12 +143,7 @@ const items = [
       'We think beyond the vehicle itself by aligning charging access, operational planning, and infrastructure support for smoother day-to-day adoption.',
     icon: PhLightning,
   },
-  {
-    title: 'Sustainable Mobility Vision',
-    description:
-      'Our solutions are built around long-term urban impact, helping organisations move toward cleaner transport without sacrificing usability or quality.',
-    icon: PhLeaf,
-  },
+
   {
     title: 'Human-Centered Partnership',
     description:
@@ -134,20 +162,46 @@ const itemPairs = computed(() => {
   return pairs;
 });
 
-const visibleItems = computed(() => itemPairs.value[activePairIndex.value] ?? itemPairs.value[0] ?? []);
+const visibleItems = computed(
+  () => itemPairs.value[activePairIndex.value] ?? itemPairs.value[0] ?? [],
+);
 
-onMounted(() => {
-  cycleInterval = window.setInterval(() => {
-    activePairIndex.value = (activePairIndex.value + 1) % itemPairs.value.length;
-  }, 5000);
-});
+const advancePair = () => {
+  activePairIndex.value = (activePairIndex.value + 1) % itemPairs.value.length;
+};
 
-onBeforeUnmount(() => {
+const stopCycle = () => {
   if (cycleInterval) {
     clearInterval(cycleInterval);
     cycleInterval = null;
   }
-});
+};
+
+const startCycle = () => {
+  if (cycleInterval || itemPairs.value.length < 2) {
+    return;
+  }
+
+  cycleInterval = window.setInterval(() => {
+    if (!isCyclePaused.value) {
+      advancePair();
+    }
+  }, cycleDelay);
+};
+
+const pauseCycle = () => {
+  isCyclePaused.value = true;
+  stopCycle();
+};
+
+const resumeCycle = () => {
+  isCyclePaused.value = false;
+  startCycle();
+};
+
+onMounted(startCycle);
+
+onBeforeUnmount(stopCycle);
 </script>
 
 <style scoped>
