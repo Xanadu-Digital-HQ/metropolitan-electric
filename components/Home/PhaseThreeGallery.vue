@@ -1,18 +1,24 @@
 <template>
   <section class="js-phase-three-gallery relative overflow-hidden bg-white">
-    <div class="js-phase-three-gallery-scroll overflow-hidden px-4 py-16 sm:px-8 lg:px-12">
+    <div class="js-phase-three-gallery-scroll overflow-hidden py-16">
       <div
-        class="js-phase-three-gallery-track mx-auto mt-16 flex max-w-368 flex-col justify-start gap-20 pb-24 lg:mt-24 lg:gap-28 lg:pb-32"
+        :class="[
+          container,
+          'js-phase-three-gallery-track mt-16 flex flex-col justify-start gap-20 pb-24 lg:mt-24 lg:gap-28 lg:pb-32',
+        ]"
       >
         <article
           v-for="feature in features"
           :key="feature.title"
-          class="js-phase-three-panel grid min-h-[70vh] items-center gap-8 lg:grid-cols-12 lg:gap-10"
-          :class="feature.reverse ? 'lg:[&>*:first-child]:order-2' : ''"
+          class="js-phase-three-panel grid min-h-[70vh] items-center gap-8 lg:justify-between lg:gap-10"
+          :class="
+            feature.reverse
+              ? 'lg:grid-cols-[minmax(18rem,32rem)_minmax(0,58%)] lg:[&>*:first-child]:order-2'
+              : 'lg:grid-cols-[minmax(0,58%)_minmax(18rem,32rem)]'
+          "
         >
           <div
-            class="js-phase-three-image-wrapper relative overflow-hidden rounded-[1.75rem] bg-[#f3f5f7] shadow-[0_30px_90px_rgba(16,25,32,0.12)] lg:col-span-7"
-            :class="feature.reverse ? 'lg:col-start-6' : ''"
+            class="js-phase-three-image-wrapper relative overflow-hidden rounded-[1.75rem] bg-[#f3f5f7] shadow-[0_30px_90px_rgba(16,25,32,0.12)]"
           >
             <img
               :src="feature.image"
@@ -23,8 +29,7 @@
           </div>
 
           <div
-            class="js-phase-three-copy max-w-xl lg:col-span-4"
-            :class="feature.reverse ? 'lg:col-start-2' : 'lg:col-start-9'"
+            class="js-phase-three-copy max-w-xl"
           >
             <div class="space-y-3">
               <h2 class="js-phase-three-title font-opensans text-3xl font-bold leading-tight text-brand/75 md:text-4xl">
@@ -44,7 +49,7 @@
           </div>
         </article>
         <div
-          class="js-phase-three-cta mx-auto -mt-8 flex max-w-368 justify-center pb-8 lg:-mt-12 lg:pb-12"
+          class="js-phase-three-cta -mt-8 flex justify-center pb-8 lg:-mt-12 lg:pb-12"
         >
           <NuxtLink :to="URLS.SOLUTIONS" class="inline-flex">
             <CustomButton text="Explore More Solutions" />
@@ -57,6 +62,8 @@
 
 <script lang="ts" setup>
 import { URLS } from '~/utils/constants';
+
+const { container } = useTailwindConfig();
 
 defineProps<{
   features: ReadonlyArray<{

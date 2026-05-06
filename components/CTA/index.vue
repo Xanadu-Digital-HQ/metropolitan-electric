@@ -1,6 +1,8 @@
 <template>
-  <section class="page-reveal reveal-delay-4 relative overflow-hidden px-5 py-12 sm:px-8 sm:py-16">
-    <div class="mx-auto max-w-7xl">
+  <section
+    :class="[container, 'page-reveal reveal-delay-4 relative overflow-hidden py-12 sm:py-16']"
+  >
+    <div>
       <div class="relative overflow-hidden rounded-4xl border border-[#cfd8cb] bg-[linear-gradient(135deg,#0f181f_0%,#17332a_55%,#50654f_100%)] px-6 py-10 shadow-[0_28px_90px_rgba(16,25,32,0.18)] sm:px-10 sm:py-14">
         <div class="pointer-events-none absolute -right-12 top-0 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
         <div class="pointer-events-none absolute bottom-0 left-0 h-40 w-40 rounded-full bg-[#b7cca9]/20 blur-3xl" />
@@ -38,3 +40,7 @@
     </div>
   </section>
 </template>
+
+<script lang="ts" setup>
+const { container } = useTailwindConfig();
+</script>

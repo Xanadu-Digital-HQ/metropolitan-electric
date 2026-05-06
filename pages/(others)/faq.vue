@@ -2,6 +2,8 @@
 import { PhBatteryCharging, PhLeaf, PhLightning, PhShieldCheck } from '@phosphor-icons/vue';
 import { faqItems } from '~/utils/faq';
 
+const { container } = useTailwindConfig();
+
 useSeoMeta({
   title: 'EV FAQ',
   ogTitle: 'EV FAQ',
@@ -66,7 +68,7 @@ const groupedFaqs = [
     />
 
     <section
-      class="mx-auto flex max-w-7xl flex-col gap-14 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40"
+      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 lg:pb-24 lg:pt-40']"
     >
       <div class="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
         <div class="page-reveal reveal-delay-1 space-y-6">

@@ -8,7 +8,7 @@
     />
 
     <section
-      class="mx-auto flex max-w-7xl flex-col gap-12 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40"
+      :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']"
     >
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
@@ -232,6 +232,8 @@
 <script lang="ts" setup>
 import emailjs from '@emailjs/browser';
 import { ArrowPathIcon } from '@heroicons/vue/20/solid';
+
+const { container } = useTailwindConfig();
 
 useSeoMeta({
   title: 'Contact Metropolitan Electric',

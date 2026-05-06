@@ -4,6 +4,8 @@ import type { vehicle } from "~/types/types";
 import { vehicles } from "~/utils/vehicles";
 import { getVehicleSlug } from "~/utils/vehicleCatalog";
 
+const { container } = useTailwindConfig();
+
 useSeoMeta({
   title: "Vehicle Gallery",
   ogTitle: "Vehicle Gallery",
@@ -101,7 +103,7 @@ onBeforeUnmount(() => {
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(124,151,116,0.12),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(16,32,39,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
     <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
-    <section class="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40">
+    <section :class="[container, 'flex flex-col gap-10 pb-16 pt-34 lg:pb-24 lg:pt-40']">
       <div class="flex flex-col gap-8 lg:gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div class="page-reveal reveal-delay-1 max-w-4xl space-y-5">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
@@ -168,7 +170,7 @@ onBeforeUnmount(() => {
               :style="{ '--reveal-delay': `${240 + (index * 65)}ms` }"
               @click="openVehicleFromCard(vehicleItem)"
             >
-              <div class="flex items-start justify-between gap-4">
+              <div class="relative flex items-start justify-between gap-4">
                 <div class="space-y-3">
                   <p
                     class="text-[11px] uppercase tracking-[0.28em]"
@@ -182,18 +184,18 @@ onBeforeUnmount(() => {
                 </div>
 
                 <div
-                  class="flex size-10 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 group-hover:translate-x-1"
+                  class="absolute -top-1 right-0 flex size-10 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 group-hover:translate-x-1"
                   :class="activeVehicle?.name === vehicleItem.name ? 'border-white/15 bg-white/8' : 'border-[#d5ddd2] bg-[#fcfefc]'"
                 >
                   <ArrowRightIcon class="size-4" />
                 </div>
               </div>
 
-              <div class="mt-6 rounded-3xl bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4">
+              <div class="mt-6 rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4 h-60">
                 <img
                   :src="vehicleItem.images[0]"
                   :alt="vehicleItem.name"
-                  class="h-40 w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+                  class="h-full w-full  transition-transform duration-500 group-hover:scale-[1.03] rounded-2xl"
                 />
               </div>
 

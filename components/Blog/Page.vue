@@ -8,7 +8,7 @@
     />
 
     <section
-      class="mx-auto flex max-w-7xl flex-col gap-12 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40"
+      class="flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40"
     >
       <div class="page-reveal reveal-delay-1 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
         <div class="space-y-7">

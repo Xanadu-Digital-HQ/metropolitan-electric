@@ -14,6 +14,8 @@ import {
   PhSparkle,
 } from '@phosphor-icons/vue';
 
+const { container } = useTailwindConfig();
+
 useSeoMeta({
   title: 'About Metropolitan Electric',
   ogTitle: 'About Metropolitan Electric',
@@ -129,7 +131,7 @@ const leadershipTeam = [
     />
 
     <section
-      class="mx-auto flex max-w-7xl flex-col gap-14 px-5 pb-16 pt-34 sm:px-8 lg:px-12 lg:pb-24 lg:pt-40"
+      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 lg:pb-24 lg:pt-40']"
     >
       <!-- OVERVIEW SECTION -->
       <div class="page-reveal reveal-delay-1 space-y-8">

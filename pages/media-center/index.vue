@@ -15,6 +15,8 @@ type RenderableMediaCenterItem = MediaCenterItem & {
   type: 'story' | 'image';
 };
 
+const { container } = useTailwindConfig();
+
 const { data: newsItems } = await useAsyncData<MediaCenterItem[]>('media-center-news', () =>
   queryCollection('mediaCenter').all(),
 );
@@ -76,7 +78,7 @@ const loadMore = () => {
     />
 
     <section
-      class="mx-auto flex max-w-7xl flex-col gap-14 px-5 pb-16 pt-34 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24 lg:pt-40"
+      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 sm:pb-20 lg:pb-24 lg:pt-40']"
     >
       <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div class="page-reveal reveal-delay-1 space-y-6">

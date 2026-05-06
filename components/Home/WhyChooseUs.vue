@@ -4,8 +4,8 @@
     @mouseleave="resumeCycle"
     :class="[
       overlay
-        ? 'js-why-choose-us absolute inset-0 isolate overflow-hidden bg-[#f5f6f7] px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28'
-        : 'js-why-choose-us relative isolate overflow-hidden bg-[#f5f6f7] px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28',
+        ? 'js-why-choose-us absolute inset-0 isolate overflow-hidden bg-[#f5f6f7] py-18 sm:py-24 lg:py-28'
+        : 'js-why-choose-us relative isolate overflow-hidden bg-[#f5f6f7] py-18 sm:py-24 lg:py-28',
     ]"
   >
     <div
@@ -29,8 +29,14 @@
       class="js-why-choose-panel panel-float-slow pointer-events-none absolute right-[10%] top-40 hidden h-[54%] w-[22%] border-l border-r border-white/55 bg-white/18 md:block"
     />
 
-    <div :class="overlay ? 'relative flex h-full md:items-center' : 'relative mx-auto max-w-7xl'">
-      <div :class="overlay ? 'mx-auto w-full max-w-7xl' : 'w-full'">
+    <div
+      :class="
+        overlay
+          ? [container, 'relative flex h-full md:items-center']
+          : [container, 'relative']
+      "
+    >
+      <div class="w-full">
         <div class="js-why-choose-heading mt-14 md:mt-4">
           <h2
             class="font-opensans text-2xl md:text-4xl font-semibold tracking-[-0.04em] text-brand sm:text-5xl"
@@ -107,6 +113,7 @@ withDefaults(
   },
 );
 
+const { container } = useTailwindConfig();
 const activePairIndex = ref(0);
 const isCyclePaused = ref(false);
 let cycleInterval: number | null = null;

@@ -3,7 +3,7 @@
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(113,159,99,0.12),transparent_30%),radial-gradient(circle_at_88%_8%,rgba(16,25,32,0.08),transparent_24%),linear-gradient(180deg,#fdfefd_0%,#f8fbf8_55%,#f1f6f0_100%)]" />
     <div class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]" />
 
-    <section class="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-14 pt-34 sm:px-8 lg:px-12 lg:pb-20 lg:pt-40">
+    <section :class="[container, 'flex flex-col gap-10 pb-14 pt-34 lg:pb-20 lg:pt-40']">
       <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div class="page-reveal reveal-delay-1 space-y-6">
           <p
@@ -88,6 +88,8 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 import type { ServiceItem, ServiceMetric } from "~/utils/serviceCatalog";
+
+const { container } = useTailwindConfig();
 
 defineProps({
   title: {
