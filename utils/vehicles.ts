@@ -36,7 +36,7 @@ export const vehicles: vehicle[] = [
       '/vehicles/hongqi2.png',
       '/vehicles/hongqi3.png',
       '/vehicles/hongqi4.png',
-      '/vehicles/hongqi5.png',
+      '/vehicles/hongqi5.jpeg',
     ],
     specification: [
       { label: 'VEHICLE TYPE', value: '4-Door 5-Seat All-Electric Sedan' },
