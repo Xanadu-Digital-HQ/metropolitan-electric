@@ -31,7 +31,13 @@ export const vehicles: vehicle[] = [
       'The Hongqi E-QM5 is a 4-door, 5-seat all-electric sedan built for efficient city and executive mobility. With LFP battery options, a smooth front-wheel-drive setup, practical cabin technology, and reliable safety features, it offers a refined electric driving experience for everyday transportation.',
     category: 'car',
     price: '₦55,000,000',
-    images: ['/vehicles/hongqi1.png', '/vehicles/hongqi2.png', '/vehicles/hongqi3.png'],
+    images: [
+      '/vehicles/hongqi1.png',
+      '/vehicles/hongqi2.png',
+      '/vehicles/hongqi3.png',
+      '/vehicles/hongqi4.png',
+      '/vehicles/hongqi5.png',
+    ],
     specification: [
       { label: 'VEHICLE TYPE', value: '4-Door 5-Seat All-Electric Sedan' },
       { label: 'DIMENSIONS (L X W X H)', value: '4,657 x 1,814 x 1,490 mm' },
