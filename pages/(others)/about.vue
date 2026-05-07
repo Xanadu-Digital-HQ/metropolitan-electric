@@ -12,6 +12,7 @@ import {
   PhTrendUp,
   PhTarget,
   PhSparkle,
+  PhLinkedinLogo,
 } from '@phosphor-icons/vue';
 
 const { container } = useTailwindConfig();
@@ -93,32 +94,7 @@ const coreValues = [
   },
 ] as const;
 
-const leadershipTeam = [
-  {
-    name: 'John Doe',
-    position: 'Chief Executive Officer',
-    bio: "With 15+ years in the automotive and EV industry, John leads Metro's vision with strategic excellence and a commitment to sustainable innovation.",
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop',
-  },
-  {
-    name: 'Jane Smith',
-    position: 'Chief Technology Officer',
-    bio: 'Jane brings deep technical expertise in EV systems and infrastructure, driving innovation across all our technology initiatives.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop',
-  },
-  {
-    name: 'Michael Johnson',
-    position: 'Chief Operations Officer',
-    bio: 'Michael ensures operational excellence across all business units, with 12+ years of experience in scaling sustainable enterprises.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
-  },
-  {
-    name: 'Sarah Williams',
-    position: 'Head of Sustainability',
-    bio: 'Sarah drives our environmental impact strategy, ensuring every decision aligns with our sustainability commitments.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop',
-  },
-] as const;
+
 </script>
 
 <template>
@@ -130,9 +106,7 @@ const leadershipTeam = [
       class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-14 pb-16 pt-34 lg:pb-24 lg:pt-40']">
       <!-- OVERVIEW SECTION -->
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
@@ -426,16 +400,31 @@ const leadershipTeam = [
             class="page-reveal page-reveal-soft group rounded-[1.85rem] border border-[#d8dfd5] bg-white/92 overflow-hidden shadow-[0_16px_50px_rgba(16,32,39,0.05)] transition-transform duration-300 hover:-translate-y-1"
             :style="{ '--reveal-delay': `${300 + index * 70}ms` }"
           >
-            <div class="relative h-56 w-full overflow-hidden bg-[#e8ebe5]">
-              <img :src="leader.image" :alt="leader.name" class="h-full w-full object-cover" />
+            <div class="relative h-100 sm:h-140 md:h-80 lg:h-120 xl:h-64 w-full overflow-hidden bg-[#e8ebe5]">
+              <img :src="leader.image" :alt="leader.name" class="h-full w-full object-cover object-top" />
             </div>
             <div class="p-6">
-              <p class="font-opensans text-lg font-semibold tracking-[-0.04em] text-brand">
-                {{ leader.name }}
-              </p>
-              <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177] mt-2">
-                {{ leader.position }}
-              </p>
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="font-opensans text-lg font-semibold tracking-[-0.04em] text-brand">
+                    {{ leader.name }}
+                  </p>
+                  <p
+                    class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177] mt-2"
+                  >
+                    {{ leader.position }}
+                  </p>
+                </div>
+
+                <NuxtLink
+                  :to="leader.linkedIn"
+                  target="_blank"
+                  class="flex size-fit shrink-0 items-center justify-center rounded-lg text-brand transition-transform duration-300 hover:-translate-y-1 hover:bg-[#e3edde] cursor-pointer overflow-clip"
+                  aria-label="LinkedIn"
+                >
+                  <PhLinkedinLogo class="size-6 rounded-lg" weight="fill" />
+                </NuxtLink>
+              </div>
               <p class="mt-4 text-sm leading-6 text-[#41555d]">
                 {{ leader.bio }}
               </p>

@@ -43,6 +43,7 @@ export const vehicles: vehicle[] = [
       { label: 'DIMENSIONS (L X W X H)', value: '4,657 x 1,814 x 1,490 mm' },
       { label: 'WHEELBASE', value: '2,680 mm' },
       { label: 'CURB WEIGHT (EST.)', value: '~1,645 - 1,750 kg' },
+      { label: 'COLOR', value: 'WHITE/BLACK' },
       { label: 'SEATING CAPACITY', value: '5 Seats' },
       { label: 'DRIVE TYPE', value: 'Front-Wheel Drive (FWD)' },
       { label: 'BATTERY TYPE', value: 'Lithium Iron Phosphate (LFP)' },
@@ -114,6 +115,7 @@ export const vehicles: vehicle[] = [
         label: 'DIMENSIONS (L X W X H)',
         value: '4,997 x 1,963 x 1,440 - 1,455 mm',
       },
+      { label: 'COLOR', value: 'WHITE' },
       { label: 'WHEELBASE', value: '3,000 mm' },
       { label: 'SEATING CAPACITY', value: '5 Seats' },
       {
