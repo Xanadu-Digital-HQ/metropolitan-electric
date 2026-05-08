@@ -27,10 +27,7 @@ const sortedMediaItems = computed(() => [...(newsItems.value ?? [])].reverse());
 const storyItems = computed(() =>
   sortedMediaItems.value.filter(
     (item): item is RenderableMediaCenterItem =>
-      !!item.image &&
-      !!item.title &&
-      !!item.description &&
-      (item.type ?? 'story') === 'story',
+      !!item.image && !!item.title && !!item.description && (item.type ?? 'story') === 'story',
   ),
 );
 const featuredNews = computed(() => storyItems.value[0] ?? null);
@@ -39,11 +36,16 @@ const hasSecondaryNews = computed(() => secondaryNews.value.length > 0);
 const renderableMediaItems = computed(() =>
   sortedMediaItems.value.filter(
     (item): item is RenderableMediaCenterItem =>
-      !!item.image && !!item.title && !!item.description && ['story', 'image'].includes(item.type ?? 'story'),
+      !!item.image &&
+      !!item.title &&
+      !!item.description &&
+      ['story', 'image'].includes(item.type ?? 'story'),
   ),
 );
 const visibleMedia = computed(() => renderableMediaItems.value.slice(0, visibleMediaCount.value));
-const canLoadMoreMedia = computed(() => visibleMediaCount.value < renderableMediaItems.value.length);
+const canLoadMoreMedia = computed(
+  () => visibleMediaCount.value < renderableMediaItems.value.length,
+);
 
 const getMediaCenterLink = (item: MediaCenterItem) =>
   item.slug
@@ -64,7 +66,10 @@ useSeoMeta({
 });
 
 const loadMore = () => {
-  visibleMediaCount.value = Math.min(visibleMediaCount.value + 2, renderableMediaItems.value.length);
+  visibleMediaCount.value = Math.min(
+    visibleMediaCount.value + 2,
+    renderableMediaItems.value.length,
+  );
 };
 </script>
 
@@ -77,9 +82,7 @@ const loadMore = () => {
       class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 sm:pb-20 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-14 pb-16 pt-34 sm:pb-20 lg:pb-24 lg:pt-40']">
       <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div class="page-reveal reveal-delay-1 space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
@@ -123,10 +126,7 @@ const loadMore = () => {
         </div>
       </div>
 
-      <section
-        class="grid gap-6"
-        :class="hasSecondaryNews ? 'lg:grid-cols-[1.15fr_0.85fr]' : ''"
-      >
+      <section class="grid gap-6" :class="hasSecondaryNews ? 'lg:grid-cols-[1.15fr_0.85fr]' : ''">
         <MediaNews
           v-if="featuredNews"
           :title="featuredNews.title!"
@@ -144,7 +144,7 @@ const loadMore = () => {
             class="page-reveal page-reveal-soft group flex gap-4 overflow-hidden rounded-3xl border border-[#d8dfd5] bg-white/92 p-4 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
             :style="{ '--reveal-delay': `${260 + index * 70}ms` }"
           >
-            <img
+            <NuxtImg
               :src="newsItem.image"
               :alt="newsItem.title!"
               class="h-28 w-28 rounded-[1.2rem] object-cover transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"

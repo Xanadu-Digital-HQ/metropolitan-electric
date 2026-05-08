@@ -37,13 +37,13 @@ watch(
             :item="route"
           />
           <NuxtLink to="/" class="order-2 mx-4" aria-label="Navigate to Home Page">
-            <img class="h-8 aspect-square" src="/wheel.svg" alt="Metropolitan Logo" />
+            <NuxtImg class="h-8 aspect-square" src="/wheel.svg" alt="Metropolitan Logo" />
           </NuxtLink>
         </div>
 
         <div class="flex items-center justify-between sm:hidden z-10 w-full px-2">
           <NuxtLink to="/" class="mx-4" aria-label="Navigate to Home Page">
-            <img class="h-8 aspect-square" src="/wheel.svg" alt="Metropolitan Logo" />
+            <NuxtImg class="h-8 aspect-square" src="/wheel.svg" alt="Metropolitan Logo" />
           </NuxtLink>
           <transition mode="out-in" name="buttonSwap">
             <button

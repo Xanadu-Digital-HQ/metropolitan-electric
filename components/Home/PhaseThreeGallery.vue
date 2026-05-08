@@ -20,7 +20,7 @@
           <div
             class="js-phase-three-image-wrapper relative overflow-hidden rounded-[1.75rem] bg-[#f3f5f7] shadow-[0_30px_90px_rgba(16,25,32,0.12)]"
           >
-            <img
+            <NuxtImg
               :src="feature.image"
               :alt="feature.title"
               class="js-phase-three-image absolute inset-x-0 top-[-14%] h-[128%] w-full object-cover will-change-transform sm:top-[-16%] lg:top-[-18%]"
@@ -28,11 +28,11 @@
             <div class="h-72 w-full sm:h-96 lg:h-108" />
           </div>
 
-          <div
-            class="js-phase-three-copy max-w-xl"
-          >
+          <div class="js-phase-three-copy max-w-xl">
             <div class="space-y-3">
-              <h2 class="js-phase-three-title font-opensans text-3xl font-bold leading-tight text-brand/75 md:text-4xl">
+              <h2
+                class="js-phase-three-title font-opensans text-3xl font-bold leading-tight text-brand/75 md:text-4xl"
+              >
                 {{ feature.title }}
               </h2>
               <p
@@ -43,14 +43,14 @@
               </p>
             </div>
 
-            <p class="js-phase-three-description mt-7 max-w-lg font-poppins text-base leading-8 text-brand/70">
+            <p
+              class="js-phase-three-description mt-7 max-w-lg font-poppins text-base leading-8 text-brand/70"
+            >
               {{ feature.description }}
             </p>
           </div>
         </article>
-        <div
-          class="js-phase-three-cta -mt-8 flex justify-center pb-8 lg:-mt-12 lg:pb-12"
-        >
+        <div class="js-phase-three-cta -mt-8 flex justify-center pb-8 lg:-mt-12 lg:pb-12">
           <NuxtLink :to="URLS.SOLUTIONS" class="inline-flex">
             <CustomButton text="Explore More Solutions" />
           </NuxtLink>

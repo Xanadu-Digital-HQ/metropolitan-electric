@@ -41,9 +41,7 @@ const highlightStatements = [
       class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']">
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
@@ -90,7 +88,9 @@ const highlightStatements = [
           :style="{ '--reveal-delay': `${180 + index * 70}ms` }"
         >
           <div class="flex items-start gap-4">
-            <div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#eef5eb,#dce7d8_58%,#cad8ca_100%)] text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+            <div
+              class="flex size-11 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#eef5eb,#dce7d8_58%,#cad8ca_100%)] text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
+            >
               <component :is="statement.icon" class="size-5" weight="fill" />
             </div>
             <p class="pt-1 text-sm leading-7 text-[#31464d]">
@@ -114,7 +114,7 @@ const highlightStatements = [
                 class="absolute inset-0 opacity-85"
                 :style="{ background: `linear-gradient(160deg, ${service.accent}, #101920)` }"
               />
-              <img
+              <NuxtImg
                 :src="`/card/${service.image}`"
                 :alt="service.title"
                 class="absolute inset-0 h-full w-full object-cover mix-blend-luminosity opacity-80 transition-transform duration-500 group-hover:scale-105"
@@ -147,7 +147,9 @@ const highlightStatements = [
                   :key="metric.label"
                   class="flex h-fit flex-col rounded-[1.25rem] bg-[#fbfdfb] p-4"
                 >
-                  <p class="text-[11px] uppercase tracking-[0.18em] leading-5 text-[#73867d] wrap-break-word">
+                  <p
+                    class="text-[11px] uppercase tracking-[0.18em] leading-5 text-[#73867d] wrap-break-word"
+                  >
                     {{ metric.label }}
                   </p>
                   <p class="mt-3 text-sm leading-6 font-medium text-brand wrap-break-word">

@@ -7,9 +7,7 @@
       class="pointer-events-none fixed inset-0 -z-10 opacity-45 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']">
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-7">
           <div class="flex flex-wrap items-center gap-3">
@@ -82,7 +80,7 @@
       <div
         class="page-reveal reveal-delay-2 relative overflow-hidden rounded-[2.5rem] border border-[#d8dfd5] bg-brand shadow-[0_30px_100px_rgba(16,32,39,0.14)]"
       >
-        <img
+        <NuxtImg
           class="h-104 w-full object-cover opacity-80 sm:h-110 lg:h-140"
           :src="currentNews.image"
           :alt="currentNews.title"
@@ -103,10 +101,14 @@
                 </span>
               </div>
               <div class="max-w-3xl">
-                <p class="text-xxs font-semibold uppercase tracking-[0.28em] text-white/52 sm:text-[11px] sm:tracking-[0.32em]">
+                <p
+                  class="text-xxs font-semibold uppercase tracking-[0.28em] text-white/52 sm:text-[11px] sm:tracking-[0.32em]"
+                >
                   News Focus
                 </p>
-                <p class="mt-2 max-w-2xl text-[0.92rem] leading-6 text-white/76 sm:mt-3 sm:max-w-3xl sm:text-base sm:leading-7">
+                <p
+                  class="mt-2 max-w-2xl text-[0.92rem] leading-6 text-white/76 sm:mt-3 sm:max-w-3xl sm:text-base sm:leading-7"
+                >
                   Timely EV coverage shaped around deployment progress, fleet adoption, charging
                   infrastructure, and the operational signals moving electric mobility forward.
                 </p>
@@ -162,7 +164,9 @@
                   </p>
                 </div>
                 <div class="rounded-3xl bg-[#f7faf6] p-4">
-                  <p class="text-[11px] uppercase tracking-[0.22em] text-[#73867d]">Coverage Lens</p>
+                  <p class="text-[11px] uppercase tracking-[0.22em] text-[#73867d]">
+                    Coverage Lens
+                  </p>
                   <p class="mt-2 text-sm leading-6 text-brand">
                     EV deployment, infrastructure maturity, and real operating progress.
                   </p>
@@ -170,7 +174,9 @@
               </div>
             </section>
 
-            <div class="rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm">
+            <div
+              class="rounded-4xl border border-[#d8dfd5] bg-white/92 p-6 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+            >
               <MediaRelatedNews />
             </div>
           </div>
@@ -235,22 +241,22 @@
 </template>
 
 <script lang="ts" setup>
-import type { Collections } from "@nuxt/content";
-import { ProseWrapper } from "#components";
+import type { Collections } from '@nuxt/content';
+import { ProseWrapper } from '#components';
 import {
   PhFacebookLogo,
   PhInstagramLogo,
   PhLinkedinLogo,
   PhWhatsappLogo,
   PhXLogo,
-} from "@phosphor-icons/vue";
+} from '@phosphor-icons/vue';
 
-type MediaCenterItem = Collections["mediaCenter"];
+type MediaCenterItem = Collections['mediaCenter'];
 const props = defineProps<{ currentNews: MediaCenterItem; news: MediaCenterItem[] }>();
 const route = useRoute();
 const { container } = useTailwindConfig();
 
-const socialMedia = ["Twitter", "Facebook", "Linkedin", "Whatsapp", "Instagram"] as const;
+const socialMedia = ['Twitter', 'Facebook', 'Linkedin', 'Whatsapp', 'Instagram'] as const;
 
 const socialIcons = {
   Twitter: PhXLogo,
@@ -264,7 +270,7 @@ const shareUrl = computed(() => `https://metropolitanelectricng.com${route.path}
 const storyTags = computed(() =>
   props.currentNews.tags?.length
     ? props.currentNews.tags.slice(0, 4)
-    : ["electric mobility", "media", "infrastructure"],
+    : ['electric mobility', 'media', 'infrastructure'],
 );
 
 useSeoMeta({
@@ -273,6 +279,6 @@ useSeoMeta({
   description: props.currentNews.description,
   ogDescription: props.currentNews.description,
   ogImage: props.currentNews.image,
-  twitterCard: "summary_large_image",
+  twitterCard: 'summary_large_image',
 });
 </script>

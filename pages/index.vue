@@ -206,10 +206,10 @@ const waitForWindowLoad = () =>
 
 const preloadImage = (src: string) =>
   new Promise<void>((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-    img.src = src;
+    const NuxtImg = new Image();
+    NuxtImg.onload = () => resolve();
+    NuxtImg.onerror = () => resolve();
+    NuxtImg.src = src;
   });
 
 const waitForClientAssets = async () => {

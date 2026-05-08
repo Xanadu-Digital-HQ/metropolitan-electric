@@ -5,12 +5,14 @@
     class="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#d8dfd5] bg-white/80 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(16,32,39,0.08)]"
   >
     <div class="relative overflow-hidden">
-      <img
+      <NuxtImg
         class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         :src="image"
         :alt="title"
       />
-      <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/36 via-transparent to-transparent" />
+      <div
+        class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/36 via-transparent to-transparent"
+      />
     </div>
 
     <div class="flex flex-1 flex-col gap-3 p-5">
@@ -26,7 +28,9 @@
 
       <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-brand">
         View Story
-        <ArrowRightIcon class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRightIcon
+          class="size-4 transition-transform duration-300 group-hover:translate-x-1"
+        />
       </div>
     </div>
   </NuxtLink>
@@ -39,12 +43,14 @@
     class="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#d8dfd5] bg-white/80 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(16,32,39,0.08)]"
   >
     <div class="relative overflow-hidden">
-      <img
+      <NuxtImg
         class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         :src="image"
         :alt="title"
       />
-      <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/36 via-transparent to-transparent" />
+      <div
+        class="pointer-events-none absolute inset-0 bg-linear-to-t from-brand/36 via-transparent to-transparent"
+      />
     </div>
 
     <div class="flex flex-1 flex-col gap-3 p-5">
@@ -60,20 +66,22 @@
 
       <div class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-brand">
         Open Image
-        <ArrowRightIcon class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRightIcon
+          class="size-4 transition-transform duration-300 group-hover:translate-x-1"
+        />
       </div>
     </div>
   </a>
 </template>
 
 <script lang="ts" setup>
-import { ArrowRightIcon } from "@heroicons/vue/20/solid";
+import { ArrowRightIcon } from '@heroicons/vue/20/solid';
 
 defineProps<{
   title: string;
   description: string;
   image: string;
-  type: "story" | "image";
+  type: 'story' | 'image';
   slug?: string;
 }>();
 </script>

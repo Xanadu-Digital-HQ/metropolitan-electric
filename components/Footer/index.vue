@@ -1,25 +1,30 @@
 <template>
   <footer
-    :class="overlay
-      ? 'js-home-footer absolute inset-0 bg-brand text-white'
-      : 'js-home-footer bg-brand text-white'"
+    :class="
+      overlay
+        ? 'js-home-footer absolute inset-0 bg-brand text-white'
+        : 'js-home-footer bg-brand text-white'
+    "
   >
     <div
       :class="[
         container,
-        overlay
-          ? 'flex h-full items-center py-16 sm:py-18 lg:py-24'
-          : 'py-14 sm:py-16 lg:py-20',
+        overlay ? 'flex h-full items-center py-16 sm:py-18 lg:py-24' : 'py-14 sm:py-16 lg:py-20',
       ]"
     >
       <div class="grid gap-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,2fr)] lg:gap-16">
         <div class="js-home-footer-copy max-w-md">
           <div class="flex items-center gap-4">
-            <img src="/logo.svg" alt="Metropolitan Electric" class="h-10 md:h-12 w-auto invert" />
+            <NuxtImg
+              src="/logo.svg"
+              alt="Metropolitan Electric"
+              class="h-10 md:h-12 w-auto invert"
+            />
           </div>
 
           <p class="mt-8 max-w-sm font-noto text-sm md:text-base md:leading-8 text-white/76">
-            We are committed to revolutionizing transportation in Africa by delivering cutting-edge electric vehicles and sustainable mobility solutions.
+            We are committed to revolutionizing transportation in Africa by delivering cutting-edge
+            electric vehicles and sustainable mobility solutions.
           </p>
 
           <div class="mt-8 flex items-center gap-4">
@@ -90,9 +95,15 @@
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Contact Info
             </p>
-            <div class="mt-5 sm:space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base">
+            <div
+              class="mt-5 sm:space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base"
+            >
               <p>77 Sinari Daranijo St,Victoria Island, Lagos 106104, Lagos.</p>
-              <a href="mailto:ev@metropolitanelectricng.com" :class="footerLinkStyle" class="text-wrap! w-full">
+              <a
+                href="mailto:ev@metropolitanelectricng.com"
+                :class="footerLinkStyle"
+                class="text-wrap! w-full"
+              >
                 ev@metropolitanelectricng.com
               </a>
             </div>
@@ -104,21 +115,19 @@
 </template>
 
 <script lang="ts" setup>
-import {URLS} from '~/utils/constants';
+import { URLS } from '~/utils/constants';
 import { vehicles } from '~/utils/vehicles';
 import { getVehicleSlug } from '~/utils/vehicleCatalog';
-import {
-  PhFacebookLogo,
-  PhInstagramLogo,
-  PhLinkedinLogo,
-  PhXLogo,
-} from '@phosphor-icons/vue';
+import { PhFacebookLogo, PhInstagramLogo, PhLinkedinLogo, PhXLogo } from '@phosphor-icons/vue';
 
-withDefaults(defineProps<{
-  overlay?: boolean;
-}>(), {
-  overlay: false,
-});
+withDefaults(
+  defineProps<{
+    overlay?: boolean;
+  }>(),
+  {
+    overlay: false,
+  },
+);
 
 const { container, footerLinkStyle } = useTailwindConfig();
 
@@ -140,13 +149,21 @@ const vehicleLinks = computed(() =>
   vehicles.map((vehicle) => ({
     label: vehicle.name,
     href: `/gallery/${getVehicleSlug(vehicle.name)}`,
-  }))
+  })),
 );
 
 const socials = [
   { label: 'X', href: 'https://x.com/metroelectricev', icon: PhXLogo },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/metropolitan-electric/', icon: PhLinkedinLogo },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/metropolitan-electric/',
+    icon: PhLinkedinLogo,
+  },
   { label: 'Instagram', href: 'https://www.instagram.com/metroelectricev', icon: PhInstagramLogo },
-  { label: 'Facebook', href: 'https://www.facebook.com/people/Metropolitan-Electric/61562743835022/', icon: PhFacebookLogo },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/people/Metropolitan-Electric/61562743835022/',
+    icon: PhFacebookLogo,
+  },
 ] as const;
 </script>

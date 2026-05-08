@@ -93,8 +93,6 @@ const coreValues = [
       'Investing in long-term relationships and experiences that support growth and impact.',
   },
 ] as const;
-
-
 </script>
 
 <template>
@@ -362,8 +360,8 @@ const coreValues = [
           <div
             class="relative h-64 w-full shrink-0 overflow-hidden rounded-4xl border border-[#d8dfd5] shadow-[0_20px_60px_rgba(16,32,39,0.08)] lg:h-80 lg:w-96"
           >
-            <img
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"
+            <NuxtImg
+              src="/team.jpeg"
               alt="Team Metro working together"
               class="h-full w-full object-cover"
             />
@@ -400,8 +398,14 @@ const coreValues = [
             class="page-reveal page-reveal-soft group rounded-[1.85rem] border border-[#d8dfd5] bg-white/92 overflow-hidden shadow-[0_16px_50px_rgba(16,32,39,0.05)] transition-transform duration-300 hover:-translate-y-1"
             :style="{ '--reveal-delay': `${300 + index * 70}ms` }"
           >
-            <div class="relative h-100 sm:h-140 md:h-80 lg:h-120 xl:h-64 w-full overflow-hidden bg-[#e8ebe5]">
-              <img :src="leader.image" :alt="leader.name" class="h-full w-full object-cover object-top" />
+            <div
+              class="relative h-100 sm:h-140 md:h-80 lg:h-120 xl:h-64 w-full overflow-hidden bg-[#e8ebe5]"
+            >
+              <NuxtImg
+                :src="leader.image"
+                :alt="leader.name"
+                class="h-full w-full object-cover object-top"
+              />
             </div>
             <div class="p-6">
               <div class="flex items-start justify-between gap-4">

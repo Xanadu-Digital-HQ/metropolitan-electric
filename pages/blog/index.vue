@@ -88,9 +88,7 @@ useSeoMeta({
       class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-14 pb-16 pt-34 sm:pb-20 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-14 pb-16 pt-34 sm:pb-20 lg:pb-24 lg:pt-40']">
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
@@ -138,7 +136,7 @@ useSeoMeta({
           class="page-reveal reveal-delay-2 group overflow-hidden rounded-4xl border border-[#d8dfd5] bg-white/92 shadow-[0_24px_80px_rgba(16,32,39,0.08)] transition-all duration-300 hover:-translate-y-1"
         >
           <div class="relative h-136 sm:h-130">
-            <img
+            <NuxtImg
               :src="featuredBlog.image"
               :alt="featuredBlog.title"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -159,7 +157,9 @@ useSeoMeta({
               >
                 {{ featuredBlog.title }}
               </h2>
-              <p class="max-w-xl line-clamp-3 text-[0.9rem] leading-6 text-white/76 sm:max-w-2xl sm:text-[0.95rem] sm:leading-7">
+              <p
+                class="max-w-xl line-clamp-3 text-[0.9rem] leading-6 text-white/76 sm:max-w-2xl sm:text-[0.95rem] sm:leading-7"
+              >
                 {{ featuredBlog.description }}
               </p>
               <div class="inline-flex items-center gap-2 pt-1 text-sm font-medium text-white">
@@ -180,7 +180,7 @@ useSeoMeta({
             class="page-reveal page-reveal-soft group flex h-fit gap-3.5 self-start overflow-hidden rounded-[1.7rem] border border-[#d8dfd5] bg-white/92 p-3.5 shadow-[0_14px_50px_rgba(16,32,39,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(16,32,39,0.08)]"
             :style="{ '--reveal-delay': `${210 + index * 75}ms` }"
           >
-            <img
+            <NuxtImg
               :src="blog.image"
               :alt="blog.title!"
               class="h-24 w-24 rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105 sm:h-28 sm:w-28"
@@ -241,7 +241,11 @@ useSeoMeta({
           <div
             class="flex h-28 w-28 items-center justify-center rounded-full bg-[#f4f8f3] shadow-[0_18px_50px_rgba(16,32,39,0.08)]"
           >
-            <img src="/MetroIcon.svg" alt="Metropolitan Electric" class="h-16 w-16 animate-pulse" />
+            <NuxtImg
+              src="/MetroIcon.svg"
+              alt="Metropolitan Electric"
+              class="h-16 w-16 animate-pulse"
+            />
           </div>
           <p class="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b8177]">
             Loading Articles

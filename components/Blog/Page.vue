@@ -7,9 +7,7 @@
       class="pointer-events-none fixed inset-0 -z-10 opacity-45 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      class="flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40"
-    >
+    <section class="flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40">
       <div class="page-reveal reveal-delay-1 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
         <div class="space-y-7">
           <div class="flex flex-wrap items-center gap-3">
@@ -82,7 +80,7 @@
       <div
         class="page-reveal reveal-delay-2 relative overflow-hidden rounded-[2.5rem] border border-[#d8dfd5] bg-brand shadow-[0_30px_100px_rgba(16,32,39,0.14)]"
       >
-        <img
+        <NuxtImg
           class="h-104 w-full object-cover opacity-80 sm:h-110 lg:h-140"
           :src="currentBlog.image"
           :alt="currentBlog.title"
@@ -103,10 +101,14 @@
                 </span>
               </div>
               <div class="max-w-3xl">
-                <p class="text-xxs font-semibold uppercase tracking-[0.28em] text-white/52 sm:text-[11px] sm:tracking-[0.32em]">
+                <p
+                  class="text-xxs font-semibold uppercase tracking-[0.28em] text-white/52 sm:text-[11px] sm:tracking-[0.32em]"
+                >
                   Article Focus
                 </p>
-                <p class="mt-2 max-w-2xl text-[0.92rem] leading-6 text-white/76 sm:mt-3 sm:max-w-3xl sm:text-base sm:leading-7">
+                <p
+                  class="mt-2 max-w-2xl text-[0.92rem] leading-6 text-white/76 sm:mt-3 sm:max-w-3xl sm:text-base sm:leading-7"
+                >
                   A refined editorial surface for electric mobility strategy, operational thinking,
                   and the practical logic behind EV adoption.
                 </p>

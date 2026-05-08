@@ -32,7 +32,7 @@
         v-else
         class="flex flex-col items-center gap-6 text-white/75"
       >
-        <img
+        <NuxtImg
           src="/wheel.svg"
           alt="Loading"
           class="size-20 animate-pulse object-contain"

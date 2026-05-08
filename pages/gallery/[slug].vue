@@ -104,7 +104,7 @@ const selectImage = (index: number) => {
             <div
               class="mt-6 rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#e7eee7_64%,#dde5de_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6"
             >
-              <img
+              <NuxtImg
                 :src="activeImage"
                 :alt="activeVehicle.name"
                 class="h-full w-full object-cover sm:h-105 lg:h-130 rounded-2xl"
@@ -123,7 +123,7 @@ const selectImage = (index: number) => {
                 "
                 @click="selectImage(index)"
               >
-                <img
+                <NuxtImg
                   :src="image"
                   :alt="`${activeVehicle.name} view ${index + 1}`"
                   class="h-18 w-28 object-cover sm:h-24 sm:w-32"
