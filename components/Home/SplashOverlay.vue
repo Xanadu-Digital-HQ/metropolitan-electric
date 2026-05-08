@@ -36,7 +36,7 @@
           src="/wheel.svg"
           alt="Loading"
           class="size-20 animate-pulse object-contain"
-        >
+        />
         <p class="text-sm font-medium tracking-[0.3em] uppercase">
           Loading
         </p>
