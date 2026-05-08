@@ -16,7 +16,7 @@
             Contact Metropolitan Electric
           </p>
           <h1
-            class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
+            class="max-w-6xl font-elemental text-3xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
           >
             Let's build the future of electric mobility.
           </h1>

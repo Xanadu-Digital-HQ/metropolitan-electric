@@ -28,7 +28,7 @@
               Blog & Articles
             </p>
             <h1
-              class="max-w-5xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-7xl"
+              class="max-w-5xl font-elemental text-3xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-7xl"
             >
               {{ currentBlog.title }}
             </h1>

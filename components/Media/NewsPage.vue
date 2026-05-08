@@ -28,7 +28,7 @@
               Media Center
             </p>
             <h1
-              class="w-full font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-7xl"
+              class="w-full font-elemental text-3xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-7xl"
             >
               {{ currentNews.title }}
             </h1>

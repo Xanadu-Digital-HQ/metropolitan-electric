@@ -112,7 +112,7 @@ const coreValues = [
             About Us
           </p>
           <h1
-            class="max-w-6xl font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
+            class="max-w-6xl font-elemental text-3xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
           >
             Pioneering electric mobility solutions for Africa's sustainable future.
           </h1>

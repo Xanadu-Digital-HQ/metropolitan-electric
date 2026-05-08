@@ -92,7 +92,7 @@ const selectImage = (index: number) => {
                   Preview
                 </p>
                 <h1
-                  class="mt-2 font-elemental text-4xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
+                  class="mt-2 font-elemental text-3xl font-medium tracking-[-0.055em] text-brand sm:text-5xl lg:text-6xl"
                 >
                   {{ activeVehicle.name }}
                 </h1>
