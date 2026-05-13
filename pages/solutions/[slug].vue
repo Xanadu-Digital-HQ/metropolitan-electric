@@ -8,20 +8,24 @@
     :accent="service.accent"
     :metrics="service.metrics"
     :pillars="service.pillars"
+    :service-lens="service.serviceLens"
+    :detail-eyebrow="service.detailEyebrow"
+    :detail-heading="service.detailHeading"
+    :detail-sections="service.detailSections"
   />
 </template>
 
 <script lang="ts" setup>
-import { getServiceBySlug } from "~/utils/serviceCatalog";
+import { getServiceBySlug } from '~/utils/serviceCatalog';
 
 definePageMeta({
-  layout: "default",
+  layout: 'default',
 });
 
 const route = useRoute();
 const slug = computed(() => {
   const value = route.params.slug;
-  return Array.isArray(value) ? value[0] ?? "" : String(value ?? "");
+  return Array.isArray(value) ? (value[0] ?? '') : String(value ?? '');
 });
 
 const service = computed(() => getServiceBySlug(slug.value));
@@ -29,16 +33,16 @@ const service = computed(() => getServiceBySlug(slug.value));
 if (!slug.value || !service.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: "Service not found",
+    statusMessage: 'Service not found',
   });
 }
 
 useSeoMeta({
-  title: () => service.value?.title ?? "Service",
-  ogTitle: () => service.value?.title ?? "Service",
-  description: () => service.value?.description ?? "Service details",
-  ogDescription: () => service.value?.description ?? "Service details",
-  ogImage: () => service.value?.image ?? "https://metropolitanelectricng.com/logo.svg",
-  twitterCard: "summary_large_image",
+  title: () => service.value?.title ?? 'Service',
+  ogTitle: () => service.value?.title ?? 'Service',
+  description: () => service.value?.description ?? 'Service details',
+  ogDescription: () => service.value?.description ?? 'Service details',
+  ogImage: () => service.value?.image ?? 'https://metropolitanelectricng.com/logo.svg',
+  twitterCard: 'summary_large_image',
 });
 </script>
