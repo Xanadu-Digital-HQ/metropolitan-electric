@@ -254,6 +254,7 @@ import {
 type MediaCenterItem = Collections['mediaCenter'];
 const props = defineProps<{ currentNews: MediaCenterItem; news: MediaCenterItem[] }>();
 const route = useRoute();
+const config = useRuntimeConfig();
 const { container } = useTailwindConfig();
 
 const socialMedia = ['Twitter', 'Facebook', 'Linkedin', 'Whatsapp', 'Instagram'] as const;
@@ -266,7 +267,7 @@ const socialIcons = {
   Instagram: PhInstagramLogo,
 } as const;
 
-const shareUrl = computed(() => `https://metropolitanelectricng.com${route.path}`);
+const shareUrl = computed(() => `${config.baseUrl}${route.path}`);
 const storyTags = computed(() =>
   props.currentNews.tags?.length
     ? props.currentNews.tags.slice(0, 4)
@@ -278,7 +279,7 @@ useSeoMeta({
   ogTitle: props.currentNews.title,
   description: props.currentNews.description,
   ogDescription: props.currentNews.description,
-  ogImage: props.currentNews.image,
+  ogImage: props.currentNews.image ?? `${config.baseUrl}/og/media_center_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 </script>

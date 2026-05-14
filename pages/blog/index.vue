@@ -2,6 +2,7 @@
 import { ArrowRightIcon } from '@heroicons/vue/20/solid';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 type BlogListItem = {
   path: string;
@@ -74,7 +75,7 @@ useSeoMeta({
     'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
   ogDescription:
     'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/blog_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 </script>

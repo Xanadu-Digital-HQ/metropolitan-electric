@@ -23,6 +23,7 @@ definePageMeta({
 });
 
 const route = useRoute();
+const config = useRuntimeConfig();
 const slug = computed(() => {
   const value = route.params.slug;
   return Array.isArray(value) ? (value[0] ?? '') : String(value ?? '');
@@ -38,11 +39,11 @@ if (!slug.value || !service.value) {
 }
 
 useSeoMeta({
-  title: () => service.value?.title ?? 'Service',
-  ogTitle: () => service.value?.title ?? 'Service',
-  description: () => service.value?.description ?? 'Service details',
-  ogDescription: () => service.value?.description ?? 'Service details',
-  ogImage: () => service.value?.image ?? 'https://metropolitanelectricng.com/logo.svg',
+  title: () => service.value?.title ?? 'Solution',
+  ogTitle: () => service.value?.title ?? 'Solution',
+  description: () => service.value?.description ?? 'Solution details',
+  ogDescription: () => service.value?.description ?? 'Solution details',
+  ogImage: () => service.value?.image ?? `${config.baseUrl}/og/solutions_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 </script>

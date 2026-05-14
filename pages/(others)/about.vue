@@ -16,6 +16,7 @@ import {
 } from '@phosphor-icons/vue';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 useSeoMeta({
   title: 'About Metropolitan Electric',
@@ -24,7 +25,7 @@ useSeoMeta({
     'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transportation future.',
   ogDescription:
     'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transportation future.',
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/about_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

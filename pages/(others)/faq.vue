@@ -3,6 +3,7 @@ import { PhBatteryCharging, PhLeaf, PhLightning, PhShieldCheck } from '@phosphor
 import { faqItems } from '~/utils/faq';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 useSeoMeta({
   title: 'EV FAQ',
@@ -11,7 +12,7 @@ useSeoMeta({
     'Answers to common questions about electric vehicles, charging, maintenance, infrastructure and EV adoption in Nigeria.',
   ogDescription:
     'Answers to common questions about electric vehicles, charging, maintenance, infrastructure and EV adoption in Nigeria.',
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/faq_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

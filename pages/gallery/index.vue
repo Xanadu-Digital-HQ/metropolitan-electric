@@ -5,6 +5,7 @@ import { vehicles } from '~/utils/vehicles';
 import { getVehicleSlug } from '~/utils/vehicleCatalog';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 useSeoMeta({
   title: 'Vehicle Gallery',
@@ -13,7 +14,7 @@ useSeoMeta({
     "Browse Metropolitan Electric's vehicle lineup through a modern gallery built for growing electric fleets.",
   ogDescription:
     "Browse Metropolitan Electric's vehicle lineup through a modern gallery built for growing electric fleets.",
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/gallery_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

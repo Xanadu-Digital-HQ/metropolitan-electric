@@ -28,8 +28,8 @@ export default defineNuxtConfig({
             'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
         },
         {
-          name: 'og:image',
-          content: 'logo.svg',
+          property: 'og:image',
+          content: 'https://metropolitanelectricng.com/ogImage.png',
         },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
@@ -121,6 +121,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     brevoApiKey: process.env.BREVO_API_KEY || '',
     public: {
+      baseUrl: process.env.NUXT_BASE_URL || '',
       scripts: {
         googleAnalytics: {
           id: process.env.NUXT_GOOGLE_ANALYTICS_ID!,

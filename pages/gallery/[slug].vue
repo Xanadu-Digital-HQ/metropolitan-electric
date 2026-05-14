@@ -6,6 +6,7 @@ import { findVehicleBySlug } from '~/utils/vehicleCatalog';
 const { container } = useTailwindConfig();
 
 const route = useRoute();
+const config = useRuntimeConfig();
 const slug = computed(() => {
   const value = route.params.slug;
   return Array.isArray(value) ? (value[0] ?? '') : String(value ?? '');
@@ -39,7 +40,7 @@ useSeoMeta({
   ogTitle: () => `${activeVehicle.value?.name ?? 'Vehicle'} Details`,
   description: () => activeVehicle.value?.description ?? 'Vehicle details',
   ogDescription: () => activeVehicle.value?.description ?? 'Vehicle details',
-  ogImage: () => activeVehicle.value?.images[0] ?? 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: () => activeVehicle.value?.images[0] ?? `${config.baseUrl}/og/gallery_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

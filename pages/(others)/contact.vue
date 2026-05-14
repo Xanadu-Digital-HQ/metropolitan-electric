@@ -233,6 +233,7 @@
 import { ArrowPathIcon } from '@heroicons/vue/20/solid';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 useSeoMeta({
   title: 'Contact Metropolitan Electric',
@@ -241,7 +242,7 @@ useSeoMeta({
     'Reach Metropolitan Electric for EV fleets, charging infrastructure, mobility programmes, partnerships and electric vehicle support.',
   ogDescription:
     'Reach Metropolitan Electric for EV fleets, charging infrastructure, mobility programmes, partnerships and electric vehicle support.',
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/contact_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

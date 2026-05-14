@@ -4,6 +4,7 @@ import { PhCircuitry, PhStrategy, PhStack } from '@phosphor-icons/vue';
 import { serviceCatalog } from '~/utils/serviceCatalog';
 
 const { container } = useTailwindConfig();
+const config = useRuntimeConfig();
 
 useSeoMeta({
   title: 'Our Solutions',
@@ -12,7 +13,7 @@ useSeoMeta({
     "Explore Metropolitan Electric's EV-focused solutions across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
   ogDescription:
     "Explore Metropolitan Electric's EV-focused solutions across fleet deployment, public mobility, charging infrastructure, assembly, ride-hailing, and maintenance.",
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/solutions_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 

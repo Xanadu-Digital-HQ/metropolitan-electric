@@ -16,7 +16,7 @@ type RenderableMediaCenterItem = MediaCenterItem & {
 };
 
 const { container } = useTailwindConfig();
-
+const config = useRuntimeConfig();
 const { data: newsItems } = await useAsyncData<MediaCenterItem[]>('media-center-news', () =>
   queryCollection('mediaCenter').all(),
 );
@@ -61,7 +61,7 @@ useSeoMeta({
     'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
   ogDescription:
     'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
-  ogImage: 'https://metropolitanelectricng.com/logo.svg',
+  ogImage: `${config.baseUrl}/og/media_center_ogImage.png`,
   twitterCard: 'summary_large_image',
 });
 
