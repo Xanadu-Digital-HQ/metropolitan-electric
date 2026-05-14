@@ -120,6 +120,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     brevoApiKey: process.env.BREVO_API_KEY || '',
+    brevoSenderEmail: process.env.BREVO_SENDER_EMAIL || '',
     public: {
       baseUrl: process.env.NUXT_BASE_URL || '',
       scripts: {

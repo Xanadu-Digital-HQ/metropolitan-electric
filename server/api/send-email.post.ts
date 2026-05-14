@@ -6,8 +6,7 @@ const escapeHtml = (value: unknown) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
-const formatMessage = (value: unknown) =>
-  escapeHtml(value).replace(/\r\n|\r|\n/g, '<br>');
+const formatMessage = (value: unknown) => escapeHtml(value).replace(/\r\n|\r|\n/g, '<br>');
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -26,12 +25,12 @@ export default defineEventHandler(async (event) => {
     },
     body: {
       sender: {
-        email: 'michaelakpuofoba@gmail.com',
+        email: config.brevoSenderEmail || 'ev@metropolitanelectricng.com',
         name: 'Metropolitan Electric',
       },
       to: [
         {
-          email: 'cerebrokyng@gmail.com',
+          email: 'michaelakpuofoba@gmail.com',
           name: 'Operations@metropolitanelectric',
         },
       ],
