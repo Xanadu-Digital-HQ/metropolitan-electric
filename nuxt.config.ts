@@ -76,7 +76,7 @@ export default defineNuxtConfig({
         '@unhead/schema-org/vue',
         'gsap',
         'gsap/all',
-        '@emailjs/browser',
+        '@getbrevo/brevo',
         '@heroicons/vue/20/solid',
       ],
     },
@@ -119,8 +119,8 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
+    brevoApiKey: process.env.BREVO_API_KEY || '',
     public: {
-      Emailjs: '75u1MbtaSAXCYENAL',
       scripts: {
         googleAnalytics: {
           id: process.env.NUXT_GOOGLE_ANALYTICS_ID!,

@@ -7,9 +7,7 @@
       class="pointer-events-none fixed inset-0 -z-10 opacity-50 bg-[linear-gradient(rgba(16,32,39,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,32,39,0.03)_1px,transparent_1px)] bg-size-[32px_32px]"
     />
 
-    <section
-      :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']"
-    >
+    <section :class="[container, 'flex flex-col gap-12 pb-16 pt-34 lg:pb-24 lg:pt-40']">
       <div class="page-reveal reveal-delay-1 space-y-8">
         <div class="space-y-6">
           <p class="text-xs font-bold font-opensans uppercase tracking-[0.34em] text-[#5d7368]">
@@ -196,7 +194,9 @@
 
               <button
                 type="submit"
-                class="inline-flex min-w-44 items-center justify-center rounded-full bg-brand px-6 py-3.5 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
+                :disabled="isLoading"
+                :aria-busy="isLoading"
+                class="inline-flex min-w-44 items-center justify-center rounded-full bg-brand px-6 py-3.5 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <ArrowPathIcon v-if="isLoading" class="h-5 w-5 animate-spin" />
                 <span v-else>Send Enquiry</span>
@@ -230,7 +230,6 @@
 </template>
 
 <script lang="ts" setup>
-import emailjs from '@emailjs/browser';
 import { ArrowPathIcon } from '@heroicons/vue/20/solid';
 
 const { container } = useTailwindConfig();
@@ -260,10 +259,27 @@ const isLoading = ref(false);
 const response = ref('');
 const errorMsg = ref('');
 const checkBox = ref(false);
+const submitDebounceMs = 350;
+let submitDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 const sendEmail = () => {
+  if (isLoading.value) {
+    return;
+  }
+
   isLoading.value = true;
 
+  if (submitDebounceTimer) {
+    clearTimeout(submitDebounceTimer);
+  }
+
+  submitDebounceTimer = setTimeout(() => {
+    submitDebounceTimer = null;
+    void submitEmail();
+  }, submitDebounceMs);
+};
+
+const submitEmail = async () => {
   if (!checkBox.value) {
     errorMsg.value = 'Consent is required';
     isLoading.value = false;
@@ -278,25 +294,40 @@ const sendEmail = () => {
     return;
   }
 
-  emailjs
-    .sendForm('service_nkjkddv', 'contact_form', form.value, useRuntimeConfig().public.Emailjs)
-    .then(
-      () => {
-        isLoading.value = false;
-        response.value = 'Enquiry sent successfully';
-        form.value?.reset();
-        checkBox.value = false;
-        setTimeout(() => {
-          response.value = '';
-        }, 3000);
+  const formData = new FormData(form.value);
+  const name = formData.get('from_name') as string;
+  const email = formData.get('from_email') as string;
+  const message = formData.get('message') as string;
+
+  try {
+    await $fetch('/api/send-email', {
+      method: 'POST',
+      body: {
+        name,
+        email,
+        message,
       },
-      () => {
-        isLoading.value = false;
-        errorMsg.value = 'Something went wrong, please try again';
-        setTimeout(() => {
-          errorMsg.value = '';
-        }, 3000);
-      },
-    );
+    });
+
+    response.value = 'Enquiry sent successfully';
+    form.value?.reset();
+    checkBox.value = false;
+    setTimeout(() => {
+      response.value = '';
+    }, 3000);
+  } catch (error) {
+    errorMsg.value = 'Something went wrong, please try again';
+    setTimeout(() => {
+      errorMsg.value = '';
+    }, 3000);
+  } finally {
+    isLoading.value = false;
+  }
 };
+
+onBeforeUnmount(() => {
+  if (submitDebounceTimer) {
+    clearTimeout(submitDebounceTimer);
+  }
+});
 </script>
