@@ -196,11 +196,11 @@ export const vehicles: vehicle[] = [
     description:
       'The Leapmotor B01 is a smart, efficient all-electric sedan designed for modern urban lifestyles. Combining practical range, intuitive technology, and everyday comfort, it offers an affordable entry into electric mobility for first-time EV owners and city professionals.',
     category: 'car',
-    price: 'Contact for price',
+    price: '₦41,000,000',
     images: [
-      'https://example.com/vehicles/leapmotor-b01-1.jpg',
-      'https://example.com/vehicles/leapmotor-b01-2.jpg',
-      'https://example.com/vehicles/leapmotor-b01-3.jpg',
+      '/vehicles/leanmotors_b01_1.png',
+      '/vehicles/leanmotors_b01_2.png',
+      '/vehicles/leanmotors_b01_3.png',
     ],
     specification: [
       { label: 'VEHICLE TYPE', value: '4-Door 5-Seat All-Electric Sedan' },
@@ -273,11 +273,12 @@ export const vehicles: vehicle[] = [
     description:
       'The Leapmotor C16 is a premium 6-seater all-electric SUV that combines spacious comfort, intelligent technology, and impressive range. Designed for modern families, it delivers strong performance, safety, and efficiency.',
     category: 'car',
-    price: 'Contact for price',
+    price: '₦66,000,000',
     images: [
-      'https://example.com/vehicles/leapmotor-c16-1.jpg',
-      'https://example.com/vehicles/leapmotor-c16-2.jpg',
-      'https://example.com/vehicles/leapmotor-c16-3.jpg',
+      '/vehicles/leapmotor_c16_1.png',
+      '/vehicles/leapmotor_c16_2.png',
+      '/vehicles/leapmotor_c16_3.jpeg',
+      '/vehicles/leapmotor_c16_4.png',
     ],
     specification: [
       { label: 'VEHICLE TYPE', value: '6-Seater All-Electric SUV (BEV / EREV)' },
@@ -363,11 +364,11 @@ export const vehicles: vehicle[] = [
     description:
       'The Leapmotor C10 is a stylish, intelligent, and highly efficient all-electric SUV that delivers premium comfort, advanced technology, and impressive range for modern lifestyles.',
     category: 'car',
-    price: 'Contact for price',
+    price: '₦57,000,000',
     images: [
-      'https://example.com/vehicles/leapmotor-c10-1.jpg',
-      'https://example.com/vehicles/leapmotor-c10-2.jpg',
-      'https://example.com/vehicles/leapmotor-c10-3.jpg',
+      '/vehicles/leapmotor_c10_1.png',
+      '/vehicles/leapmotor_c10_2.png',
+      '/vehicles/leapmotor_c10_3.png',
     ],
     specification: [
       { label: 'VEHICLE TYPE', value: '5-Seater All-Electric SUV' },
@@ -429,15 +430,16 @@ export const vehicles: vehicle[] = [
     ],
   },
   {
-    name: 'Wuling Starlight S',
+    name: 'Wuling Starlight S (SUV)',
     description:
       'The Wuling Starlight S is a compact crossover SUV available in both pure electric and plug-in hybrid versions. Built on the SGMW Tianyu EV modular architecture, it offers generous cabin space, 985 mm of rear legroom, and strong value for family mobility.',
     category: 'car',
-    price: 'Contact for price',
+    price: '₦56,000,000',
     images: [
-      'https://example.com/vehicles/wuling-starlight-s-1.jpg',
-      'https://example.com/vehicles/wuling-starlight-s-2.jpg',
-      'https://example.com/vehicles/wuling-starlight-s-3.jpg',
+      '/vehicles/wuling_starlight _s_1.png',
+      '/vehicles/wuling_starlight _s_2.png',
+      '/vehicles/wuling_starlight _s_3.png',
+      '/vehicles/wuling_starlight _s_4.png',
     ],
     specification: [
       { label: 'VEHICLE TYPE', value: '5-Seat Compact Crossover SUV (BEV / PHEV)' },
@@ -488,198 +490,258 @@ export const vehicles: vehicle[] = [
     ],
   },
   {
-    name: '7KW Level 2 Charging Station',
+    name: 'Wuling Starlight (Sedan)',
     description:
-      'The 7KW Level 2 AC Charging Station is ideal for homes, offices, hotels, apartments, and locations where vehicles remain parked for several hours. It offers a reliable and affordable charging solution for daily EV users.',
-    category: 'charger',
-    price: 'Contact for price',
+      'The Wuling Starlight is a mid-size all-electric sedan from SAIC-GM-Wuling, built on the Tianyu D architecture. It offers a refined four-door cabin, efficient LFP battery options, a smooth front-wheel-drive setup, and practical everyday range for city and intercity driving.',
+    category: 'car',
+    price: '₦48,000,000',
     images: [
-      'https://example.com/chargers/7kw-level-2-charger-1.jpg',
-      'https://example.com/chargers/7kw-level-2-charger-2.jpg',
-      'https://example.com/chargers/7kw-level-2-charger-3.jpg',
+      '/vehicles/wuling_starlight_sedan_1.png',
+      '/vehicles/wuling_starlight_sedan_2.png',
+      '/vehicles/wuling_starlight_sedan_3.png',
     ],
     specification: [
-      { label: 'CHARGER TYPE', value: 'Level 2 AC Charging Station' },
-      { label: 'POWER OUTPUT', value: '7 kW' },
-      { label: 'CHARGING SPEED', value: 'Standard' },
-      { label: 'CURRENT TYPE', value: 'AC' },
+      { label: 'VEHICLE TYPE', value: '4-Door 5-Seat Mid-Size Electric Sedan' },
+      { label: 'DIMENSIONS (L X W X H)', value: '4,835 x 1,860 x 1,515 mm' },
+      { label: 'WHEELBASE', value: '2,800 mm' },
+      { label: 'CURB WEIGHT', value: '1,600 - 1,695 kg' },
+      { label: 'SEATING CAPACITY', value: '5 Seats' },
+      { label: 'PLATFORM', value: 'SGMW Tianyu D architecture' },
+      { label: 'DRIVE TYPE', value: 'Front-Wheel Drive (FWD)' },
+      { label: 'BATTERY TYPE', value: 'Lithium Iron Phosphate (LFP)' },
       {
-        label: 'SMALL EV CHARGING TIME',
-        value: '4 - 6 hours for 30 - 40 kWh batteries',
+        label: 'BATTERY CAPACITY',
+        value: '41.9 kWh (Standard) / 54.3 kWh (Long Range) / 69.2 kWh (2025 Extended)',
       },
       {
-        label: 'MEDIUM EV CHARGING TIME',
-        value: '7 - 9 hours for 50 - 60 kWh batteries',
+        label: 'RANGE',
+        value: '410 km / 510 km / up to 610 km CLTC',
       },
+      { label: 'MOTOR TYPE', value: 'Permanent Magnet Synchronous' },
+      { label: 'MOTOR POWER', value: '100 kW (134 hp)' },
+      { label: 'TOP SPEED', value: '150 km/h' },
+      { label: 'CHARGING TIME (AC)', value: '~6 - 8 h (11 kW)' },
+      { label: 'CHARGING TIME (DC)', value: '30 min (30% - 80%)' },
+      { label: 'BATTERY SUPPLIER', value: 'CATL' },
+      { label: 'INFOTAINMENT SCREEN', value: 'Large Central Touchscreen' },
+      { label: 'OPERATING SYSTEM', value: 'Ling OS' },
+      { label: 'ADAS PLATFORM', value: 'Lingmou (Integrated)' },
+      { label: 'COMPUTE', value: 'Horizon Robotics Journey' },
+      { label: 'VOICE CONTROL', value: 'Supported' },
+      { label: 'CABIN STORAGE', value: '33 L across 14 dedicated compartments' },
+      { label: 'SUSPENSION', value: 'Coil Springs with Passive Damping' },
+      { label: 'ROOF', value: 'Metal' },
       {
-        label: 'LARGE EV CHARGING TIME',
-        value: '10 - 12+ hours for 70+ kWh batteries',
+        label: 'SAFETY FEATURES',
+        value: 'Airbag Suite, ABS, EBD, ESC, TPMS, Parking Sensors',
       },
-      {
-        label: 'BEST FOR',
-        value:
-          'Homeowners, workplaces, hotels, residential estates, and small commercial facilities',
-      },
-      { label: 'TYPICAL USE CASE', value: 'Home / Office' },
-      { label: 'ESTIMATED TIME', value: '4 - 12 hrs' },
+      { label: 'WARRANTY', value: 'Available - per SGMW terms' },
     ],
     features: [
-      'Perfect for Overnight Charging',
-      'Lower Installation Cost',
-      'Compact and Easy to Deploy',
-      'Ideal for Private Users and Staff Parking Lots',
+      'Mid-Size All-Electric Sedan',
+      'Up to 610 km CLTC Range',
+      'Efficient LFP Battery Options',
+      'CATL Battery Supply',
+      'Smooth Front-Wheel Drive',
+      'Large Central Touchscreen with Ling OS',
+      'Integrated Lingmou ADAS',
+      'Spacious Cabin with 14 Storage Compartments',
     ],
   },
-  {
-    name: '22KW AC Charging Station',
-    description:
-      'The 22KW AC Charging Station is a faster commercial AC charging solution designed for public places and businesses needing shorter charging turnaround times.',
-    category: 'charger',
-    price: 'Contact for price',
-    images: [
-      'https://example.com/chargers/22kw-ac-charger-1.jpg',
-      'https://example.com/chargers/22kw-ac-charger-2.jpg',
-      'https://example.com/chargers/22kw-ac-charger-3.jpg',
-    ],
-    specification: [
-      { label: 'CHARGER TYPE', value: 'AC Charging Station' },
-      { label: 'POWER OUTPUT', value: '22 kW' },
-      { label: 'CHARGING SPEED', value: 'Fast AC' },
-      { label: 'CURRENT TYPE', value: 'AC' },
-      {
-        label: 'SMALL EV CHARGING TIME',
-        value: '1.5 - 2.5 hours for 30 - 40 kWh batteries',
-      },
-      {
-        label: 'MEDIUM EV CHARGING TIME',
-        value: '3 - 4 hours for 50 - 60 kWh batteries',
-      },
-      {
-        label: 'LARGE EV CHARGING TIME',
-        value: '4 - 6 hours for 70+ kWh batteries',
-      },
-      {
-        label: 'BEST FOR',
-        value:
-          'Shopping malls, offices, restaurants, hotels, hospitals, universities, and public car parks',
-      },
-      { label: 'TYPICAL USE CASE', value: 'Public / Commercial' },
-      { label: 'ESTIMATED TIME', value: '1.5 - 6 hrs' },
-    ],
-    features: [
-      'Three Times Faster than 7KW Charging',
-      'Suitable for Commercial Environments',
-      'Supports Destination Charging',
-      'Ideal for Short to Medium Parking Durations',
-    ],
-  },
-  {
-    name: '40KW DC Fast Charging Station',
-    description:
-      'The 40KW DC Fast Charger provides direct current charging, bypassing the vehicle onboard charger for significantly faster charging speeds.',
-    category: 'charger',
-    price: 'Contact for price',
-    images: [
-      'https://example.com/chargers/40kw-dc-fast-charger-1.jpg',
-      'https://example.com/chargers/40kw-dc-fast-charger-2.jpg',
-      'https://example.com/chargers/40kw-dc-fast-charger-3.jpg',
-    ],
-    specification: [
-      { label: 'CHARGER TYPE', value: 'DC Fast Charging Station' },
-      { label: 'POWER OUTPUT', value: '40 kW' },
-      { label: 'CHARGING SPEED', value: 'Fast DC' },
-      { label: 'CURRENT TYPE', value: 'DC' },
-      { label: 'CHARGING RANGE', value: '20% - 80%' },
-      { label: 'SMALL EV CHARGING TIME', value: '30 - 40 minutes' },
-      { label: 'MEDIUM EV CHARGING TIME', value: '45 - 60 minutes' },
-      { label: 'LARGE EV CHARGING TIME', value: '60 - 90 minutes' },
-      {
-        label: 'BEST FOR',
-        value: 'Fleet depots, fuel stations, business centers, taxi parks, and transit locations',
-      },
-      { label: 'TYPICAL USE CASE', value: 'Fleet / Public' },
-      { label: 'ESTIMATED TIME', value: '30 - 90 mins' },
-    ],
-    features: [
-      'Fast Turnaround for Fleet and Commercial Use',
-      'Efficient Public Charging Option',
-      'Suitable for Medium Traffic Charging Hubs',
-      'Reduces Downtime for EV Drivers',
-    ],
-  },
-  {
-    name: '60KW DC Fast Charging Station',
-    description:
-      'The 60KW DC Fast Charger is a premium fast-charging solution designed for busy charging stations and commercial fleets needing rapid charging.',
-    category: 'charger',
-    price: 'Contact for price',
-    images: [
-      'https://example.com/chargers/60kw-dc-fast-charger-1.jpg',
-      'https://example.com/chargers/60kw-dc-fast-charger-2.jpg',
-      'https://example.com/chargers/60kw-dc-fast-charger-3.jpg',
-    ],
-    specification: [
-      { label: 'CHARGER TYPE', value: 'DC Fast Charging Station' },
-      { label: 'POWER OUTPUT', value: '60 kW' },
-      { label: 'CHARGING SPEED', value: 'Faster DC' },
-      { label: 'CURRENT TYPE', value: 'DC' },
-      { label: 'CHARGING RANGE', value: '20% - 80%' },
-      { label: 'SMALL EV CHARGING TIME', value: '20 - 30 minutes' },
-      { label: 'MEDIUM EV CHARGING TIME', value: '30 - 45 minutes' },
-      { label: 'LARGE EV CHARGING TIME', value: '45 - 60 minutes' },
-      {
-        label: 'BEST FOR',
-        value:
-          'Fuel stations, public charging hubs, logistics fleets, ride-hailing fleets, and transport terminals',
-      },
-      { label: 'TYPICAL USE CASE', value: 'High Traffic Sites' },
-      { label: 'ESTIMATED TIME', value: '20 - 60 mins' },
-    ],
-    features: [
-      'Faster Charging than 40KW Systems',
-      'High User Turnover',
-      'Excellent for Commercial and Public Networks',
-      'Reliable for Continuous Operation',
-    ],
-  },
-  {
-    name: '160KW DC Fast Charging Station',
-    description:
-      'The 160KW Ultra-Fast DC Charger is a high-performance charging solution built for next-generation EVs and heavy-duty commercial operations.',
-    category: 'charger',
-    price: 'Contact for price',
-    images: [
-      'https://example.com/chargers/160kw-dc-fast-charger-1.jpg',
-      'https://example.com/chargers/160kw-dc-fast-charger-2.jpg',
-      'https://example.com/chargers/160kw-dc-fast-charger-3.jpg',
-    ],
-    specification: [
-      { label: 'CHARGER TYPE', value: 'Ultra-Fast DC Charging Station' },
-      { label: 'POWER OUTPUT', value: '160 kW' },
-      { label: 'CHARGING SPEED', value: 'Ultra Fast DC' },
-      { label: 'CURRENT TYPE', value: 'DC' },
-      { label: 'CHARGING RANGE', value: '20% - 80%' },
-      { label: 'SMALL EV CHARGING TIME', value: '10 - 15 minutes' },
-      { label: 'MEDIUM EV CHARGING TIME', value: '15 - 25 minutes' },
-      { label: 'LARGE EV CHARGING TIME', value: '25 - 40 minutes' },
-      {
-        label: 'BEST FOR',
-        value:
-          'Highways, intercity routes, premium charging hubs, bus depots, logistics centers, and large commercial fleets',
-      },
-      { label: 'TYPICAL USE CASE', value: 'Highway / Premium Fleet' },
-      { label: 'ESTIMATED TIME', value: '10 - 40 mins' },
-      {
-        label: 'CHARGING DURATION NOTE',
-        value:
-          'Actual time depends on vehicle battery capacity, state of charge, vehicle maximum charging acceptance rate, battery temperature, charger efficiency, and power supply conditions',
-      },
-    ],
-    features: [
-      'Ultra-Fast Charging Speeds',
-      'Minimizes Waiting Time',
-      'Ideal for Highways and Premium Charging Networks',
-      'Supports Modern EVs with High Charging Acceptance Rates',
-    ],
-  },
+
+  // {
+  //   name: '7KW Level 2 Charging Station',
+  //   description:
+  //     'The 7KW Level 2 AC Charging Station is ideal for homes, offices, hotels, apartments, and locations where vehicles remain parked for several hours. It offers a reliable and affordable charging solution for daily EV users.',
+  //   category: 'charger',
+  //   price: 'Contact for price',
+  //   images: [
+  //     'https://example.com/chargers/7kw-level-2-charger-1.jpg',
+  //     'https://example.com/chargers/7kw-level-2-charger-2.jpg',
+  //     'https://example.com/chargers/7kw-level-2-charger-3.jpg',
+  //   ],
+  //   specification: [
+  //     { label: 'CHARGER TYPE', value: 'Level 2 AC Charging Station' },
+  //     { label: 'POWER OUTPUT', value: '7 kW' },
+  //     { label: 'CHARGING SPEED', value: 'Standard' },
+  //     { label: 'CURRENT TYPE', value: 'AC' },
+  //     {
+  //       label: 'SMALL EV CHARGING TIME',
+  //       value: '4 - 6 hours for 30 - 40 kWh batteries',
+  //     },
+  //     {
+  //       label: 'MEDIUM EV CHARGING TIME',
+  //       value: '7 - 9 hours for 50 - 60 kWh batteries',
+  //     },
+  //     {
+  //       label: 'LARGE EV CHARGING TIME',
+  //       value: '10 - 12+ hours for 70+ kWh batteries',
+  //     },
+  //     {
+  //       label: 'BEST FOR',
+  //       value:
+  //         'Homeowners, workplaces, hotels, residential estates, and small commercial facilities',
+  //     },
+  //     { label: 'TYPICAL USE CASE', value: 'Home / Office' },
+  //     { label: 'ESTIMATED TIME', value: '4 - 12 hrs' },
+  //   ],
+  //   features: [
+  //     'Perfect for Overnight Charging',
+  //     'Lower Installation Cost',
+  //     'Compact and Easy to Deploy',
+  //     'Ideal for Private Users and Staff Parking Lots',
+  //   ],
+  // },
+  // {
+  //   name: '22KW AC Charging Station',
+  //   description:
+  //     'The 22KW AC Charging Station is a faster commercial AC charging solution designed for public places and businesses needing shorter charging turnaround times.',
+  //   category: 'charger',
+  //   price: 'Contact for price',
+  //   images: [
+  //     'https://example.com/chargers/22kw-ac-charger-1.jpg',
+  //     'https://example.com/chargers/22kw-ac-charger-2.jpg',
+  //     'https://example.com/chargers/22kw-ac-charger-3.jpg',
+  //   ],
+  //   specification: [
+  //     { label: 'CHARGER TYPE', value: 'AC Charging Station' },
+  //     { label: 'POWER OUTPUT', value: '22 kW' },
+  //     { label: 'CHARGING SPEED', value: 'Fast AC' },
+  //     { label: 'CURRENT TYPE', value: 'AC' },
+  //     {
+  //       label: 'SMALL EV CHARGING TIME',
+  //       value: '1.5 - 2.5 hours for 30 - 40 kWh batteries',
+  //     },
+  //     {
+  //       label: 'MEDIUM EV CHARGING TIME',
+  //       value: '3 - 4 hours for 50 - 60 kWh batteries',
+  //     },
+  //     {
+  //       label: 'LARGE EV CHARGING TIME',
+  //       value: '4 - 6 hours for 70+ kWh batteries',
+  //     },
+  //     {
+  //       label: 'BEST FOR',
+  //       value:
+  //         'Shopping malls, offices, restaurants, hotels, hospitals, universities, and public car parks',
+  //     },
+  //     { label: 'TYPICAL USE CASE', value: 'Public / Commercial' },
+  //     { label: 'ESTIMATED TIME', value: '1.5 - 6 hrs' },
+  //   ],
+  //   features: [
+  //     'Three Times Faster than 7KW Charging',
+  //     'Suitable for Commercial Environments',
+  //     'Supports Destination Charging',
+  //     'Ideal for Short to Medium Parking Durations',
+  //   ],
+  // },
+  // {
+  //   name: '40KW DC Fast Charging Station',
+  //   description:
+  //     'The 40KW DC Fast Charger provides direct current charging, bypassing the vehicle onboard charger for significantly faster charging speeds.',
+  //   category: 'charger',
+  //   price: 'Contact for price',
+  //   images: [
+  //     'https://example.com/chargers/40kw-dc-fast-charger-1.jpg',
+  //     'https://example.com/chargers/40kw-dc-fast-charger-2.jpg',
+  //     'https://example.com/chargers/40kw-dc-fast-charger-3.jpg',
+  //   ],
+  //   specification: [
+  //     { label: 'CHARGER TYPE', value: 'DC Fast Charging Station' },
+  //     { label: 'POWER OUTPUT', value: '40 kW' },
+  //     { label: 'CHARGING SPEED', value: 'Fast DC' },
+  //     { label: 'CURRENT TYPE', value: 'DC' },
+  //     { label: 'CHARGING RANGE', value: '20% - 80%' },
+  //     { label: 'SMALL EV CHARGING TIME', value: '30 - 40 minutes' },
+  //     { label: 'MEDIUM EV CHARGING TIME', value: '45 - 60 minutes' },
+  //     { label: 'LARGE EV CHARGING TIME', value: '60 - 90 minutes' },
+  //     {
+  //       label: 'BEST FOR',
+  //       value: 'Fleet depots, fuel stations, business centers, taxi parks, and transit locations',
+  //     },
+  //     { label: 'TYPICAL USE CASE', value: 'Fleet / Public' },
+  //     { label: 'ESTIMATED TIME', value: '30 - 90 mins' },
+  //   ],
+  //   features: [
+  //     'Fast Turnaround for Fleet and Commercial Use',
+  //     'Efficient Public Charging Option',
+  //     'Suitable for Medium Traffic Charging Hubs',
+  //     'Reduces Downtime for EV Drivers',
+  //   ],
+  // },
+  // {
+  //   name: '60KW DC Fast Charging Station',
+  //   description:
+  //     'The 60KW DC Fast Charger is a premium fast-charging solution designed for busy charging stations and commercial fleets needing rapid charging.',
+  //   category: 'charger',
+  //   price: 'Contact for price',
+  //   images: [
+  //     'https://example.com/chargers/60kw-dc-fast-charger-1.jpg',
+  //     'https://example.com/chargers/60kw-dc-fast-charger-2.jpg',
+  //     'https://example.com/chargers/60kw-dc-fast-charger-3.jpg',
+  //   ],
+  //   specification: [
+  //     { label: 'CHARGER TYPE', value: 'DC Fast Charging Station' },
+  //     { label: 'POWER OUTPUT', value: '60 kW' },
+  //     { label: 'CHARGING SPEED', value: 'Faster DC' },
+  //     { label: 'CURRENT TYPE', value: 'DC' },
+  //     { label: 'CHARGING RANGE', value: '20% - 80%' },
+  //     { label: 'SMALL EV CHARGING TIME', value: '20 - 30 minutes' },
+  //     { label: 'MEDIUM EV CHARGING TIME', value: '30 - 45 minutes' },
+  //     { label: 'LARGE EV CHARGING TIME', value: '45 - 60 minutes' },
+  //     {
+  //       label: 'BEST FOR',
+  //       value:
+  //         'Fuel stations, public charging hubs, logistics fleets, ride-hailing fleets, and transport terminals',
+  //     },
+  //     { label: 'TYPICAL USE CASE', value: 'High Traffic Sites' },
+  //     { label: 'ESTIMATED TIME', value: '20 - 60 mins' },
+  //   ],
+  //   features: [
+  //     'Faster Charging than 40KW Systems',
+  //     'High User Turnover',
+  //     'Excellent for Commercial and Public Networks',
+  //     'Reliable for Continuous Operation',
+  //   ],
+  // },
+  // {
+  //   name: '160KW DC Fast Charging Station',
+  //   description:
+  //     'The 160KW Ultra-Fast DC Charger is a high-performance charging solution built for next-generation EVs and heavy-duty commercial operations.',
+  //   category: 'charger',
+  //   price: 'Contact for price',
+  //   images: [
+  //     'https://example.com/chargers/160kw-dc-fast-charger-1.jpg',
+  //     'https://example.com/chargers/160kw-dc-fast-charger-2.jpg',
+  //     'https://example.com/chargers/160kw-dc-fast-charger-3.jpg',
+  //   ],
+  //   specification: [
+  //     { label: 'CHARGER TYPE', value: 'Ultra-Fast DC Charging Station' },
+  //     { label: 'POWER OUTPUT', value: '160 kW' },
+  //     { label: 'CHARGING SPEED', value: 'Ultra Fast DC' },
+  //     { label: 'CURRENT TYPE', value: 'DC' },
+  //     { label: 'CHARGING RANGE', value: '20% - 80%' },
+  //     { label: 'SMALL EV CHARGING TIME', value: '10 - 15 minutes' },
+  //     { label: 'MEDIUM EV CHARGING TIME', value: '15 - 25 minutes' },
+  //     { label: 'LARGE EV CHARGING TIME', value: '25 - 40 minutes' },
+  //     {
+  //       label: 'BEST FOR',
+  //       value:
+  //         'Highways, intercity routes, premium charging hubs, bus depots, logistics centers, and large commercial fleets',
+  //     },
+  //     { label: 'TYPICAL USE CASE', value: 'Highway / Premium Fleet' },
+  //     { label: 'ESTIMATED TIME', value: '10 - 40 mins' },
+  //     {
+  //       label: 'CHARGING DURATION NOTE',
+  //       value:
+  //         'Actual time depends on vehicle battery capacity, state of charge, vehicle maximum charging acceptance rate, battery temperature, charger efficiency, and power supply conditions',
+  //     },
+  //   ],
+  //   features: [
+  //     'Ultra-Fast Charging Speeds',
+  //     'Minimizes Waiting Time',
+  //     'Ideal for Highways and Premium Charging Networks',
+  //     'Supports Modern EVs with High Charging Acceptance Rates',
+  //   ],
+  // },
 ];

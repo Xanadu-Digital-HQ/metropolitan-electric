@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <div class="grid gap-10 xs:grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 lg:gap-10">
+        <div class="grid gap-10 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 lg:gap-10">
           <div class="js-home-footer-column">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Explore
@@ -75,11 +75,16 @@
             </div>
           </div>
 
-          <div class="js-home-footer-column">
+          <div
+            class="js-home-footer-column"
+            :class="{ 'xs:col-span-2 sm:col-span-2 lg:col-span-2': vehicleLinks.length > 4 }"
+          >
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Vehicles
             </p>
-            <div class="mt-5 flex flex-col gap-4">
+            <div
+              class="mt-5 grid grid-flow-col grid-rows-4 gap-x-8 gap-y-4"
+            >
               <NuxtLink
                 v-for="link in vehicleLinks"
                 :key="link.label"
@@ -91,7 +96,29 @@
             </div>
           </div>
 
-          <div class="js-home-footer-column col-span-full sm:col-span-2 lg:col-span-2">
+          <div
+          v-if="chargerLinks.length > 0"
+            class="js-home-footer-column"
+            :class="{ 'xs:col-span-2 sm:col-span-2 lg:col-span-2': chargerLinks.length > 4 }"
+          >
+            <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
+              Chargers
+            </p>
+            <div
+              class="mt-5 grid grid-flow-col grid-rows-4 gap-x-8 gap-y-4"
+            >
+              <NuxtLink
+                v-for="link in chargerLinks"
+                :key="link.label"
+                :to="link.href"
+                :class="footerLinkStyle"
+              >
+                {{ link.label }}
+              </NuxtLink>
+            </div>
+          </div>
+
+          <div class="js-home-footer-column col-span-full sm:col-span-2 lg:col-span-2 2xl:col-span-1">
             <p class="font-sora text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
               Contact Info
             </p>
@@ -109,6 +136,12 @@
             </div>
           </div>
         </div>
+
+      </div>
+      <div
+        class="mt-12 border-t border-white/10 pt-12 text-center font-poppins text-xs sm:text-sm text-white/60 w-full"
+      >
+        &copy; {{ new Date().getFullYear() }} Metropolitan Electric. All rights reserved.
       </div>
     </div>
   </footer>
@@ -146,10 +179,21 @@ const otherLinks = [
 ] as const;
 
 const vehicleLinks = computed(() =>
-  vehicles.map((vehicle) => ({
-    label: vehicle.name,
-    href: `/gallery/${getVehicleSlug(vehicle.name)}`,
-  })),
+  vehicles
+    .filter((vehicle) => vehicle.category !== 'charger')
+    .map((vehicle) => ({
+      label: vehicle.name,
+      href: `/gallery/${getVehicleSlug(vehicle.name)}`,
+    })),
+);
+
+const chargerLinks = computed(() =>
+  vehicles
+    .filter((vehicle) => vehicle.category === 'charger')
+    .map((vehicle) => ({
+      label: vehicle.name,
+      href: `/gallery/${getVehicleSlug(vehicle.name)}`,
+    })),
 );
 
 const socials = [
