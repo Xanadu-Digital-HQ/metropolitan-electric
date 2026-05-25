@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
             "
             @click="selectCategory(category)"
           >
-            {{ category === 'all' ? 'All Vehicles' : category }}
+            {{ category === 'all' ? 'All' : category }}
           </button>
         </div>
       </div>

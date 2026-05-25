@@ -87,10 +87,15 @@ export interface Car {
   images: string[];
   specification: BusSpecification[];
 }
+export interface Charger {
+  category: "charger";
+  images: string[];
+  specification: BusSpecification[];
+}
 
 export type vehicle = {
   name: string;
   description: string;
   price: string;
   features: string[];
-} & (Bus | Car);
+} & (Bus | Car | Charger);
