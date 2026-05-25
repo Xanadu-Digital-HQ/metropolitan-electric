@@ -5,10 +5,6 @@ import { partnerOffers } from '~/utils/offers';
 const { container } = useTailwindConfig();
 const config = useRuntimeConfig();
 
-const totalOfferVehicles = computed(() =>
-  partnerOffers.reduce((total, offer) => total + offer.vehicles.length, 0),
-);
-
 useSeoMeta({
   title: 'Partner Offers',
   ogTitle: 'Partner Offers',
@@ -47,21 +43,13 @@ useSeoMeta({
           </p>
         </div>
 
-        <div class="page-reveal reveal-delay-2 grid grid-cols-2 gap-4">
+        <div class="page-reveal reveal-delay-2 flex justify-end-safe">
           <div
-            class="rounded-[1.75rem] border border-[#d5ddd2] bg-white/92 p-5 shadow-[0_18px_60px_rgba(16,32,39,0.06)] backdrop-blur-sm"
+            class="rounded-[1.75rem] w-36 border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]"
           >
-            <p class="text-[11px] uppercase tracking-[0.28em] text-[#6c8177]">Partners</p>
+            <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Partners</p>
             <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">
               {{ partnerOffers.length }}
-            </p>
-          </div>
-          <div
-            class="rounded-[1.75rem] border border-brand/8 bg-brand p-5 text-white shadow-[0_24px_80px_rgba(16,32,39,0.16)]"
-          >
-            <p class="text-[11px] uppercase tracking-[0.28em] text-white/50">Eligible Vehicles</p>
-            <p class="mt-3 font-opensans text-3xl font-semibold tracking-[-0.04em]">
-              {{ totalOfferVehicles }}
             </p>
           </div>
         </div>
