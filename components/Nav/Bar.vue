@@ -8,6 +8,7 @@ const route = useRoute();
 const mobilePrimaryLinks = [
   { label: 'Home', href: URLS.HOME },
   { label: 'Gallery', href: URLS.GALLERY },
+  { label: 'Partner Offers', href: URLS.OFFERS },
   { label: 'Solutions', href: URLS.SOLUTIONS },
   { label: 'About', href: URLS.ABOUT },
   { label: 'Media Center', href: URLS.MEDIA },

@@ -103,13 +103,16 @@ const selectImage = (index: number) => {
               </div>
             </div>
             <div
-              class="mt-6 rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#e7eee7_64%,#dde5de_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6"
+              class="relative mt-6 overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#e7eee7_64%,#dde5de_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6"
             >
-              <NuxtImg
-                :src="activeImage"
-                :alt="activeVehicle.name"
-                class="h-full w-full object-cover sm:h-105 lg:h-130 rounded-2xl"
-              />
+              <Transition name="vehicle-image-fade" mode="out-in">
+                <NuxtImg
+                  :key="activeImage"
+                  :src="activeImage"
+                  :alt="activeVehicle.name"
+                  class="h-full w-full rounded-2xl object-cover sm:h-105 lg:h-130"
+                />
+              </Transition>
             </div>
             <div class="mt-5 flex flex-wrap gap-3">
               <button
@@ -204,3 +207,31 @@ const selectImage = (index: number) => {
     </section>
   </div>
 </template>
+
+<style scoped>
+.vehicle-image-fade-enter-active,
+.vehicle-image-fade-leave-active {
+  transition:
+    opacity 320ms ease,
+    filter 320ms ease;
+}
+
+.vehicle-image-fade-enter-from,
+.vehicle-image-fade-leave-to {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+.vehicle-image-fade-enter-to,
+.vehicle-image-fade-leave-from {
+  opacity: 1;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vehicle-image-fade-enter-active,
+  .vehicle-image-fade-leave-active {
+    transition: none;
+  }
+}
+</style>

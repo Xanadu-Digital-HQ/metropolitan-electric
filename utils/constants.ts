@@ -2,6 +2,7 @@ export const URLS = {
   HOME: '/',
   EXPLORE: '/explore',
   GALLERY: '/gallery',
+  OFFERS: '/offers',
   SOLUTIONS: '/solutions',
   ABOUT: '/about',
   MEDIA: '/media-center',

@@ -24,6 +24,10 @@ export const routes: (Link & position)[] = [
         path: URLS.GALLERY,
       },
       {
+        name: 'Partner Offers',
+        path: URLS.OFFERS,
+      },
+      {
         name: 'Solutions',
         path: URLS.SOLUTIONS,
       },
