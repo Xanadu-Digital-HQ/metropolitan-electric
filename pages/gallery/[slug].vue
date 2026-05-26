@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/20/solid';
+import { ArrowDownTrayIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/20/solid';
 import type { vehicle } from '~/types/types';
 import { findVehicleBySlug } from '~/utils/vehicleCatalog';
 
@@ -71,13 +71,15 @@ const selectImage = (index: number) => {
           Back to Gallery
         </NuxtLink>
 
-        <NuxtLink
-          to="/contact"
-          class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-medium text-white shadow-[0_14px_40px_rgba(16,32,39,0.12)]"
-        >
-          Contact Sales
-          <ArrowRightIcon class="size-4" />
-        </NuxtLink>
+        <div class="flex flex-wrap items-center gap-3">
+          <NuxtLink
+            to="/contact"
+            class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-medium text-white shadow-[0_14px_40px_rgba(16,32,39,0.12)]"
+          >
+            Contact Sales
+            <ArrowRightIcon class="size-4" />
+          </NuxtLink>
+        </div>
       </div>
 
       <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -133,6 +135,17 @@ const selectImage = (index: number) => {
                   class="h-18 w-28 object-cover sm:h-24 sm:w-32"
                 />
               </button>
+            </div>
+            <div class="flex w-full justify-end items-center pt-6">
+              <a
+                v-if="activeVehicle.document"
+                :href="activeVehicle.document"
+                download
+                class="inline-flex items-center gap-2 rounded-full border border-brand/10 bg-brand px-5 py-3 text-sm font-medium text-white shadow-[0_14px_40px_rgba(16,32,39,0.12)] backdrop-blur-sm"
+              >
+                Spec Sheet
+                <ArrowDownTrayIcon class="size-4" />
+              </a>
             </div>
           </div>
           <section

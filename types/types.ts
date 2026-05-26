@@ -97,5 +97,6 @@ export type vehicle = {
   name: string;
   description: string;
   price: string;
+  document: string;
   features: string[];
 } & (Bus | Car | Charger);

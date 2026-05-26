@@ -6,6 +6,7 @@ type OfferVehicleInput = {
   offerNote: string;
   displayImage: string;
   startingPrice: string;
+  document: string;
 };
 
 type OfferHighlight = {
@@ -24,6 +25,7 @@ export type PartnerOfferVehicle = OfferVehicleInput & {
   image: string;
   category: string;
   startingPrice: string;
+  document: string;
   keySpecifications: OfferVehicleSpecification[];
 };
 
@@ -79,30 +81,35 @@ const offerSources: Array<Omit<PartnerOffer, 'vehicles'> & { vehicles: OfferVehi
         offerNote: 'Access staff financing model',
         displayImage: '/vehicles/leanmotors_b01_1.png',
         startingPrice: '₦41M',
+        document: '',
       },
       {
         vehicleName: 'Leapmotor C10',
         offerNote: 'Access staff financing SUV model',
         displayImage: '/vehicles/leapmotor_c10_1.png',
         startingPrice: '₦57M',
+        document: '/vehicles_docs/Leapmotor_Brochure_C101905.pdf',
       },
       {
         vehicleName: 'Leapmotor C16',
         offerNote: 'Access staff financing family SUV model',
         displayImage: '/vehicles/leapmotor_c16_1.png',
         startingPrice: '₦66M',
+        document: '/vehicles_docs/Leapmotor C16 REEV EN.pdf',
       },
       {
         vehicleName: 'Wuling Starlight S (SUV)',
         offerNote: 'Access staff financing crossover SUV model',
         displayImage: '/vehicles/wuling_starlight _s_1.png',
         startingPrice: '₦56M',
+        document: '',
       },
       {
         vehicleName: 'Wuling Starlight (Sedan)',
         offerNote: 'Access staff financing crossover SUV model',
         displayImage: '/vehicles/wuling_starlight_sedan_1.png',
         startingPrice: '₦48M',
+        document: '',
       },
     ],
   },
@@ -162,6 +169,7 @@ export const partnerOffers: PartnerOffer[] = offerSources.map((offer) => ({
         name: vehicle.name,
         image: offerVehicle.displayImage,
         category: vehicle.category,
+        document: offerVehicle.document || vehicle.document,
         keySpecifications: getKeySpecifications(vehicle.name),
       },
     ];

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {
   ArrowLeftIcon,
+  ArrowDownTrayIcon,
   ArrowRightIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -344,13 +345,24 @@ onBeforeUnmount(() => {
                     </div>
                   </div>
 
-                  <NuxtLink
-                    :to="`/gallery/${vehicle.slug}`"
-                    class="mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-[#9fc58b] px-5 py-3 text-sm font-medium text-brand"
-                  >
-                    View vehicle details
-                    <ArrowRightIcon class="size-4" />
-                  </NuxtLink>
+                  <div class="mt-auto flex flex-wrap gap-4">
+                    <a
+                      v-if="vehicle.document"
+                      :href="vehicle.document"
+                      download
+                      class="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white px-5 py-3 text-sm font-medium text-brand"
+                    >
+                      Spec Sheet
+                      <ArrowDownTrayIcon class="size-4" />
+                    </a>
+                    <NuxtLink
+                      :to="`/gallery/${vehicle.slug}`"
+                      class="inline-flex w-fit items-center gap-2 rounded-full bg-[#9fc58b] px-5 py-3 text-sm font-medium text-brand"
+                    >
+                      View details
+                      <ArrowRightIcon class="size-4" />
+                    </NuxtLink>
+                  </div>
                 </div>
               </article>
             </div>
