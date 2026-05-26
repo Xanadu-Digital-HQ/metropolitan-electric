@@ -6,6 +6,7 @@ export const vehicles: vehicle[] = [
       'The Metro Electric Mass Transit E-Bus is a state-of-the-art electric vehicle designed to redefine sustainable urban transportation. Equipped with a robust 160 kWh battery, it boasts an impressive range of 265 km per charge, making it ideal for city-wide transit systems. Engineered for efficiency and eco-friendliness, the Metro Electric offers smooth, quiet rides while significantly reducing carbon emissions. This advanced mass transit solution combines innovation, reliability, and environmental consciousness to meet the growing demands for sustainable public transportation. Perfect for modern urban settings, it exemplifies the future of green mobility.',
     category: 'bus',
     price: '₦310,000,000',
+    document: '',
     images: ['/vehicles/Bus1.png', '/vehicles/Bus2.jpg', '/vehicles/Bus3.png'],
     specification: [
       { label: 'NAME', value: 'Metro Electric' },
@@ -31,6 +32,7 @@ export const vehicles: vehicle[] = [
       'The Hongqi E-QM5 is a 4-door, 5-seat all-electric sedan built for efficient city and executive mobility. With LFP battery options, a smooth front-wheel-drive setup, practical cabin technology, and reliable safety features, it offers a refined electric driving experience for everyday transportation.',
     category: 'car',
     price: '₦55,000,000',
+    document: '',
     images: [
       '/vehicles/hongqi1.png',
       '/vehicles/hongqi2.png',
@@ -97,6 +99,7 @@ export const vehicles: vehicle[] = [
       'The Xiaomi SU7 is a 2024 full-size four-door fastback electric sedan from Xiaomi Auto. Launched in Beijing in March 2024, it combines a low-drag body, strong single- and dual-motor powertrain options, long CLTC driving range, fast charging on the Max variant, and Xiaomi HyperOS smart ecosystem integration.',
     category: 'car',
     price: '₦75,000,000',
+    document: '',
     images: [
       '/vehicles/xiaomi_su7_1.png',
       '/vehicles/xiaomi_su7_2.png',
@@ -197,6 +200,7 @@ export const vehicles: vehicle[] = [
       'The Leapmotor B01 is a smart, efficient all-electric sedan designed for modern urban lifestyles. Combining practical range, intuitive technology, and everyday comfort, it offers an affordable entry into electric mobility for first-time EV owners and city professionals.',
     category: 'car',
     price: '₦41,000,000',
+    document: '',
     images: [
       '/vehicles/leanmotors_b01_1.png',
       '/vehicles/leanmotors_b01_2.png',
@@ -274,6 +278,7 @@ export const vehicles: vehicle[] = [
       'The Leapmotor C16 is a premium 6-seater all-electric SUV that combines spacious comfort, intelligent technology, and impressive range. Designed for modern families, it delivers strong performance, safety, and efficiency.',
     category: 'car',
     price: '₦66,000,000',
+    document: '/vehicles_docs/Leapmotor C16 REEV EN.pdf',
     images: [
       '/vehicles/leapmotor_c16_1.png',
       '/vehicles/leapmotor_c16_2.png',
@@ -365,6 +370,7 @@ export const vehicles: vehicle[] = [
       'The Leapmotor C10 is a stylish, intelligent, and highly efficient all-electric SUV that delivers premium comfort, advanced technology, and impressive range for modern lifestyles.',
     category: 'car',
     price: '₦57,000,000',
+    document: '/vehicles_docs/Leapmotor_Brochure_C101905.pdf',
     images: [
       '/vehicles/leapmotor_c10_1.png',
       '/vehicles/leapmotor_c10_2.png',
@@ -435,6 +441,7 @@ export const vehicles: vehicle[] = [
       'The Wuling Starlight S is a compact crossover SUV available in both pure electric and plug-in hybrid versions. Built on the SGMW Tianyu EV modular architecture, it offers generous cabin space, 985 mm of rear legroom, and strong value for family mobility.',
     category: 'car',
     price: '₦56,000,000',
+    document: '',
     images: [
       '/vehicles/wuling_starlight _s_1.png',
       '/vehicles/wuling_starlight _s_2.png',
@@ -495,6 +502,7 @@ export const vehicles: vehicle[] = [
       'The Wuling Starlight is a mid-size all-electric sedan from SAIC-GM-Wuling, built on the Tianyu D architecture. It offers a refined four-door cabin, efficient LFP battery options, a smooth front-wheel-drive setup, and practical everyday range for city and intercity driving.',
     category: 'car',
     price: '₦48,000,000',
+    document: '',
     images: [
       '/vehicles/wuling_starlight_sedan_1.png',
       '/vehicles/wuling_starlight_sedan_2.png',
