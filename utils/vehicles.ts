@@ -200,7 +200,7 @@ export const vehicles: vehicle[] = [
       'The Leapmotor B01 is a smart, efficient all-electric sedan designed for modern urban lifestyles. Combining practical range, intuitive technology, and everyday comfort, it offers an affordable entry into electric mobility for first-time EV owners and city professionals.',
     category: 'car',
     price: '₦41,000,000',
-    document: '',
+    document: '/vehicles_docs/Leapmotor_Brochure_B01_Metro.pdf',
     images: [
       '/vehicles/leanmotors_b01_1.png',
       '/vehicles/leanmotors_b01_2.png',
@@ -278,7 +278,7 @@ export const vehicles: vehicle[] = [
       'The Leapmotor C16 is a premium 6-seater all-electric SUV that combines spacious comfort, intelligent technology, and impressive range. Designed for modern families, it delivers strong performance, safety, and efficiency.',
     category: 'car',
     price: '₦66,000,000',
-    document: '/vehicles_docs/Leapmotor C16 REEV EN.pdf',
+    document: '/vehicles_docs/Leapmotor_Brochure_C16_Metro.pdf',
     images: [
       '/vehicles/leapmotor_c16_1.png',
       '/vehicles/leapmotor_c16_2.png',
@@ -441,7 +441,7 @@ export const vehicles: vehicle[] = [
       'The Wuling Starlight S is a compact crossover SUV available in both pure electric and plug-in hybrid versions. Built on the SGMW Tianyu EV modular architecture, it offers generous cabin space, 985 mm of rear legroom, and strong value for family mobility.',
     category: 'car',
     price: '₦56,000,000',
-    document: '',
+    document: '/vehicles_docs/Wuling_Starlight_S.pdf',
     images: [
       '/vehicles/wuling_starlight _s_1.png',
       '/vehicles/wuling_starlight _s_2.png',
@@ -502,7 +502,7 @@ export const vehicles: vehicle[] = [
       'The Wuling Starlight is a mid-size all-electric sedan from SAIC-GM-Wuling, built on the Tianyu D architecture. It offers a refined four-door cabin, efficient LFP battery options, a smooth front-wheel-drive setup, and practical everyday range for city and intercity driving.',
     category: 'car',
     price: '₦48,000,000',
-    document: '',
+    document: '/vehicles_docs/Wuling_Starlight.pdf',
     images: [
       '/vehicles/wuling_starlight_sedan_1.png',
       '/vehicles/wuling_starlight_sedan_2.png',
