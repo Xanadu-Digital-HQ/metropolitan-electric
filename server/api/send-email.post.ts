@@ -30,8 +30,8 @@ export default defineEventHandler(async (event) => {
       },
       to: [
         {
-          email: 'michaelakpuofoba@gmail.com',
-          name: 'Operations@metropolitanelectric',
+          email: 'operations@metropolitanelectricng.com',
+          name: 'Operations Team',
         },
       ],
       replyTo: {

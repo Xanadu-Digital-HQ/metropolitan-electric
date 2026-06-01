@@ -32,15 +32,12 @@
             class="absolute inset-x-0 bottom-0 z-30 flex flex-col items-center gap-y-8 px-4 pb-8 sm:gap-y-10 sm:px-6 sm:pb-10 lg:px-8 lg:pb-12"
           >
             <div
-              :class="[
-                container,
-                'relative flex items-end justify-start gap-4 overflow-x-auto pb-4 md:justify-center md:overflow-visible md:pb-0 md:gap-4 lg:gap-6 snap-x snap-mandatory md:perspective-[1600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-              ]"
+              class="relative flex w-screen items-end justify-start gap-4 overflow-x-auto pb-4 -mx-4 px-[6vw] scroll-px-[6vw] snap-x snap-mandatory sm:-mx-6 md:gap-4 md:px-[calc(50vw-14rem)] md:scroll-px-[calc(50vw-14rem)] md:perspective-[1600px] lg:-mx-8 lg:gap-6 xl:mx-auto xl:w-auto xl:max-w-368 xl:justify-center xl:overflow-visible xl:px-5 xl:scroll-px-0 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div
                 v-for="vehicle in vehicles"
                 :key="vehicle.name"
-                class="js-hero-card flex-none shrink-0 w-[88vw] max-w-[24rem] snap-center md:flex-1 md:w-auto md:max-w-none"
+                class="js-hero-card flex-none shrink-0 w-[88vw] snap-center md:w-md xl:flex-1 xl:w-auto"
               >
                 <HeroVehicleCard :vehicle="vehicle" />
               </div>
@@ -78,7 +75,6 @@ useSeoMeta({
 });
 
 const pageRoot = ref<HTMLElement | null>(null);
-const { container } = useTailwindConfig();
 const heroSection = ref<HTMLElement | null>(null);
 const heroSticky = ref<HTMLElement | null>(null);
 const gallerySection = ref<{ $el: Element } | null>(null);
@@ -100,7 +96,7 @@ const showSplashVideo = computed(() => !hasSplashVideoFinished.value);
 
 const vehicles = [
   { name: 'Metro Electric Car', image: '/showcase/car_front_resized.png' },
-  { name: 'Metro Charge', image: '/showcase/charger_resized.png' },
+  { name: 'Metro Charge', image: '/showcase/charger_resized.png', imagePosition: 'object-center' },
   { name: 'Metro Electric Bus', image: '/showcase/bus_resized.png' },
 ] as const;
 
