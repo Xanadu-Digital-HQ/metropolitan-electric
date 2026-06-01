@@ -2,6 +2,7 @@
 type ShowcaseVehicle = {
   name: string;
   image: string;
+  imagePosition?: string;
 };
 
 defineProps<{
@@ -25,7 +26,10 @@ const isOpen = ref(false);
         :src="vehicle.image"
         :alt="vehicle.name"
         class="h-full w-full object-cover transition-[filter,scale,transform] duration-700 ease-out"
-        :class="isOpen ? 'grayscale-0 scale-100' : 'grayscale scale-90'"
+        :class="[
+          vehicle.imagePosition ?? 'object-bottom',
+          isOpen ? 'grayscale-0 scale-100' : 'grayscale scale-90',
+        ]"
       />
       <HeroVehicleCardSlider :is-open="isOpen" />
     </div>
