@@ -30,13 +30,13 @@ const shareUrl = computed(() => {
 
   switch (props.platform) {
     case "Twitter":
-      return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+      return `https://x.com/intent/post?url=${encodedUrl}&text=${encodedTitle}`;
     case "Facebook":
       return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-    case "LinkedIn":
-      return `https://www.linkedin.com/shareArticle?url=${encodedUrl}&title=${encodedTitle}`;
-    case "WhatsApp":
-      return `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+    case "Linkedin":
+      return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+    case "Whatsapp":
+      return `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
     case "Instagram":
       return "https://www.instagram.com/";
     default:
