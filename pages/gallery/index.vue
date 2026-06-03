@@ -222,12 +222,12 @@ onBeforeUnmount(() => {
               </div>
 
               <div
-                class="mt-6 rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4 h-60"
+                class="mt-6 rounded-2xl bg-[radial-gradient(circle_at_top,#ffffff,#edf2eb_62%,#e1e8e1_100%)] p-4 aspect-square xl:aspect-auto xl:h-60"
               >
                 <NuxtImg
                   :src="vehicleItem.images[0]"
                   :alt="vehicleItem.name"
-                  class="h-full w-full transition-transform duration-500 group-hover:scale-[1.03] rounded-2xl"
+                  class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03] rounded-2xl"
                 />
               </div>
 
