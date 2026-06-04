@@ -52,7 +52,7 @@
       </div>
     </section>
 
-    <HomePhaseThreeGallery ref="gallerySection" :features="phaseThreeFeatures" />
+    <HomePhaseThreeGallery ref="gallerySection" />
     <HomeWhyChooseUs ref="whyChooseSection" />
     <HomeClosingContactFooter ref="closingSection" />
   </div>
@@ -98,33 +98,6 @@ const vehicles = [
   { name: 'Metro Electric Car', image: '/showcase/car_front_resized.png' },
   { name: 'Metro Charge', image: '/showcase/charger_resized.png', imagePosition: 'object-center' },
   { name: 'Metro Electric Bus', image: '/showcase/bus_resized.png' },
-] as const;
-
-const phaseThreeFeatures = [
-  {
-    title: 'Fleet 360',
-    subTitle: 'Corporate EV Fleet',
-    description:
-      'Offers comprehensive electric vehicle solutions tailored to corporate clients in Africa. Our services include supplying a diverse range of electric vehicles such ad cars, buses, tricycle, and pickups, this facilitates employee mobility and dispatch.',
-    image: '/fleet.png',
-    reverse: true,
-  },
-  {
-    title: 'Metro Charge',
-    subTitle: 'EV Charging Infrastructure',
-    description:
-      'Recognizing the importance of supporting infrastructure, metro charge is our network of electric vehicle charging station in partnership with Sunphos, dedicating to ensure seamless and convenient charging for all electric vehicles’ users. Our stations will be strategically located to provide easily access and reliability, supporting the growing adoption of EVs across the continent.',
-    image: '/charger.png',
-    reverse: false,
-  },
-  {
-    title: 'EV Care',
-    subTitle: 'EV Maintenance Services',
-    description:
-      'Electric Vehicle care offers comprehensive maintenance services to ensure your EV fleets longevity and optimal performance. Our network of specialized service and maintenance garages are equipped with the latest technology and staffed by trained professionals. From routine maintenance to advance repairs, we provide support to keep your electric vehicles running smoothly and efficiently.',
-    image: '/maintenance.jpg',
-    reverse: true,
-  },
 ] as const;
 
 if (import.meta.client) {
@@ -246,15 +219,6 @@ onMounted(async () => {
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
       const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
-      const phaseThreePanels = gsap.utils.toArray<HTMLElement>('.js-phase-three-panel');
-      const phaseThreeImageWrappers = gsap.utils.toArray<HTMLElement>(
-        '.js-phase-three-image-wrapper',
-      );
-      const phaseThreeImages = gsap.utils.toArray<HTMLElement>('.js-phase-three-image');
-      const phaseThreeTextItems = gsap.utils.toArray<HTMLElement>(
-        '.js-phase-three-title, .js-phase-three-subtitle, .js-phase-three-description',
-      );
-      const phaseThreeCta = page.querySelector<HTMLElement>('.js-phase-three-cta');
       const whyHeading = page.querySelector<HTMLElement>('.js-why-choose-heading');
       const whyCards = gsap.utils.toArray<HTMLElement>('.js-why-choose-card');
       const whyPanels = gsap.utils.toArray<HTMLElement>('.js-why-choose-panel');
@@ -283,12 +247,6 @@ onMounted(async () => {
       if (cards[2]) {
         gsap.set(cards[2], { xPercent: 8, rotationY: 0, rotation: 0, scale: 0.96 });
       }
-      gsap.set(phaseThreeImageWrappers, { autoAlpha: 0, y: 36 });
-      gsap.set(phaseThreeTextItems, { autoAlpha: 0, y: 24 });
-      gsap.set(phaseThreeCta, { autoAlpha: 0, y: 28 });
-      phaseThreeImages.forEach((image, index) => {
-        gsap.set(image, { yPercent: 28 + index * 3, scale: 1.14 });
-      });
       gsap.set(whyHeading, { autoAlpha: 0, y: 24 });
       gsap.set(whyCards, { autoAlpha: 0, y: 28 });
       gsap.set(whyPanels, { autoAlpha: 0, yPercent: 8 });
@@ -358,82 +316,6 @@ onMounted(async () => {
           { autoAlpha: 1, y: 0, duration: isMobile ? 0.24 : 0.75 },
           isMobile ? 0.2 : 0.7,
         );
-
-      phaseThreePanels.forEach((panel, index) => {
-        const imageWrapper = phaseThreeImageWrappers[index];
-        const image = phaseThreeImages[index];
-        const textItems = gsap.utils.toArray<HTMLElement>(
-          panel.querySelectorAll(
-            '.js-phase-three-title, .js-phase-three-subtitle, .js-phase-three-description',
-          ),
-        );
-
-        if (imageWrapper || textItems.length) {
-          const panelReveal = gsap.timeline({
-            scrollTrigger: {
-              trigger: panel,
-              start: 'top 82%',
-              once: true,
-            },
-            defaults: {
-              ease: 'power2.out',
-            },
-          });
-
-          if (imageWrapper) {
-            panelReveal.to(
-              imageWrapper,
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.78,
-              },
-              0,
-            );
-          }
-
-          if (textItems.length) {
-            panelReveal.to(
-              textItems,
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.68,
-                stagger: 0.08,
-              },
-              0.12,
-            );
-          }
-        }
-
-        if (image) {
-          gsap.to(image, {
-            yPercent: -28,
-            scale: 1.04,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: panel,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          });
-        }
-      });
-
-      if (phaseThreeCta) {
-        gsap.to(phaseThreeCta, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: phaseThreeCta,
-            start: 'top 88%',
-            once: true,
-          },
-        });
-      }
 
       if (whySection) {
         ScrollTrigger.create({
@@ -512,17 +394,6 @@ onMounted(async () => {
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set([heroShowcase.value, heroButton.value, heroIntro.value], { clearProps: 'all' });
     gsap.set('.js-hero-card', { clearProps: 'all' });
-    gsap.set(
-      [
-        '.js-phase-three-title',
-        '.js-phase-three-subtitle',
-        '.js-phase-three-description',
-        '.js-phase-three-image-wrapper',
-        '.js-phase-three-image',
-        '.js-phase-three-cta',
-      ],
-      { clearProps: 'all' },
-    );
     gsap.set(['.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], {
       clearProps: 'all',
     });
