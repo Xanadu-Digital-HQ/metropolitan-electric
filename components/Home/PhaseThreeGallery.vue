@@ -150,14 +150,30 @@ const showroomAccents = ['#75f5cf', '#5fb6f7', '#69e0d0', '#8fb8ff', '#5ad1e6', 
 
 const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
 
-const showcaseVehicles = vehicleCatalog.slice(0, 6).map((vehicleItem, index) => ({
-  name: vehicleItem.name,
-  category: vehicleItem.category,
-  image: vehicleItem.images[0] ?? '/showcase/car_front_resized.png',
-  slug: getVehicleSlug(vehicleItem.name),
-  accent: showroomAccents[index % showroomAccents.length],
-  indexLabel: formatIndex(index),
-}));
+// Background-removed cut-outs (public/showcase) generated one-per-vehicle by
+// scripts/remove_bg_showcase.py. These transparent PNGs suit the dark showroom
+// stage far better than the catalogue photos, which carry their own backgrounds.
+const showcaseImages: Record<string, string> = {
+  'E-Bus': '/showcase/Bus1.png',
+  'Hongqi E-QM5': '/showcase/hongqi2.png',
+  'Xiaomi SU7': '/showcase/xiaomi_su7_2.png',
+  'Leapmotor B01': '/showcase/leanmotors_b01_1.png',
+  'Leapmotor C16': '/showcase/leapmotor_c16_1.png',
+  'Leapmotor C10': '/showcase/leapmotor_c10_1.png',
+  'Wuling Starlight S (SUV)': '/showcase/wuling_starlight _s_1.png',
+  'Wuling Starlight (Sedan)': '/showcase/wuling_starlight_sedan_1.png',
+};
+
+const showcaseVehicles = vehicleCatalog
+  .filter((vehicleItem) => showcaseImages[vehicleItem.name])
+  .map((vehicleItem, index) => ({
+    name: vehicleItem.name,
+    category: vehicleItem.category,
+    image: showcaseImages[vehicleItem.name]!,
+    slug: getVehicleSlug(vehicleItem.name),
+    accent: showroomAccents[index % showroomAccents.length],
+    indexLabel: formatIndex(index),
+  }));
 
 const totalLabel = String(showcaseVehicles.length).padStart(2, '0');
 

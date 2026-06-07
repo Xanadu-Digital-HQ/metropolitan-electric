@@ -6,7 +6,7 @@
       @video-ended="onSplashVideoEnded"
     />
 
-    <section ref="heroSection" class="relative h-[140vh] bg-brand md:h-[220vh]">
+    <section ref="heroSection" class="relative h-screen bg-brand">
       <div ref="heroSticky" class="sticky top-0 h-screen overflow-hidden">
         <div
           ref="heroBackdrop"
@@ -27,7 +27,14 @@
             </div>
           </div>
 
-          <div
+          <!--
+            Hero vehicle-card showcase (the cards + "Go to Gallery" button that
+            revealed/hid on scroll) has been commented out. The page now scrolls
+            straight from the hero into the About section below. Restore this
+            markup together with the matching GSAP block in the script and the
+            tall hero height to bring the showcase back.
+          -->
+          <!-- <div
             ref="heroShowcase"
             class="absolute inset-x-0 bottom-0 z-30 flex flex-col items-center gap-y-8 px-4 pb-8 sm:gap-y-10 sm:px-6 sm:pb-10 lg:px-8 lg:pb-12"
           >
@@ -47,11 +54,12 @@
                 <CustomButton text="Go to Gallery" class="mt-5 md:mt-0" />
               </NuxtLink>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
 
+    <HomeAbout ref="aboutSection" />
     <HomePhaseThreeGallery ref="gallerySection" />
     <HomeWhyChooseUs ref="whyChooseSection" />
     <HomeClosingContactFooter ref="closingSection" />
@@ -77,14 +85,16 @@ useSeoMeta({
 const pageRoot = ref<HTMLElement | null>(null);
 const heroSection = ref<HTMLElement | null>(null);
 const heroSticky = ref<HTMLElement | null>(null);
+const aboutSection = ref<{ $el: Element } | null>(null);
 const gallerySection = ref<{ $el: Element } | null>(null);
 const whyChooseSection = ref<{ $el: Element } | null>(null);
 const closingSection = ref<{ $el: Element } | null>(null);
 const heroBackdrop = ref<HTMLElement | null>(null);
 const heroOverlay = ref<HTMLElement | null>(null);
 const heroIntro = ref<HTMLElement | null>(null);
-const heroShowcase = ref<HTMLElement | null>(null);
-const heroButton = ref<HTMLElement | null>(null);
+// Hero vehicle-card showcase refs — commented out alongside the showcase markup.
+// const heroShowcase = ref<HTMLElement | null>(null);
+// const heroButton = ref<HTMLElement | null>(null);
 
 let mm: gsap.MatchMedia | null = null;
 const route = useRoute();
@@ -120,11 +130,15 @@ const getElementPageTop = (element: Element | null | undefined) => {
 
 const syncPhaseScrollPositions = () => {
   const heroTop = getElementPageTop(heroSection.value) ?? 0;
+  const galleryTop = getElementPageTop(gallerySection.value?.$el ?? null) ?? 0;
 
   phaseScrollPositions.value = {
     intro: heroTop,
-    vehicles: heroTop + window.innerHeight * 0.7,
-    gallery: getElementPageTop(gallerySection.value?.$el ?? null) ?? 0,
+    about: getElementPageTop(aboutSection.value?.$el ?? null) ?? 0,
+    // The in-hero vehicle showcase was removed, so the "Gallery" wheel item now
+    // targets the showroom gallery section instead of a point inside the hero.
+    vehicles: galleryTop,
+    gallery: galleryTop,
     why: getElementPageTop(whyChooseSection.value?.$el ?? null) ?? 0,
     contact: getElementPageTop(closingSection.value?.$el ?? null) ?? 0,
   };
@@ -216,9 +230,14 @@ onMounted(async () => {
     }
 
     const ctx = gsap.context(() => {
-      const isMobile = window.matchMedia('(max-width: 767px)').matches;
-      const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
+      // Hero vehicle-card showcase scroll animation — commented out with markup.
+      // const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      // const cards = gsap.utils.toArray<HTMLElement>('.js-hero-card');
       const heroFades = gsap.utils.toArray<HTMLElement>('.js-hero-fade');
+      const aboutSectionEl = page.querySelector<HTMLElement>('.js-home-about');
+      const aboutHeading = page.querySelector<HTMLElement>('.js-home-about-heading');
+      const aboutCopy = page.querySelector<HTMLElement>('.js-home-about-copy');
+      const aboutCards = gsap.utils.toArray<HTMLElement>('.js-home-about-card');
       const whyHeading = page.querySelector<HTMLElement>('.js-why-choose-heading');
       const whyCards = gsap.utils.toArray<HTMLElement>('.js-why-choose-card');
       const whyPanels = gsap.utils.toArray<HTMLElement>('.js-why-choose-panel');
@@ -230,23 +249,30 @@ onMounted(async () => {
       const closingCar = page.querySelector<HTMLElement>('.js-home-closing-car');
       const closingFooter = page.querySelector<HTMLElement>('.js-home-closing-footer');
 
-      gsap.set(heroShowcase.value, { autoAlpha: 0, y: 12 });
-      gsap.set(heroButton.value, { autoAlpha: 0, y: 24 });
-      gsap.set(cards, {
-        autoAlpha: 0,
-        yPercent: 14,
-        transformOrigin: 'center center',
-        force3D: true,
-      });
-      if (cards[0]) {
-        gsap.set(cards[0], { xPercent: -8, rotationY: 0, rotation: 0, scale: 0.96 });
-      }
-      if (cards[1]) {
-        gsap.set(cards[1], { yPercent: 0, scale: 1.04 });
-      }
-      if (cards[2]) {
-        gsap.set(cards[2], { xPercent: 8, rotationY: 0, rotation: 0, scale: 0.96 });
-      }
+      /*
+       * Hero vehicle-card showcase initial states — commented out with the
+       * showcase markup. Restore alongside the heroTimeline block below.
+       *
+       * gsap.set(heroShowcase.value, { autoAlpha: 0, y: 12 });
+       * gsap.set(heroButton.value, { autoAlpha: 0, y: 24 });
+       * gsap.set(cards, {
+       *   autoAlpha: 0,
+       *   yPercent: 14,
+       *   transformOrigin: 'center center',
+       *   force3D: true,
+       * });
+       * if (cards[0]) {
+       *   gsap.set(cards[0], { xPercent: -8, rotationY: 0, rotation: 0, scale: 0.96 });
+       * }
+       * if (cards[1]) {
+       *   gsap.set(cards[1], { yPercent: 0, scale: 1.04 });
+       * }
+       * if (cards[2]) {
+       *   gsap.set(cards[2], { xPercent: 8, rotationY: 0, rotation: 0, scale: 0.96 });
+       * }
+       */
+      gsap.set([aboutHeading, aboutCopy], { autoAlpha: 0, y: 24 });
+      gsap.set(aboutCards, { autoAlpha: 0, y: 28 });
       gsap.set(whyHeading, { autoAlpha: 0, y: 24 });
       gsap.set(whyCards, { autoAlpha: 0, y: 28 });
       gsap.set(whyPanels, { autoAlpha: 0, yPercent: 8 });
@@ -263,59 +289,91 @@ onMounted(async () => {
         ease: 'power3.out',
       });
 
-      const heroTimeline = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        scrollTrigger: {
-          trigger: heroSection.value,
-          start: 'top top',
-          end: isMobile ? '+=35%' : 'bottom bottom',
-          scrub: isMobile ? 0.12 : 0.7,
-          snap: {
-            snapTo: [0, 1],
-            duration: { min: 0.16, max: 0.32 },
-            delay: 0.04,
-            ease: 'power1.inOut',
-          },
-          invalidateOnRefresh: true,
-        },
-      });
+      /*
+       * Hero vehicle-card showcase scroll timeline — commented out together
+       * with the showcase markup. This is what revealed/hid the vehicle cards
+       * (and faded the hero intro out) as you scrolled through the tall hero.
+       * Restore this block, the showcase markup, and the tall hero height
+       * (h-[140vh] md:h-[220vh]) to bring the showcase back.
+       *
+       * const heroTimeline = gsap.timeline({
+       *   defaults: { ease: 'power2.out' },
+       *   scrollTrigger: {
+       *     trigger: heroSection.value,
+       *     start: 'top top',
+       *     end: isMobile ? '+=35%' : 'bottom bottom',
+       *     scrub: isMobile ? 0.12 : 0.7,
+       *     snap: {
+       *       snapTo: [0, 1],
+       *       duration: { min: 0.16, max: 0.32 },
+       *       delay: 0.04,
+       *       ease: 'power1.inOut',
+       *     },
+       *     invalidateOnRefresh: true,
+       *   },
+       * });
+       *
+       * heroTimeline
+       *   .to(heroOverlay.value, { opacity: isMobile ? 0.2 : 0.1, duration: isMobile ? 0.3 : 1.1 }, 0)
+       *   .to(
+       *     heroBackdrop.value,
+       *     {
+       *       scale: isMobile ? 1 : 1.08,
+       *       yPercent: isMobile ? 0 : 5,
+       *       duration: isMobile ? 0.01 : 1.2,
+       *     },
+       *     0,
+       *   )
+       *   .to(
+       *     heroIntro.value,
+       *     { autoAlpha: 0, yPercent: isMobile ? -4 : -10, duration: isMobile ? 0.3 : 1 },
+       *     0.02,
+       *   )
+       *   .to(
+       *     heroShowcase.value,
+       *     { autoAlpha: 1, y: 0, duration: isMobile ? 0.28 : 0.85 },
+       *     isMobile ? 0.12 : 0.45,
+       *   )
+       *   .to(
+       *     cards,
+       *     {
+       *       autoAlpha: 1,
+       *       yPercent: (index) => (index === 1 ? -5 : 0),
+       *       duration: isMobile ? 0.28 : 0.95,
+       *       stagger: isMobile ? 0.04 : 0.14,
+       *     },
+       *     isMobile ? 0.16 : 0.58,
+       *   )
+       *   .to(
+       *     heroButton.value,
+       *     { autoAlpha: 1, y: 0, duration: isMobile ? 0.24 : 0.75 },
+       *     isMobile ? 0.2 : 0.7,
+       *   );
+       */
 
-      heroTimeline
-        .to(heroOverlay.value, { opacity: isMobile ? 0.2 : 0.1, duration: isMobile ? 0.3 : 1.1 }, 0)
-        .to(
-          heroBackdrop.value,
-          {
-            scale: isMobile ? 1 : 1.08,
-            yPercent: isMobile ? 0 : 5,
-            duration: isMobile ? 0.01 : 1.2,
+      if (aboutSectionEl) {
+        ScrollTrigger.create({
+          trigger: aboutSectionEl,
+          start: 'top 82%',
+          once: true,
+          onEnter: () => {
+            gsap.to([aboutHeading, aboutCopy], {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: 'power2.out',
+            });
+            gsap.to(aboutCards, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: 'power2.out',
+            });
           },
-          0,
-        )
-        .to(
-          heroIntro.value,
-          { autoAlpha: 0, yPercent: isMobile ? -4 : -10, duration: isMobile ? 0.3 : 1 },
-          0.02,
-        )
-        .to(
-          heroShowcase.value,
-          { autoAlpha: 1, y: 0, duration: isMobile ? 0.28 : 0.85 },
-          isMobile ? 0.12 : 0.45,
-        )
-        .to(
-          cards,
-          {
-            autoAlpha: 1,
-            yPercent: (index) => (index === 1 ? -5 : 0),
-            duration: isMobile ? 0.28 : 0.95,
-            stagger: isMobile ? 0.04 : 0.14,
-          },
-          isMobile ? 0.16 : 0.58,
-        )
-        .to(
-          heroButton.value,
-          { autoAlpha: 1, y: 0, duration: isMobile ? 0.24 : 0.75 },
-          isMobile ? 0.2 : 0.7,
-        );
+        });
+      }
 
       if (whySection) {
         ScrollTrigger.create({
@@ -392,8 +450,10 @@ onMounted(async () => {
   });
 
   mm.add('(prefers-reduced-motion: reduce)', () => {
-    gsap.set([heroShowcase.value, heroButton.value, heroIntro.value], { clearProps: 'all' });
-    gsap.set('.js-hero-card', { clearProps: 'all' });
+    gsap.set(heroIntro.value, { clearProps: 'all' });
+    gsap.set(['.js-home-about-heading', '.js-home-about-copy', '.js-home-about-card'], {
+      clearProps: 'all',
+    });
     gsap.set(['.js-why-choose-heading', '.js-why-choose-card', '.js-why-choose-panel'], {
       clearProps: 'all',
     });
