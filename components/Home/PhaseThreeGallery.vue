@@ -37,7 +37,7 @@
               :style="{ '--panel-accent': activeVehicle.accent }"
             >
               <span
-                class="pointer-events-none absolute left-0 top-1 z-0 select-none font-elemental text-[6rem] leading-none text-white/[0.045] sm:text-[9rem] lg:text-[13rem]"
+                class="pointer-events-none absolute left-0 top-1 z-0 select-none font-elemental text-[6rem] leading-none text-white/4.5 sm:text-[9rem] lg:text-[13rem]"
               >
                 {{ activeVehicle.indexLabel }}
               </span>
@@ -154,7 +154,7 @@ const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
 // scripts/remove_bg_showcase.py. These transparent PNGs suit the dark showroom
 // stage far better than the catalogue photos, which carry their own backgrounds.
 const showcaseImages: Record<string, string> = {
-  'E-Bus': '/showcase/Bus1.png',
+  'E-Bus': '/showcase/bus.png',
   'Hongqi E-QM5': '/showcase/hongqi2.png',
   'Xiaomi SU7': '/showcase/xiaomi_su7_2.png',
   'Leapmotor B01': '/showcase/leanmotors_b01_1.png',
