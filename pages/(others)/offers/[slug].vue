@@ -10,7 +10,7 @@ import { findPartnerOfferBySlug } from '~/utils/offers';
 
 const { container } = useTailwindConfig();
 const route = useRoute();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 const vehiclesCarousel = ref<HTMLElement | null>(null);
 const eligibleVehiclesSection = ref<HTMLElement | null>(null);
 const hasAnimatedVehicleCards = ref(false);
@@ -34,7 +34,7 @@ useSeoMeta({
   ogTitle: `${activeOffer.headline} | Partner Offers`,
   description: activeOffer.description,
   ogDescription: activeOffer.description,
-  ogImage: `${config.baseUrl}${heroImage}`,
+  ogImage: absoluteUrl(heroImage),
   twitterCard: 'summary_large_image',
 });
 

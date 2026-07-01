@@ -5,6 +5,6 @@ const route = useRoute();
 <template>
   <div>
     <NuxtPage />
-    <Footer v-show="route.path !== '/'" class="p-5" />
+    <Footer v-if="route.path !== '/'" class="p-5" />
   </div>
 </template>

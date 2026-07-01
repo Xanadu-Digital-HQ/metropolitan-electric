@@ -3,7 +3,7 @@ export const vehicles: vehicle[] = [
   {
     name: 'E-Bus',
     description:
-      'The Metro Electric Mass Transit E-Bus is a state-of-the-art electric vehicle designed to redefine sustainable urban transportation. Equipped with a robust 160 kWh battery, it boasts an impressive range of 265 km per charge, making it ideal for city-wide transit systems. Engineered for efficiency and eco-friendliness, the Metro Electric offers smooth, quiet rides while significantly reducing carbon emissions. This advanced mass transit solution combines innovation, reliability, and environmental consciousness to meet the growing demands for sustainable public transportation. Perfect for modern urban settings, it exemplifies the future of green mobility.',
+      'The Metro Electric Mass Transit E-Bus is a state-of-the-art electric vehicle designed to redefine sustainable urban transport. Equipped with a robust 160 kWh battery, it boasts an impressive range of 265 km per charge, making it ideal for city-wide transit systems. Engineered for efficiency and eco-friendliness, the Metro Electric offers smooth, quiet rides while significantly reducing carbon emissions. This advanced mass transit solution combines innovation, reliability, and environmental consciousness to meet the growing demands for sustainable public transport. Perfect for modern urban settings, it exemplifies the future of green mobility.',
     category: 'bus',
     price: '₦310,000,000',
     document: '',
@@ -29,7 +29,7 @@ export const vehicles: vehicle[] = [
   {
     name: 'Hongqi E-QM5',
     description:
-      'The Hongqi E-QM5 is a 4-door, 5-seat all-electric sedan built for efficient city and executive mobility. With LFP battery options, a smooth front-wheel-drive setup, practical cabin technology, and reliable safety features, it offers a refined electric driving experience for everyday transportation.',
+      'The Hongqi E-QM5 is a 4-door, 5-seat all-electric sedan built for efficient city and executive mobility. With LFP battery options, a smooth front-wheel-drive setup, practical cabin technology, and reliable safety features, it offers a refined electric driving experience for everyday transport.',
     category: 'car',
     price: '₦55,000,000',
     document: '',

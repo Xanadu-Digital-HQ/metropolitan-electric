@@ -263,7 +263,7 @@ import {
 } from '@phosphor-icons/vue';
 
 const route = useRoute();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 const activeSection = ref<string | null>(null);
 type BlogItem = Collections['blog'];
 const props = defineProps<{ currentBlog: BlogItem }>();
@@ -278,7 +278,7 @@ const socialIcons = {
   Instagram: PhInstagramLogo,
 } as const;
 
-const shareUrl = computed(() => `${config.baseUrl}${route.path}`);
+const shareUrl = computed(() => absoluteUrl(route.path));
 const topLevelTocLinks = computed(() => props.currentBlog.body?.toc?.links ?? []);
 const tocLinks = computed(() =>
   topLevelTocLinks.value.flatMap((item) => [item, ...(item.children ?? [])]),
@@ -289,7 +289,7 @@ useSeoMeta({
   ogTitle: props.currentBlog.title,
   description: props.currentBlog.description,
   ogDescription: props.currentBlog.description,
-  ogImage: props.currentBlog.image ?? `${config.baseUrl}/og/blog_ogImage.png`,
+  ogImage: absoluteUrl(props.currentBlog.image ?? '/og/blog_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 

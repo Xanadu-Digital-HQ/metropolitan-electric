@@ -175,7 +175,10 @@
                 />
                 <label for="contact-consent" class="text-sm leading-7 text-[#41555d]">
                   I allow Metropolitan Electric to store this enquiry and contact me about the
-                  request.
+                  request, as described in the
+                  <NuxtLink to="/privacy" class="font-semibold text-brand underline underline-offset-4">
+                    Privacy Policy
+                  </NuxtLink>.
                 </label>
               </div>
 
@@ -233,7 +236,7 @@
 import { ArrowPathIcon } from '@heroicons/vue/20/solid';
 
 const { container } = useTailwindConfig();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 
 useSeoMeta({
   title: 'Contact Metropolitan Electric',
@@ -242,7 +245,7 @@ useSeoMeta({
     'Reach Metropolitan Electric for EV fleets, charging infrastructure, mobility programmes, partnerships and electric vehicle support.',
   ogDescription:
     'Reach Metropolitan Electric for EV fleets, charging infrastructure, mobility programmes, partnerships and electric vehicle support.',
-  ogImage: `${config.baseUrl}/og/contact_ogImage.png`,
+  ogImage: absoluteUrl('/og/contact_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 

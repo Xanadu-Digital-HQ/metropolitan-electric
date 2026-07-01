@@ -1,5 +1,25 @@
 import tailwindcss from '@tailwindcss/vite';
 
+const normalizeSiteUrl = (value?: string) => {
+  const trimmedValue = value?.trim().replace(/\/+$/, '');
+
+  if (!trimmedValue || trimmedValue === 'undefined' || trimmedValue === 'null') {
+    return 'https://www.metropolitanelectricng.com';
+  }
+
+  if (
+    trimmedValue === 'metropolitanelectricng.com' ||
+    trimmedValue === 'http://metropolitanelectricng.com' ||
+    trimmedValue === 'https://metropolitanelectricng.com'
+  ) {
+    return 'https://www.metropolitanelectricng.com';
+  }
+
+  return trimmedValue;
+};
+
+const siteUrl = normalizeSiteUrl(process.env.NUXT_BASE_URL);
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
@@ -20,16 +40,16 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
+            'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
         },
         {
           name: 'og:description',
           content:
-            'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
+            'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
         },
         {
           property: 'og:image',
-          content: 'https://metropolitanelectricng.com/ogImage.png',
+          content: `${siteUrl}/og/ogImage.png`,
         },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
@@ -99,7 +119,7 @@ export default defineNuxtConfig({
     // fallback: "light",
   },
   site: {
-    url: 'https://metropolitanelectricng.com',
+    url: siteUrl,
     name: 'Metropolitan Electric Limited',
     defaultLocale: 'en',
   },
@@ -122,7 +142,7 @@ export default defineNuxtConfig({
     brevoApiKey: process.env.BREVO_API_KEY || '',
     brevoSenderEmail: process.env.BREVO_SENDER_EMAIL || '',
     public: {
-      baseUrl: process.env.NUXT_BASE_URL || '',
+      baseUrl: siteUrl,
       scripts: {
         googleAnalytics: {
           id: process.env.NUXT_GOOGLE_ANALYTICS_ID!,

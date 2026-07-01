@@ -8,8 +8,31 @@ const escapeHtml = (value: unknown) =>
 
 const formatMessage = (value: unknown) => escapeHtml(value).replace(/\r\n|\r|\n/g, '<br>');
 
+const normalizeSiteUrl = (value?: unknown) => {
+  if (typeof value !== 'string') {
+    return 'https://www.metropolitanelectricng.com';
+  }
+
+  const trimmedValue = value.trim().replace(/\/+$/, '');
+
+  if (!trimmedValue || trimmedValue === 'undefined' || trimmedValue === 'null') {
+    return 'https://www.metropolitanelectricng.com';
+  }
+
+  if (
+    trimmedValue === 'metropolitanelectricng.com' ||
+    trimmedValue === 'http://metropolitanelectricng.com' ||
+    trimmedValue === 'https://metropolitanelectricng.com'
+  ) {
+    return 'https://www.metropolitanelectricng.com';
+  }
+
+  return trimmedValue;
+};
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
+  const siteUrl = normalizeSiteUrl(config.public?.baseUrl);
   const body = await readBody(event);
 
   const { name, email, message } = body;
@@ -289,7 +312,7 @@ export default defineEventHandler(async (event) => {
                 <table role="presentation" class="email-card" width="640" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="header">
-                      <img src="${config.baseUrl || 'https://metropolitanelectricng.com'}/metro_logo_white.png" width="120" alt="Metropolitan Electric" class="brand-logo" style="display:block; width:120px; max-width:100%; height:auto;">
+                      <img src="${siteUrl}/metro_logo_white.png" width="120" alt="Metropolitan Electric" class="brand-logo" style="display:block; width:120px; max-width:100%; height:auto;">
 
                       <div class="eyebrow">Website enquiry</div>
                       <h1>New EV conversation ready for follow-up</h1>

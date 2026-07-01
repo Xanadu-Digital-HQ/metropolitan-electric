@@ -9,8 +9,22 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const siteUrl = useSiteUrl();
+const absoluteUrl = useAbsoluteUrl();
+const canonicalUrl = computed(() => absoluteUrl(route.path || '/'));
+
+useSeoMeta({
+  ogUrl: () => canonicalUrl.value,
+});
 
 useHead({
+  link: [
+    {
+      key: 'canonical',
+      rel: 'canonical',
+      href: () => canonicalUrl.value,
+    },
+  ],
   script: [
     {
       type: "application/ld+json",
@@ -18,7 +32,7 @@ useHead({
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: "Metropolitan Electric Limited",
-        url: "https://metropolitanelectricng.com",
+        url: siteUrl,
       }),
     },
   ],
