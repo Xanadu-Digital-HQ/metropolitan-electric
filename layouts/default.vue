@@ -4,7 +4,7 @@ const route = useRoute();
 
 <template>
   <div>
-    <NuxtPage />
+    <NuxtPage :key="route.fullPath" />
     <Footer v-if="route.path !== '/'" class="p-5" />
   </div>
 </template>

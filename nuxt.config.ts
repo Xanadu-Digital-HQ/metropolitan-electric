@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/faq'],
     },
   },
   build: {
@@ -64,7 +64,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: { name: 'page', mode: 'out-in' },
   },
   modules: [
     '@nuxtjs/color-mode',
@@ -128,6 +127,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     exclude: ['/_nuxt/**'],
+    urls: [{ loc: '/faq', changefreq: 'monthly' as const, priority: 0.8 as const }],
   },
 
   devtools: { enabled: true },
