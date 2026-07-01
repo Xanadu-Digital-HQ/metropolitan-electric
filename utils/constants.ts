@@ -9,6 +9,8 @@ export const URLS = {
   BLOG: '/blog',
   CONTACT: '/contact',
   FAQ: '/faq',
+  PRIVACY: '/privacy',
+  TERMS: '/terms',
   GREENFLEET: '/solutions/green-fleet',
   FLEET360: '/solutions/corporate-ev-fleet',
   EVCARE: '/solutions/ev-care',

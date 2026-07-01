@@ -2,7 +2,7 @@
 import { ArrowRightIcon } from '@heroicons/vue/20/solid';
 
 const { container } = useTailwindConfig();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 
 type BlogListItem = {
   path: string;
@@ -72,10 +72,10 @@ useSeoMeta({
   title: 'Blogs & Articles',
   ogTitle: 'Blogs & Articles',
   description:
-    'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
+    'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
   ogDescription:
-    'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
-  ogImage: `${config.baseUrl}/og/blog_ogImage.png`,
+    'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
+  ogImage: absoluteUrl('/og/blog_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 </script>
@@ -102,7 +102,7 @@ useSeoMeta({
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
             Explore articles on EV fleets, charging infrastructure, sustainability, and the systems
-            shaping the future of transportation.
+            shaping the future of transport.
           </p>
         </div>
 

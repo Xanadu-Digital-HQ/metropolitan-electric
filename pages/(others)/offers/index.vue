@@ -3,7 +3,7 @@ import { ArrowRightIcon } from '@heroicons/vue/20/solid';
 import { partnerOffers } from '~/utils/offers';
 
 const { container } = useTailwindConfig();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 
 useSeoMeta({
   title: 'Partner Offers',
@@ -12,7 +12,7 @@ useSeoMeta({
     'Explore Metropolitan Electric partner offers and selected EV discounts from our financing and mobility partners.',
   ogDescription:
     'Explore Metropolitan Electric partner offers and selected EV discounts from our financing and mobility partners.',
-  ogImage: `${config.baseUrl}/og/gallery_ogImage.png`,
+  ogImage: absoluteUrl('/og/gallery_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 </script>

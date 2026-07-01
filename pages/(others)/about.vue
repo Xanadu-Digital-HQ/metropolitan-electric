@@ -16,16 +16,16 @@ import {
 } from '@phosphor-icons/vue';
 
 const { container } = useTailwindConfig();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 
 useSeoMeta({
   title: 'About Metropolitan Electric',
   ogTitle: 'About Metropolitan Electric',
   description:
-    'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transportation future.',
+    'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transport future.',
   ogDescription:
-    'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transportation future.',
-  ogImage: `${config.baseUrl}/og/about_ogImage.png`,
+    'Metropolitan Electric is pioneering electric mobility solutions committed to transitioning Africa to a cleaner, smarter, and more sustainable transport future.',
+  ogImage: absoluteUrl('/og/about_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 
@@ -119,7 +119,7 @@ const coreValues = [
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-[#41555d] sm:text-base">
             Metropolitan Electric is committed to transitioning Africa to a cleaner, smarter, and
-            more sustainable transportation future. We offer end-to-end solutions for individuals,
+            more sustainable transport future. We offer end-to-end solutions for individuals,
             businesses, and public transport systems, combining innovative vehicles with
             infrastructure, expertise, and support systems that make electric mobility practical and
             accessible.
@@ -230,7 +230,7 @@ const coreValues = [
                   Impact & Growth
                 </p>
                 <p class="text-sm leading-7 text-[#41555d] sm:text-base">
-                  By investing in training programs and knowledge-sharing initiatives, we empower
+                  By investing in training programmes and knowledge-sharing initiatives, we empower
                   employees and stakeholders to contribute meaningfully to the EV industry.
                 </p>
                 <p class="text-sm leading-7 text-[#41555d] sm:text-base">
@@ -259,7 +259,7 @@ const coreValues = [
                   Our Mission
                 </h3>
                 <p class="text-sm leading-7 text-[#41555d]">
-                  To accelerate Africa's transition to clean transportation by delivering reliable,
+                  To accelerate Africa's transition to clean transport by delivering reliable,
                   affordable, and integrated EV solutions—from vehicles and charging to support and
                   skills development.
                 </p>

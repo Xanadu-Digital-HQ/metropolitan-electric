@@ -44,13 +44,13 @@
               <div class="vehicle-spot pointer-events-none absolute inset-x-0 top-0 z-0 h-[72%]" />
 
               <div
-                class="absolute inset-x-0 top-0 bottom-30 z-10 flex items-center justify-center px-10 sm:bottom-32 sm:px-16 lg:bottom-36 lg:px-20"
+                class="absolute inset-x-0 top-0 bottom-30 z-10 flex items-center justify-center px-4 sm:bottom-32 sm:px-16 lg:bottom-36 lg:px-20"
               >
                 <NuxtImg
                   :src="activeVehicle.image"
                   :alt="activeVehicle.name"
                   sizes="xs:100vw sm:100vw lg:70vw"
-                  class="h-full w-full object-contain drop-shadow-[0_50px_70px_rgba(0,0,0,0.6)]"
+                  class="h-full w-[calc(100vw-2rem)] max-w-none object-contain drop-shadow-[0_50px_70px_rgba(0,0,0,0.6)] sm:w-full sm:max-w-full"
                 />
                 <div
                   class="vehicle-base pointer-events-none absolute inset-x-[14%] bottom-3 h-8 opacity-70"

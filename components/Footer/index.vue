@@ -23,7 +23,7 @@
           </div>
 
           <p class="mt-8 max-w-sm font-noto text-sm md:text-base md:leading-8 text-white/76">
-            We are committed to revolutionizing transportation in Africa by delivering cutting-edge
+            We are committed to revolutionising transport in Africa by delivering cutting-edge
             electric vehicles and sustainable mobility solutions.
           </p>
 
@@ -123,15 +123,26 @@
               Contact Info
             </p>
             <div
-              class="mt-5 sm:space-y-5 font-poppins leading-8 text-white/84 text-sm md:text-base"
+              class="mt-5 flex flex-col gap-3 font-poppins leading-8 text-white/84 text-sm md:text-base"
             >
-              <p>77 Sinari Daranijo St,Victoria Island, Lagos 106104, Lagos.</p>
+              <p>77 Sinari Daranijo St, Victoria Island, Lagos 106104, Lagos.</p>
+              <a
+                href="tel:+2348126630682"
+                :class="footerLinkStyle"
+                class="flex w-full items-center gap-2 text-wrap!"
+              >
+                <PhPhone class="size-4 shrink-0" aria-hidden="true" />
+                <span class="font-semibold text-white/70">Tel:</span>
+                <span>+234 812 663 0682</span>
+              </a>
               <a
                 href="mailto:ev@metropolitanelectricng.com"
                 :class="footerLinkStyle"
-                class="text-wrap! w-full"
+                class="flex w-full items-center gap-2 text-wrap!"
               >
-                ev@metropolitanelectricng.com
+                <PhEnvelopeSimple class="size-4 shrink-0" aria-hidden="true" />
+                <span class="font-semibold text-white/70">Email:</span>
+                <span class="break-all">ev@metropolitanelectricng.com</span>
               </a>
             </div>
           </div>
@@ -151,7 +162,14 @@
 import { URLS } from '~/utils/constants';
 import { vehicles } from '~/utils/vehicles';
 import { getVehicleSlug } from '~/utils/vehicleCatalog';
-import { PhFacebookLogo, PhInstagramLogo, PhLinkedinLogo, PhXLogo } from '@phosphor-icons/vue';
+import {
+  PhEnvelopeSimple,
+  PhFacebookLogo,
+  PhInstagramLogo,
+  PhLinkedinLogo,
+  PhPhone,
+  PhXLogo,
+} from '@phosphor-icons/vue';
 
 withDefaults(
   defineProps<{
@@ -176,6 +194,8 @@ const otherLinks = [
   { label: 'Media Center', href: URLS.MEDIA },
   { label: 'Blog', href: URLS.BLOG },
   { label: 'FAQ', href: URLS.FAQ },
+  { label: 'Privacy Policy', href: URLS.PRIVACY },
+  { label: 'Terms', href: URLS.TERMS },
 ] as const;
 
 const vehicleLinks = computed(() =>

@@ -136,36 +136,42 @@ onBeforeUnmount(() => {
         :aria-label="headingText"
         class="text-3xl text-center text-white font-elemental md:text-4xl md:leading-14 lg:text-5xl"
       >
-        <template v-for="(word, wordIndex) in headingWords" :key="`${word.word}-${wordIndex}`">
-          <span aria-hidden="true" class="mr-[0.28em] inline-flex overflow-hidden align-top last:mr-0">
-            <span
-              v-for="(char, charIndex) in word.chars"
-              :key="`${word.word}-${wordIndex}-${charIndex}`"
-              data-split-char
-              class="inline-block"
-            >
-              {{ char }}
+        <span class="sr-only">{{ headingText }}</span>
+        <span aria-hidden="true">
+          <template v-for="(word, wordIndex) in headingWords" :key="`${word.word}-${wordIndex}`">
+            <span class="mr-[0.28em] inline-flex overflow-hidden align-top last:mr-0">
+              <span
+                v-for="(char, charIndex) in word.chars"
+                :key="`${word.word}-${wordIndex}-${charIndex}`"
+                data-split-char
+                class="inline-block"
+              >
+                {{ char }}
+              </span>
             </span>
-          </span>
-        </template>
+          </template>
+        </span>
       </h1>
       <p
         ref="subheadingRef"
         :aria-label="subheadingText"
         class="mt-4 text-base text-center text-white/90 md:text-lg lg:text-xl"
       >
-        <template v-for="(word, wordIndex) in subheadingWords" :key="`${word.word}-${wordIndex}`">
-          <span aria-hidden="true" class="mr-[0.28em] inline-flex overflow-hidden align-top last:mr-0">
-            <span
-              v-for="(char, charIndex) in word.chars"
-              :key="`${word.word}-${wordIndex}-${charIndex}`"
-              data-split-char
-              class="inline-block"
-            >
-              {{ char }}
+        <span class="sr-only">{{ subheadingText }}</span>
+        <span aria-hidden="true">
+          <template v-for="(word, wordIndex) in subheadingWords" :key="`${word.word}-${wordIndex}`">
+            <span class="mr-[0.28em] inline-flex overflow-hidden align-top last:mr-0">
+              <span
+                v-for="(char, charIndex) in word.chars"
+                :key="`${word.word}-${wordIndex}-${charIndex}`"
+                data-split-char
+                class="inline-block"
+              >
+                {{ char }}
+              </span>
             </span>
-          </span>
-        </template>
+          </template>
+        </span>
       </p>
     </div>
   </div>

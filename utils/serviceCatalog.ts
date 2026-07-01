@@ -128,11 +128,11 @@ export const serviceCatalog: ServiceItem[] = [
   },
   {
     slug: 'green-fleet',
-    title: 'GreenFleet: Public Transportation Renewal',
+    title: 'GreenFleet: Public Transport Renewal',
     shortTitle: 'GreenFleet',
     eyebrow: 'Public Transport Renewal',
     description:
-      'GreenFleet is our Electric Vehicles (EV) Fleet Renewal Initiative for Public Transportation, developed in collaboration with governments at various levels. This initiative focuses on integrating Electric Vehicles (EV) into public transportation systems, including tricycles, minicars, taxis, minibuses, and buses. By transitioning to EVs, we aim to create greener, cleaner cities while enhancing the efficiency and sustainability of public transport networks.',
+      'GreenFleet is our Electric Vehicles (EV) Fleet Renewal Initiative for Public Transport, developed in collaboration with governments at various levels. This initiative focuses on integrating Electric Vehicles (EV) into public transport systems, including tricycles, minicars, taxis, minibuses, and buses. By transitioning to EVs, we aim to create greener, cleaner cities while enhancing the efficiency and sustainability of public transport networks.',
     image: 'greenfleet.webp',
     accent: '#719f63',
     metrics: [
@@ -341,7 +341,7 @@ export const serviceCatalog: ServiceItem[] = [
   //   shortTitle: "RYDE",
   //   eyebrow: "Ride-Hailing & Shared Mobility",
   //   description:
-  //     "RYDE is our innovative ride-hailing, sharing, charter, and taxi service. Starting in Nigeria, RYDE will deploy a fleet of owned Electric Vehicles (EV) assets, offering affordable, convenient, safe, and eco-friendly transportation. Positioned to rival global giants like Uber, Bolt, and Lyft, RYDE aims to redefine urban mobility in Africa.",
+  //     "RYDE is our innovative ride-hailing, sharing, charter, and taxi service. Starting in Nigeria, RYDE will deploy a fleet of owned Electric Vehicles (EV) assets, offering affordable, convenient, safe, and eco-friendly transport. Positioned to rival global giants like Uber, Bolt, and Lyft, RYDE aims to redefine urban mobility in Africa.",
   //   image: "ryde.webp",
   //   accent: "#7d8db0",
   //   metrics: [

@@ -69,16 +69,16 @@
 <script lang="ts" setup>
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 
 useSeoMeta({
   title: 'Leading the Electric Vehicles (EV) Revolution across the Continent',
   ogTitle: 'Leading the Electric Vehicles (EV) Revolution across the Continent',
   description:
-    'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
+    'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
   ogDescription:
-    'Metropolitan Electric Limited is at the forefront of revolutionizing the Electric Vehicle (EV) industry across Africa.',
-  ogImage: `${config.baseUrl}/og/ogImage.png`,
+    'Metropolitan Electric Limited is at the forefront of revolutionising the Electric Vehicle (EV) industry across Africa.',
+  ogImage: absoluteUrl('/og/ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 

@@ -18,6 +18,7 @@
         autoplay
         muted
         playsinline
+        poster="/wheel.png"
         preload="auto"
         @ended="$emit('video-ended')"
         @error="$emit('video-ended')"

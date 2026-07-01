@@ -23,7 +23,7 @@ definePageMeta({
 });
 
 const route = useRoute();
-const config = useRuntimeConfig();
+const absoluteUrl = useAbsoluteUrl();
 const slug = computed(() => {
   const value = route.params.slug;
   return Array.isArray(value) ? (value[0] ?? '') : String(value ?? '');
@@ -43,7 +43,7 @@ useSeoMeta({
   ogTitle: () => service.value?.title ?? 'Solution',
   description: () => service.value?.description ?? 'Solution details',
   ogDescription: () => service.value?.description ?? 'Solution details',
-  ogImage: () => service.value?.image ?? `${config.baseUrl}/og/solutions_ogImage.png`,
+  ogImage: () => absoluteUrl(service.value?.image ?? '/og/solutions_ogImage.png'),
   twitterCard: 'summary_large_image',
 });
 </script>
