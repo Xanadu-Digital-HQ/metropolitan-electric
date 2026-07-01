@@ -6,14 +6,39 @@ const { container } = useTailwindConfig();
 const absoluteUrl = useAbsoluteUrl();
 
 useSeoMeta({
-  title: 'EV FAQ',
-  ogTitle: 'EV FAQ',
+  title: 'Electric Vehicle FAQ in Nigeria | Metropolitan Electric',
+  ogTitle: 'Electric Vehicle FAQ in Nigeria | Metropolitan Electric',
   description:
-    'Answers to common questions about electric vehicles, charging, maintenance, infrastructure and EV adoption in Nigeria.',
+    'Answers to common questions about electric vehicles, charging, maintenance, infrastructure, range and EV adoption in Nigeria.',
   ogDescription:
-    'Answers to common questions about electric vehicles, charging, maintenance, infrastructure and EV adoption in Nigeria.',
+    'Answers to common questions about electric vehicles, charging, maintenance, infrastructure, range and EV adoption in Nigeria.',
   ogImage: absoluteUrl('/og/faq_ogImage.png'),
   twitterCard: 'summary_large_image',
+});
+
+useHead({
+  script: [
+    {
+      key: 'faq-page-schema',
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${absoluteUrl('/faq')}#faq`,
+        url: absoluteUrl('/faq'),
+        name: 'Electric Vehicle FAQ in Nigeria',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.item,
+          url: `${absoluteUrl('/faq')}#${item.slug}`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.content,
+          },
+        })),
+      }),
+    },
+  ],
 });
 
 const highlights = [
@@ -170,6 +195,7 @@ const groupedFaqs = [
           <Accordion type="single" collapsible class="w-full">
             <AccordionItem
               v-for="item in group.items"
+              :id="item.slug"
               :key="item.value"
               :value="item.value"
               class="border-b border-[#e4ebe1] py-1"
